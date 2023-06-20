@@ -1,0 +1,4 @@
+# 运行angular服务器前端
+ng serve --watch
+# 运行.net服务器后端
+dotnet watch run
