@@ -3,8 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpEventType } from '@angular/common/ht
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { TokenService } from "./token.service";
-import { Comment, Post, PostField } from "../utilities/Models";
+import { Comment, Post, PostField } from "./utility.models";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,7 @@ export class HttpService {
   constructor(
     private _http: HttpClient,
     private _router: Router,
-    private _token: TokenService,
+    //private _token: TokenService,
   ) {
   }
 
@@ -23,11 +22,11 @@ export class HttpService {
   }
 
   //确保用户没有登录
-  ensureNotLoginAlready(): void {
+  /*ensureNotLoginAlready(): void {
     if (this._token.isStillValid()) {
       this.gotoHomePage();
     }
-  }
+  }*/
 
   //获取当前用户的详细数据
   getCurrentUser() {

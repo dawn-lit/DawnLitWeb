@@ -27,10 +27,25 @@
             "styles": [
               "src/styles.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/bootstrap-icons/font/bootstrap-icons.css"
+              "./node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "./node_modules/prismjs/themes/prism-okaidia.css",
+              "./node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
+              "./node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",
+              "./node_modules/prismjs/plugins/command-line/prism-command-line.css",
+              "./node_modules/katex/dist/katex.min.css"
             ],
             "scripts": [
-              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "./node_modules/marked/marked.min.js",
+              "./node_modules/prismjs/prism.js",
+              "./node_modules/prismjs/components/prism-csharp.min.js",
+              "./node_modules/prismjs/components/prism-css.min.js",
+              "./node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js",
+              "./node_modules/prismjs/plugins/line-highlight/prism-line-highlight.js",
+              "./node_modules/prismjs/plugins/command-line/prism-command-line.js",
+              "./node_modules/emoji-toolkit/lib/js/joypixels.min.js",
+              "./node_modules/katex/dist/katex.min.js",
+              "./node_modules/katex/dist/contrib/auto-render.min.js"
             ]
           },
           "configurations": {
