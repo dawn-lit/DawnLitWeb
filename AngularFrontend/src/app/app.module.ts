@@ -10,13 +10,17 @@ import { WikiComponent } from './wiki/wiki.component';
 // third party libraries
 import { MarkdownModule } from 'ngx-markdown';
 import { NavigationComponent } from './navigation/navigation.component';
+import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     NavigationComponent,
-    WikiComponent
+    WikiComponent,
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

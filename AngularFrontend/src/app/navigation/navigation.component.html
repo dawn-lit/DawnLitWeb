@@ -336,7 +336,10 @@
         <!-- Notification dropdown END -->
 
         <li class="nav-item ms-2 dropdown">
-          <a aria-expanded="false" class="nav-link btn icon-md p-0" data-bs-auto-close="outside"
+          <a *ngIf="true" class="nav-link icon-md btn btn-light p-0" href="./login">
+            <i class="bi bi-door-open-fill fs-6"> </i>
+          </a>
+          <a *ngIf="false" aria-expanded="false" class="nav-link btn icon-md p-0" data-bs-auto-close="outside"
              data-bs-display="static" data-bs-toggle="dropdown"
              href="#" id="profileDropdown" role="button">
             <img alt="" class="avatar-img rounded-2" src="/assets/images/avatar/07.jpg">
