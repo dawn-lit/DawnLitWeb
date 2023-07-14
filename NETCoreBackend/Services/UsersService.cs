@@ -10,10 +10,9 @@ public class UsersService : AbstractService<User>
     {
     }
 
-    public async Task<User?> GetWithConfidential(string email)
+    public async Task<User?> GetAsync(string email)
     {
         return await this.GetDatabaseCollection()
-            .Include(m => m.Confidential)
             .FirstOrDefaultAsync(x => x.Email == email);
     }
 }

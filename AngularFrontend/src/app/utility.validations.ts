@@ -45,19 +45,11 @@ export class RegistrationValidation {
     let error = this.isEmailValid(RegistrationData["email"]);
     if (error != null) {
       errorMessages.set("email", error);
-
     }
 
     error = this.isNameValid(RegistrationData["name"]);
     if (error != null) {
       errorMessages.set("name", error);
-
-    }
-
-    error = this.isBirthdayValid(RegistrationData["birthday"]);
-    if (error != null) {
-      errorMessages.set("birthday", error);
-
     }
 
     if (RegistrationData["password"] != RegistrationData["password_confirm"]) {

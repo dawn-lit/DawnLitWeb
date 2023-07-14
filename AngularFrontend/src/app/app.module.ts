@@ -12,6 +12,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { NavigationComponent } from './navigation/navigation.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { RegistrationComponent } from './registration/registration.component';
     AppRoutingModule,
     HttpClientModule,
     MarkdownModule.forRoot({loader: HttpClient}),
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

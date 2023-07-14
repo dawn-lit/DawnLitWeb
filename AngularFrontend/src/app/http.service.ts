@@ -18,7 +18,7 @@ export class HttpService {
   }
 
   getIpInfo(): Observable<any> {
-    return this._http.get("https://api.ipify.org/?format=json");
+    return this._http.get('https://jsonip.com');
   }
 
   //确保用户没有登录
@@ -56,7 +56,7 @@ export class HttpService {
 
   //登出
   logoffUser() {
-    localStorage.removeItem("jwt_token");
+    //localStorage.removeItem("jwt_token");
     return this._http.get("/api/users/logoff");
   }
 

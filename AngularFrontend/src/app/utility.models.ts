@@ -3,15 +3,13 @@ export interface User {
   avatar: any;
   name: string;
   email: string;
-  birthday: Date;
   group: number;
   registerIp: string;
   loginIp: string;
   friends: Array<User>;
   comments: Array<Comment>;
-  credits: number;
-  money: number;
-  exp: number;
+  coins: number;
+  experience: number;
   signature: string;
   createdAt: Date;
   updatedAt: Date;

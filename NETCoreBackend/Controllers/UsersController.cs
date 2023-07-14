@@ -79,18 +79,10 @@ public class UsersController : ControllerBase
             return this.Conflict("Password");
         }
 
-        // ensure the Date is not in the future
-        if (newUser.Birthday.CompareTo(DateTime.Today) > 0)
-        {
-            return this.Conflict("Birthday");
-        }
-
-        newUser.Birthday = DateTime.SpecifyKind(newUser.Birthday, DateTimeKind.Utc);
-
         // hashing the password
         Authentications.CreatePasswordHash(newUser.Password, out byte[] passwordHash, out byte[] passwordSalt);
-        newUser.Confidential.PasswordHash = passwordHash;
-        newUser.Confidential.PasswordSalt = passwordSalt;
+        newUser.PasswordHash = passwordHash;
+        newUser.PasswordSalt = passwordSalt;
 
         // set Login Ip as Register Ip
         newUser.LoginIp = newUser.RegisterIp;
@@ -104,7 +96,7 @@ public class UsersController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login(User userThatLogin)
     {
-        User? theUserData = await this._usersService.GetWithConfidential(userThatLogin.Email);
+        User? theUserData = await this._usersService.GetAsync(userThatLogin.Email);
 
         // ensure that the user exists
         if (theUserData == null)
@@ -113,7 +105,8 @@ public class UsersController : ControllerBase
         }
 
         // whether the password is correct
-        if (!Authentications.VerifyPasswordHash(userThatLogin.Password, theUserData.Confidential))
+        if (!Authentications.VerifyPasswordHash(userThatLogin.Password, theUserData.PasswordHash,
+                theUserData.PasswordSalt))
         {
             return this.Ok(new { accepted = false, password = "password_incorrect" });
         }
