@@ -1,2 +1,0 @@
-﻿dotnet ef migrations add TheMigration
-dotnet ef database update

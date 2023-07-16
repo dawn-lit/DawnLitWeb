@@ -23,6 +23,7 @@ export class RegistrationComponent {
   }
 
   ngOnInit(): void {
+    //this._httpService.ensureNotLoginAlready();
   }
 
   onSubmit(): void {

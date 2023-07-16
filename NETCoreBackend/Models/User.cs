@@ -5,7 +5,6 @@ namespace NETCoreBackend.Models;
 
 public class User : AbstractModel
 {
-    [Required]
     [Display(Name = "name")]
     public string Name { get; set; } = string.Empty;
 

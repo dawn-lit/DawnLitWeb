@@ -11,21 +11,27 @@
           <h1 class="mb-2">Sign in</h1>
           <p class="mb-0">Don't have an account?<a href="./registration"> Click here to sign up</a></p>
           <!-- Form START -->
-          <form class="mt-sm-4">
+          <form (ngSubmit)="onSubmit()" class="mt-sm-4">
             <!-- Email -->
             <div class="mb-3 input-group-lg">
-              <input class="form-control" placeholder="Enter email" type="email">
+              <input [(ngModel)]="LoginData['email']" class="form-control"
+                     name="email" placeholder="Enter email" type="email">
+              <p *ngIf="ErrorMessage['email']" class="warning_messages"
+                 style="text-align: left !important;">{{ErrorMessage['email']}}</p>
             </div>
             <!-- New password -->
             <div class="mb-3 position-relative">
               <!-- Password -->
               <div class="input-group input-group-lg">
-                <input class="form-control fakepassword" id="psw-input" placeholder="Enter new password"
+                <input [(ngModel)]="LoginData['password']" class="form-control fakepassword" id="psw-input"
+                       name="password" placeholder="Enter new password"
                        type="password">
                 <span class="input-group-text p-0">
                   <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
                 </span>
               </div>
+              <p *ngIf="ErrorMessage['password']" class="warning_messages"
+                 style="text-align: left !important;">{{ErrorMessage['password']}}</p>
             </div>
             <!-- Remember me -->
             <div class="mb-3 d-sm-flex justify-content-between">

@@ -21,11 +21,13 @@
               <input [(ngModel)]="RegistrationData['name']" class="form-control" name="name"
                      placeholder="Enter username"
                      type="text">
+              <p *ngIf="ErrorMessage['name']" class="warning_messages">{{ErrorMessage['name']}}</p>
             </div>
             <div class="mb-3 input-group-lg">
               <p>Email:</p>
               <input [(ngModel)]="RegistrationData['email']" class="form-control" name="email" placeholder="Enter email"
                      type="email">
+              <p *ngIf="ErrorMessage['email']" class="warning_messages">{{ErrorMessage['email']}}</p>
             </div>
             <!-- New password -->
             <div class="mb-3 position-relative">
@@ -44,6 +46,7 @@
               <!-- Pswmeter -->
               <div class="mt-2" id="pswmeter"></div>
               <div class="d-flex mt-1">
+                <p *ngIf="ErrorMessage['password']" class="warning_messages">{{ErrorMessage['password']}}</p>
                 <div class="rounded" id="pswmeter-message"></div>
                 <!-- Password message notification -->
                 <div class="ms-auto">
@@ -61,6 +64,8 @@
               <input [(ngModel)]="RegistrationData['password_confirm']" class="form-control" name="password_confirm"
                      placeholder="Confirm password"
                      type="password">
+              <p *ngIf="ErrorMessage['password_confirm']"
+                 class="warning_messages">{{ErrorMessage['password_confirm']}}</p>
             </div>
             <!-- Keep me signed in -->
             <div class="mb-3 text-start">

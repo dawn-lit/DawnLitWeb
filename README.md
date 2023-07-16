@@ -35,6 +35,26 @@ For database, we are using: **PostgreSQL**
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/120px-Postgresql_elephant.svg.png" alt="PostgreSQL" style="width:25%; height:25%" />
 
 
+
+# Some useful commands:
+#### Migrate the models:
+
+dotnet ef migrations add TheMigration
+
+#### Update the models in PostgreSQL:
+
+dotnet ef database update
+
+#### Run the angular frontend:
+
+ng serve --watch
+
+#### Run the dotnet backend:
+
+dotnet watch run
+
+
+
 # Want to contribute?
 
 I know this is a tough time for everyone, so I welcome anyone with an interest in web development to contribute to this project. I will be pleased to do some code reviews when needed.

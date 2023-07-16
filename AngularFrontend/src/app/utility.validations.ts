@@ -13,29 +13,25 @@ export class RegistrationValidation {
   private static readonly MIN_PASSWORD_LENGTH = 8;
   private static readonly MAX_PASSWORD_LENGTH = 16;
 
-  private static readonly _RE = /\S+@\S+\.\S+/;
+  private static readonly _RE = /[^A-Za-z0-9_]/;
 
   private static readonly ERROR_MESSAGES = {
-    "birthday": {
-      "in_future": "您的生日不能在未来哦",
-      "empty": "您的生日不能为空"
-    },
     "email": {
-      "already_exist": "这个邮箱地址已经被使用。如果您的邮箱地址被非法使用，请通过“忘记密码”找回帐号",
-      "invalid": "这不是一个正确的邮箱地址",
-      "empty": "您的邮箱地址不能为空"
+      "already_exist": `This Email address has already been used. If you believe your Email address has been used illegally, please use the "Forgot Password" page to retrieve your account.`,
+      "invalid": "This is not a valid Email address!",
+      "empty": "Please enter your Email address!"
     },
     "name": {
-      "empty": "请告诉我您的昵称吧",
-      "too_short": `昵称不能小于${this.MIN_NAME_LENGTH}个字符`,
-      "special_char_detected": "昵称不可包含除-和_以外的特殊字符",
-      "too_long": `昵称不能大于${this.MAX_NAME_LENGTH}个字符`
+      "empty": "Please enter your username!",
+      "too_short": `Username cannot be shorter than ${this.MIN_NAME_LENGTH} characters!`,
+      "special_char_detected": `Username may not contain special characters other than "_"!`,
+      "too_long": `Username cannot be longer than ${this.MAX_NAME_LENGTH} characters!`
     },
     "password": {
-      "empty": "您的密码不能为空",
-      "do_not_match": "两次输入的密码不一致，请重新输入",
-      "too_short": `密码不能小于${this.MIN_PASSWORD_LENGTH}个字符`,
-      "too_long": `密码不能大于${this.MAX_PASSWORD_LENGTH}个字符`
+      "empty": "Please enter your password!",
+      "do_not_match": "The passwords did not match!",
+      "too_short": `Password cannot be shorter than ${this.MIN_PASSWORD_LENGTH} characters!`,
+      "too_long": `Password cannot be longer than ${this.MAX_PASSWORD_LENGTH} characters!`
     }
   };
 
@@ -88,15 +84,9 @@ export class RegistrationValidation {
       return this.ERROR_MESSAGES.name.too_long;
     }
 
-    return null;
-  }
-
-  private static isBirthdayValid(birthday: string): string | null {
-    if (birthday == null || birthday.length <= 0) {
-      return this.ERROR_MESSAGES.birthday.empty;
-    }
-    if (new Date(birthday) > new Date()) {
-      return this.ERROR_MESSAGES.birthday.in_future;
+    // check special characters
+    if (this._RE.test(name)) {
+      return this.ERROR_MESSAGES.name.special_char_detected;
     }
 
     return null;
@@ -119,10 +109,10 @@ export class RegistrationValidation {
 // 登录信息预验证模块
 export class LoginValidation {
   public static readonly ERROR_MESSAGES: Record<string, string> = {
-    "email_empty": "邮箱不能为空",
-    "email_cannot_find": "邮箱不存在",
-    "password_incorrect": "密码错误",
-    "password_empty": "密码不能为空",
+    "email_empty": "Please enter your Email address!",
+    "email_cannot_find": "This Email address does not exist!",
+    "password_incorrect": "Wrong password!",
+    "password_empty": "Password cannot be empty!",
 
   };
 
