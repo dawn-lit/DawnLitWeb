@@ -13,6 +13,11 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { FormsModule } from "@angular/forms";
+import { JwtModule } from "@auth0/angular-jwt";
+
+export function tokenGetter() {
+  return localStorage.getItem("jwt_token");
+}
 
 @NgModule({
   declarations: [
@@ -29,6 +34,13 @@ import { FormsModule } from "@angular/forms";
     HttpClientModule,
     MarkdownModule.forRoot({loader: HttpClient}),
     FormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["localhost:7061"],
+        disallowedRoutes: []
+      }
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

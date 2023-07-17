@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpService } from '../http.service';
 import { HttpClient } from '@angular/common/http';
 import { LoginValidation } from "../utility.validations";
+import { TokenService } from "../token.service";
 
 @Component({
   selector: 'app-login',
@@ -15,11 +16,12 @@ export class LoginComponent {
   constructor(
     private _httpService: HttpService,
     private _http: HttpClient,
+    private _token: TokenService
   ) {
   }
 
   ngOnInit(): void {
-    //this._httpService.ensureNotLoginAlready();
+    this._httpService.ensureNotLoginAlready();
   }
 
   onSubmit(): void {
@@ -37,7 +39,7 @@ export class LoginComponent {
         this._httpService.loginUser(this.LoginData).subscribe({
           next: (data: any) => {
             if (data.accepted == true) {
-              // this._token.set(data.token);
+              this._token.set(data.token);
               this._httpService.gotoHomePage();
               this.resetLoginData();
             } else {

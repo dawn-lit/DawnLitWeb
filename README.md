@@ -39,19 +39,19 @@ For database, we are using: **PostgreSQL**
 # Some useful commands:
 #### Migrate the models:
 
-dotnet ef migrations add TheMigration
+`dotnet ef migrations add TheMigration`
 
 #### Update the models in PostgreSQL:
 
-dotnet ef database update
+`dotnet ef database update`
 
 #### Run the angular frontend:
 
-ng serve --watch
+`ng serve --watch`
 
 #### Run the dotnet backend:
 
-dotnet watch run
+`dotnet watch run`
 
 
 

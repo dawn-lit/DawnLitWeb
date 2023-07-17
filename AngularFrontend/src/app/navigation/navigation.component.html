@@ -336,10 +336,11 @@
         <!-- Notification dropdown END -->
 
         <li class="nav-item ms-2 dropdown">
-          <a *ngIf="true" class="nav-link icon-md btn btn-light p-0" href="./login">
+          <a *ngIf="UserData.id==null" class="nav-link icon-md btn btn-light p-0" href="./login">
             <i class="bi bi-door-open-fill fs-6"> </i>
           </a>
-          <a *ngIf="false" aria-expanded="false" class="nav-link btn icon-md p-0" data-bs-auto-close="outside"
+          <a *ngIf="UserData.id!=null" aria-expanded="false" class="nav-link btn icon-md p-0"
+             data-bs-auto-close="outside"
              data-bs-display="static" data-bs-toggle="dropdown"
              href="#" id="profileDropdown" role="button">
             <img alt="" class="avatar-img rounded-2" src="/assets/images/avatar/07.jpg">
@@ -354,8 +355,8 @@
                   <img alt="avatar" class="avatar-img rounded-circle" src="/assets/images/avatar/07.jpg">
                 </div>
                 <div>
-                  <a class="h6 stretched-link" href="#">Lori Ferguson</a>
-                  <p class="small m-0">Web Developer</p>
+                  <a class="h6 stretched-link" href="#">{{UserData.name}}</a>
+                  <p class="small m-0">{{UserData.signature}}</p>
                 </div>
               </div>
               <a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href="my-profile.html">View
@@ -375,7 +376,7 @@
               </a>
             </li>
             <li class="dropdown-divider"></li>
-            <li><a class="dropdown-item bg-danger-soft-hover" href="sign-in-advance.html"><i
+            <li><a (click)="logOff()" class="dropdown-item bg-danger-soft-hover" href="."><i
               class="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
             <li>
               <hr class="dropdown-divider">

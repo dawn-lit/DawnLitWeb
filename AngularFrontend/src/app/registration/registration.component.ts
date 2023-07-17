@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpService } from '../http.service';
 import { HttpClient } from '@angular/common/http';
 import { RegistrationValidation } from "../utility.validations";
+import { TokenService } from "../token.service";
 
 @Component({
   selector: 'app-registration',
@@ -19,11 +20,12 @@ export class RegistrationComponent {
   constructor(
     private _httpService: HttpService,
     private _http: HttpClient,
+    private _token: TokenService
   ) {
   }
 
   ngOnInit(): void {
-    //this._httpService.ensureNotLoginAlready();
+    this._httpService.ensureNotLoginAlready();
   }
 
   onSubmit(): void {
@@ -44,6 +46,7 @@ export class RegistrationComponent {
         } else {
           console.log(this.RegistrationData);
           this._httpService.registerUser(this.RegistrationData).subscribe((data: any) => {
+            this._token.set(data.token);
             this._httpService.gotoHomePage();
             // reset registration ngmodel
             for (const key in this.RegistrationData) {
