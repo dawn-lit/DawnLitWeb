@@ -1,9 +1,4 @@
-<!-- Dark mode -->
-
-
 <app-navigation></app-navigation>
-<!-- =======================
-Header END -->
 
 <!-- **************** MAIN CONTENT START **************** -->
 <main style="margin-top:4%">
@@ -52,9 +47,8 @@ Header END -->
                                         src="/assets/images/avatar/07.jpg"></a>
                     </div>
                     <!-- Info -->
-                    <h5 class="mb-0"><a href="#!">Sam Lanson </a></h5>
-                    <small>Web Developer at Webestica</small>
-                    <p class="mt-3">I'd love to change the world, but they won’t give me the source code.</p>
+                    <h5 class="mb-0"><a href="#!">{{UserData.name}}</a></h5>
+                    <p class="mt-3">{{UserData.signature}}</p>
 
                     <!-- User stat START -->
                     <div class="hstack gap-2 gap-xl-3 justify-content-center">
@@ -2830,7 +2824,3 @@ JS libraries, plugins and custom scripts -->
 <script src="/assets/vendor/dropzone/dist/min/dropzone.min.js"></script>
 <script src="/assets/vendor/zuck.js/dist/zuck.min.js"></script>
 <script src="/assets/js/zuck-stories.js"></script>
-
-<!-- Theme Functions -->
-<script src="/assets/js/functions.js"></script>
-

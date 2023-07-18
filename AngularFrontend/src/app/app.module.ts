@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { FormsModule } from "@angular/forms";
 import { JwtModule } from "@auth0/angular-jwt";
+import { SettingsComponent } from './settings/settings.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt_token");
@@ -26,7 +27,8 @@ export function tokenGetter() {
     NavigationComponent,
     WikiComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
