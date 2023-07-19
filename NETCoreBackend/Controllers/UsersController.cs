@@ -17,6 +17,9 @@ public class UsersController : ControllerBase
     private const int MIN_PASSWORD_LENGTH = 8;
     private const int MAX_PASSWORD_LENGTH = 16;
 
+    private const int MIN_SIGNATURE_LENGTH = 0;
+    private const int MAX_SIGNATURE_LENGTH = 300;
+
     private readonly UsersService _usersService;
 
     public UsersController(DatabaseContext db)
@@ -116,6 +119,47 @@ public class UsersController : ControllerBase
         await this._usersService.SaveChangesAsync();
 
         return this.Accepted(new { accepted = true, token = Authentications.CreateJwtToken(theUserData) });
+    }
+
+    [HttpPut("update/current/info")]
+    public async Task<IActionResult> PutInfo(User modifiedUser)
+    {
+        // ensure the email is not empty and valid
+        if (modifiedUser.Email.Length <= 0 || !new EmailAddressAttribute().IsValid(modifiedUser.Email))
+        {
+            return this.Conflict("Email");
+        }
+
+        // ensure the user name length is within range
+        if (modifiedUser.Name.Length is < MIN_NAME_LENGTH or > MAX_NAME_LENGTH)
+        {
+            return this.Conflict("Name");
+        }
+
+        // get current user
+        string theSId = Authentications.ReadJwtToken(this.Request).Claims
+            .First(claim => claim.Type == ClaimTypes.PrimarySid).Value;
+
+        if (!int.TryParse(theSId, out int theId))
+        {
+            return this.NotFound();
+        }
+
+        User? user = await this._usersService.GetAsync(theId);
+
+        if (user is null)
+        {
+            return this.NotFound();
+        }
+
+        // modify user information
+        user.Name = modifiedUser.Name;
+        user.Signature = modifiedUser.Signature;
+
+        // save the changes
+        await this._usersService.SaveChangesAsync();
+
+        return this.Accepted();
     }
 
     [HttpDelete("delete/{id:int}")]

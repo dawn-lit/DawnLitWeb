@@ -1,60 +1,54 @@
-<main>
-
-  <!-- Container START -->
-  <div class="container">
-    <div class="row justify-content-center align-items-center vh-100 py-5">
-      <!-- Main content START -->
-      <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
-        <!-- Sign in START -->
-        <div class="card card-body text-center p-4 p-sm-5">
-          <!-- Title -->
-          <h1 class="mb-2">Sign in</h1>
-          <p class="mb-0">Don't have an account?<a href="./registration"> Click here to sign up</a></p>
-          <!-- Form START -->
-          <form (ngSubmit)="onSubmit()" class="mt-sm-4">
-            <!-- Email -->
-            <div class="mb-3 input-group-lg">
-              <input [(ngModel)]="LoginData['email']" class="form-control"
-                     name="email" placeholder="Enter email" type="email">
-              <p *ngIf="ErrorMessage['email']" class="warning_messages"
-                 style="text-align: left !important;">{{ErrorMessage['email']}}</p>
-            </div>
-            <!-- New password -->
-            <div class="mb-3 position-relative">
-              <!-- Password -->
-              <div class="input-group input-group-lg">
-                <input [(ngModel)]="LoginData['password']" class="form-control fakepassword" id="psw-input"
-                       name="password" placeholder="Enter new password"
-                       type="password">
-                <span class="input-group-text p-0">
+<div class="container">
+  <div class="row justify-content-center align-items-center vh-100 py-5">
+    <!-- Main content START -->
+    <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
+      <!-- Sign in START -->
+      <div class="card card-body text-center p-4 p-sm-5">
+        <!-- Title -->
+        <h1 class="mb-2">Sign in</h1>
+        <p class="mb-0">Don't have an account?<a href="./registration"> Click here to sign up</a></p>
+        <!-- Form START -->
+        <form (ngSubmit)="onSubmit()" class="mt-sm-4">
+          <!-- Email -->
+          <div class="mb-3 input-group-lg">
+            <input [(ngModel)]="LoginData['email']" class="form-control"
+                   name="email" placeholder="Enter email" type="email">
+            <p *ngIf="ErrorMessage['email']" class="warning_messages"
+               style="text-align: left !important;">{{ErrorMessage['email']}}</p>
+          </div>
+          <!-- New password -->
+          <div class="mb-3 position-relative">
+            <!-- Password -->
+            <div class="input-group input-group-lg">
+              <input [(ngModel)]="LoginData['password']" class="form-control fakepassword" id="psw-input"
+                     name="password" placeholder="Enter new password"
+                     type="password">
+              <span class="input-group-text p-0">
                   <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
                 </span>
-              </div>
-              <p *ngIf="ErrorMessage['password']" class="warning_messages"
-                 style="text-align: left !important;">{{ErrorMessage['password']}}</p>
             </div>
-            <!-- Remember me -->
-            <div class="mb-3 d-sm-flex justify-content-between">
-              <div>
-                <input class="form-check-input" id="rememberCheck" type="checkbox">
-                <label class="form-check-label" for="rememberCheck">Remember me?</label>
-              </div>
-              <a href="forgot-password.html">Forgot password?</a>
+            <p *ngIf="ErrorMessage['password']" class="warning_messages"
+               style="text-align: left !important;">{{ErrorMessage['password']}}</p>
+          </div>
+          <!-- Remember me -->
+          <div class="mb-3 d-sm-flex justify-content-between">
+            <div>
+              <input class="form-check-input" id="rememberCheck" type="checkbox">
+              <label class="form-check-label" for="rememberCheck">Remember me?</label>
             </div>
-            <!-- Button -->
-            <div class="d-grid">
-              <button class="btn btn-lg btn-primary" type="submit">Login</button>
-            </div>
-            <!-- Copyright -->
-            <p class="mb-0 mt-3">©2023 <a href="https://dawnlit.com" target="_blank">Dawn Lit</a> All rights reserved
-            </p>
-          </form>
-          <!-- Form END -->
-        </div>
-        <!-- Sign in START -->
+            <a href="forgot-password.html">Forgot password?</a>
+          </div>
+          <!-- Button -->
+          <div class="d-grid">
+            <button class="btn btn-lg btn-primary" type="submit">Login</button>
+          </div>
+          <!-- Copyright -->
+          <p class="mb-0 mt-3">©2023 <a href="https://dawnlit.com" target="_blank">Dawn Lit</a> All rights reserved
+          </p>
+        </form>
+        <!-- Form END -->
       </div>
-    </div> <!-- Row END -->
-  </div>
-  <!-- Container END -->
-
-</main>
+      <!-- Sign in START -->
+    </div>
+  </div> <!-- Row END -->
+</div>

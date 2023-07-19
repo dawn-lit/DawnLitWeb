@@ -23,7 +23,6 @@ export class NavigationComponent {
     this._httpService.getCurrentUser().subscribe(data => {
       if (data != null && Object.keys(data).length > 0) {
         this.UserData = data as User;
-        console.log(this.UserData);
       }
     });
   }

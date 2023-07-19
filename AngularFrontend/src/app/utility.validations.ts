@@ -1,8 +1,4 @@
-/*
-* 输入信息预验证模块
-*/
-
-// 注册信息预验证模块
+// validate user registration input data
 export class RegistrationValidation {
 
   // 名称长度限制
@@ -106,14 +102,13 @@ export class RegistrationValidation {
   }
 }
 
-// 登录信息预验证模块
+// validate user login input data
 export class LoginValidation {
-  public static readonly ERROR_MESSAGES: Record<string, string> = {
+  private static readonly ERROR_MESSAGES: Record<string, string> = {
     "email_empty": "Please enter your Email address!",
     "email_cannot_find": "This Email address does not exist!",
     "password_incorrect": "Wrong password!",
     "password_empty": "Password cannot be empty!",
-
   };
 
   public static check(LoginData: Record<string, string>): Map<string, string> {
@@ -134,6 +129,15 @@ export class LoginValidation {
     return this.ERROR_MESSAGES[key];
   }
 }
+
+// validate user update information input data
+export class UserUpdateValidation {
+  private static readonly ERROR_MESSAGES: Record<string, string> = {
+    "password_incorrect": "Wrong password!",
+    "password_empty": "Password cannot be empty!",
+  };
+}
+
 
 // 帖子信息预验证模块
 export class PostValidation {
