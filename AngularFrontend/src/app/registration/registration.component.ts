@@ -41,10 +41,8 @@ export class RegistrationComponent {
         if (errors.size > 0) {
           errors.forEach((value: string, key: string) => {
             this.ErrorMessage[key] = value;
-            console.log(this.ErrorMessage);
           });
         } else {
-          console.log(this.RegistrationData);
           this._httpService.registerUser(this.RegistrationData).subscribe((data: any) => {
             this._token.set(data.token);
             this._httpService.gotoHomePage();

@@ -1,72 +1,43 @@
-// validate user registration input data
-export class RegistrationValidation {
+// validate general user information
+class UserValidation {
 
-  // 名称长度限制
+  // user name length requirements
   private static readonly MIN_NAME_LENGTH = 2;
   private static readonly MAX_NAME_LENGTH = 16;
-
-  // 密码长度限制
+  // user password length requirements
   private static readonly MIN_PASSWORD_LENGTH = 8;
   private static readonly MAX_PASSWORD_LENGTH = 16;
-
-  private static readonly _RE = /[^A-Za-z0-9_]/;
-
+  // user signature length requirements
+  private static readonly MIN_SIGNATURE_LENGTH = 0;
+  private static readonly MAX_SIGNATURE_LENGTH = 500;
+  // error messages
   private static readonly ERROR_MESSAGES = {
-    "email": {
-      "already_exist": `This Email address has already been used. If you believe your Email address has been used illegally, please use the "Forgot Password" page to retrieve your account.`,
-      "invalid": "This is not a valid Email address!",
-      "empty": "Please enter your Email address!"
-    },
     "name": {
       "empty": "Please enter your username!",
       "too_short": `Username cannot be shorter than ${this.MIN_NAME_LENGTH} characters!`,
       "special_char_detected": `Username may not contain special characters other than "_"!`,
       "too_long": `Username cannot be longer than ${this.MAX_NAME_LENGTH} characters!`
     },
+    "email": {
+      "already_exist": `This Email address has already been used. If you believe your Email address has been used illegally, please use the "Forgot Password" page to retrieve your account.`,
+      "invalid": "This is not a valid Email address!",
+      "empty": "Please enter your Email address!"
+    },
     "password": {
       "empty": "Please enter your password!",
       "do_not_match": "The passwords did not match!",
       "too_short": `Password cannot be shorter than ${this.MIN_PASSWORD_LENGTH} characters!`,
       "too_long": `Password cannot be longer than ${this.MAX_PASSWORD_LENGTH} characters!`
+    },
+    "signature": {
+      "too_short": `Signature cannot be shorter than ${this.MIN_SIGNATURE_LENGTH} characters!`,
+      "too_long": `Signature cannot be longer than ${this.MAX_SIGNATURE_LENGTH} characters!`
     }
   };
+  private static readonly USERNAME_RE: RegExp = /[^A-Za-z0-9_]/;
+  private static readonly EMAIL_RE: RegExp = /\S+@\S+\.\S+/;
 
-  public static check(RegistrationData: Record<string, string>): Map<string, string> {
-    const errorMessages: Map<string, string> = new Map<string, string>();
-
-    let error = this.isEmailValid(RegistrationData["email"]);
-    if (error != null) {
-      errorMessages.set("email", error);
-    }
-
-    error = this.isNameValid(RegistrationData["name"]);
-    if (error != null) {
-      errorMessages.set("name", error);
-    }
-
-    if (RegistrationData["password"] != RegistrationData["password_confirm"]) {
-      errorMessages.set("password_confirm", this.ERROR_MESSAGES.password.do_not_match);
-    }
-    error = this.isPasswordValid(RegistrationData["password"]);
-    if (error != null) {
-      errorMessages.set("password", error);
-
-    }
-    return errorMessages;
-
-  }
-
-  private static isEmailValid(email: string): string | null {
-    if (email == null || email.length <= 0) {
-      return this.ERROR_MESSAGES.email.empty;
-    }
-    if (!this._RE.test(email)) {
-      return this.ERROR_MESSAGES.email.invalid;
-    }
-    return null;
-  }
-
-  private static isNameValid(name: string): string | null {
+  public static isNameValid(name: string): string | null {
     // if name is empty
     if (name.length <= 0) {
       return this.ERROR_MESSAGES.name.empty;
@@ -81,14 +52,34 @@ export class RegistrationValidation {
     }
 
     // check special characters
-    if (this._RE.test(name)) {
+    if (this.USERNAME_RE.test(name)) {
       return this.ERROR_MESSAGES.name.special_char_detected;
     }
 
     return null;
   }
 
-  private static isPasswordValid(password: string): string | null {
+  public static isEmailValid(email: string): string | null {
+    if (email == null || email.length <= 0) {
+      return this.ERROR_MESSAGES.email.empty;
+    }
+    if (!this.EMAIL_RE.test(email)) {
+      return this.ERROR_MESSAGES.email.invalid;
+    }
+    return null;
+  }
+
+  public static isSignatureValid(signature: string): string | null {
+    if (signature.length < this.MIN_SIGNATURE_LENGTH) {
+      return this.ERROR_MESSAGES.signature.too_short;
+    }
+    if (signature.length > this.MAX_SIGNATURE_LENGTH) {
+      return this.ERROR_MESSAGES.signature.too_long;
+    }
+    return null;
+  }
+
+  public static isPasswordValid(password: string): string | null {
     if (password.length <= 0) {
       return this.ERROR_MESSAGES.password.empty;
     }
@@ -99,6 +90,42 @@ export class RegistrationValidation {
       return this.ERROR_MESSAGES.password.too_long;
     }
     return null;
+  }
+
+  public static isConfirmPasswordMatching(password: string, confirmPassword: string): string | null {
+    if (password != confirmPassword) {
+      return this.ERROR_MESSAGES.password.do_not_match;
+    }
+    return null;
+  }
+}
+
+// validate user registration input data
+export class RegistrationValidation {
+  public static check(RegistrationData: Record<string, string>): Map<string, string> {
+    const errorMessages: Map<string, string> = new Map<string, string>();
+
+    let error = UserValidation.isEmailValid(RegistrationData["email"]);
+    if (error != null) {
+      errorMessages.set("email", error);
+    }
+
+    error = UserValidation.isNameValid(RegistrationData["name"]);
+    if (error != null) {
+      errorMessages.set("name", error);
+    }
+
+    error = UserValidation.isPasswordValid(RegistrationData["password"]);
+    if (error != null) {
+      errorMessages.set("password", error);
+    }
+
+    error = UserValidation.isConfirmPasswordMatching(RegistrationData["password"], RegistrationData["password_confirm"]);
+    if (error != null) {
+      errorMessages.set("password_confirm", error);
+    }
+
+    return errorMessages;
   }
 }
 
@@ -132,10 +159,42 @@ export class LoginValidation {
 
 // validate user update information input data
 export class UserUpdateValidation {
-  private static readonly ERROR_MESSAGES: Record<string, string> = {
-    "password_incorrect": "Wrong password!",
-    "password_empty": "Password cannot be empty!",
-  };
+  public static checkInfo(UserInfoData: Record<string, string>): Map<string, string> {
+    const errorMessages: Map<string, string> = new Map<string, string>();
+
+    let error = UserValidation.isNameValid(UserInfoData["name"]);
+    if (error != null) {
+      errorMessages.set("name", error);
+    }
+
+    error = UserValidation.isSignatureValid(UserInfoData["signature"]);
+    if (error != null) {
+      errorMessages.set("signature", error);
+    }
+
+    return errorMessages;
+  }
+
+  public static checkPassword(PasswordData: Record<string, string>): Map<string, string> {
+    const errorMessages: Map<string, string> = new Map<string, string>();
+
+    let error = UserValidation.isPasswordValid(PasswordData["password"]);
+    if (error != null) {
+      errorMessages.set("password", error);
+    }
+
+    error = UserValidation.isPasswordValid(PasswordData["newPassword"]);
+    if (error != null) {
+      errorMessages.set("new_password", error);
+    }
+
+    error = UserValidation.isConfirmPasswordMatching(PasswordData["newPassword"], PasswordData["passwordConfirm"]);
+    if (error != null) {
+      errorMessages.set("password_confirm", error);
+    }
+
+    return errorMessages;
+  }
 }
 
 

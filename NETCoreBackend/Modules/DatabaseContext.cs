@@ -11,6 +11,8 @@ public class DatabaseContext : DbContext
 
     public DbSet<User> Users { get; set; } = null!;
 
+    public DbSet<Confidential> Confidential { get; set; } = null!;
+
     public DbSet<Post> Posts { get; set; } = null!;
 
     public DbSet<PostField> PostFields { get; set; } = null!;

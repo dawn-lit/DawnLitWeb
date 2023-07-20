@@ -50,12 +50,17 @@ export class HttpService {
     return this._http.get(`/api/users/get/${id}`);
   }
 
-  //获取一个用户的信息
+  // update the current user's information
   updateCurrentUserInfo(data: any) {
     return this._http.put(`/api/users/update/current/info`, data);
   }
 
-  //登录
+  // update the current user's information
+  updateCurrentUserPassword(data: any) {
+    return this._http.put(`/api/users/update/current/password`, data);
+  }
+
+  // login the user
   loginUser(data: any) {
     return this._http.post("/api/users/login", data);
   }

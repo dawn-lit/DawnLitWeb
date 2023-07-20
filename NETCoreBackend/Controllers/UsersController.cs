@@ -18,13 +18,15 @@ public class UsersController : ControllerBase
     private const int MAX_PASSWORD_LENGTH = 16;
 
     private const int MIN_SIGNATURE_LENGTH = 0;
-    private const int MAX_SIGNATURE_LENGTH = 300;
+    private const int MAX_SIGNATURE_LENGTH = 500;
+    private readonly ConfidentialService _confidentialService;
 
     private readonly UsersService _usersService;
 
     public UsersController(DatabaseContext db)
     {
         this._usersService = new UsersService(db);
+        this._confidentialService = new ConfidentialService(db);
     }
 
     [HttpGet("current")]
@@ -84,8 +86,17 @@ public class UsersController : ControllerBase
 
         // hashing the password
         Authentications.CreatePasswordHash(newUser.Password, out byte[] passwordHash, out byte[] passwordSalt);
-        newUser.PasswordHash = passwordHash;
-        newUser.PasswordSalt = passwordSalt;
+        
+        // create an associate confidential record
+        Confidential userConfidential = new()
+        {
+            PasswordHash = passwordHash,
+            PasswordSalt = passwordSalt
+        };
+        await this._confidentialService.CreateAsync(userConfidential);
+        
+        // update user confidential
+        newUser.Confidential = userConfidential;
 
         // set Login Ip as Register Ip
         newUser.LoginIp = newUser.RegisterIp;
@@ -99,7 +110,7 @@ public class UsersController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login(User userThatLogin)
     {
-        User? theUserData = await this._usersService.GetAsync(userThatLogin.Email);
+        User? theUserData = await this._usersService.GetAsync(userThatLogin.Email, true);
 
         // ensure that the user exists
         if (theUserData == null)
@@ -108,8 +119,7 @@ public class UsersController : ControllerBase
         }
 
         // whether the password is correct
-        if (!Authentications.VerifyPasswordHash(userThatLogin.Password, theUserData.PasswordHash,
-                theUserData.PasswordSalt))
+        if (!Authentications.VerifyPasswordHash(userThatLogin.Password, theUserData.Confidential!))
         {
             return this.Ok(new { accepted = false, password = "password_incorrect" });
         }
@@ -122,21 +132,21 @@ public class UsersController : ControllerBase
     }
 
     [HttpPut("update/current/info")]
-    public async Task<IActionResult> PutInfo(User modifiedUser)
+    public async Task<IActionResult> UpdateInfo(User modifiedUser)
     {
-        // ensure the email is not empty and valid
-        if (modifiedUser.Email.Length <= 0 || !new EmailAddressAttribute().IsValid(modifiedUser.Email))
-        {
-            return this.Conflict("Email");
-        }
-
         // ensure the user name length is within range
         if (modifiedUser.Name.Length is < MIN_NAME_LENGTH or > MAX_NAME_LENGTH)
         {
             return this.Conflict("Name");
         }
 
-        // get current user
+        // ensure the signature length is within range
+        if (modifiedUser.Signature.Length is < MIN_SIGNATURE_LENGTH or > MAX_SIGNATURE_LENGTH)
+        {
+            return this.Conflict("Signature");
+        }
+
+        // get current user id
         string theSId = Authentications.ReadJwtToken(this.Request).Claims
             .First(claim => claim.Type == ClaimTypes.PrimarySid).Value;
 
@@ -144,7 +154,8 @@ public class UsersController : ControllerBase
         {
             return this.NotFound();
         }
-
+        
+        // get current user
         User? user = await this._usersService.GetAsync(theId);
 
         if (user is null)
@@ -158,6 +169,51 @@ public class UsersController : ControllerBase
 
         // save the changes
         await this._usersService.SaveChangesAsync();
+
+        return this.Accepted();
+    }
+
+
+    [HttpPut("update/current/password")]
+    public async Task<IActionResult> UpdatePassword(User modifiedUser)
+    {
+        // ensure the password length is within range
+        if (modifiedUser.Password.Length is < MIN_PASSWORD_LENGTH or > MAX_PASSWORD_LENGTH)
+        {
+            return this.Conflict("Password");
+        }
+
+        // get current user id
+        string theSId = Authentications.ReadJwtToken(this.Request).Claims
+            .First(claim => claim.Type == ClaimTypes.PrimarySid).Value;
+        
+        if (!int.TryParse(theSId, out int theId))
+        {
+            return this.NotFound();
+        }
+        
+        // get current user
+        User? user = await this._usersService.GetAsync(theId, true);
+
+        if (user is null)
+        {
+            return this.NotFound();
+        }
+
+        // make sure that the password is correct
+        if (!Authentications.VerifyPasswordHash(modifiedUser.Password, user.Confidential!))
+        {
+            return this.Conflict(new { accepted = false, password = "password_incorrect" });
+        }
+
+        // hashing the new password
+        Authentications.CreatePasswordHash(modifiedUser.NewPassword, out byte[] passwordHash, out byte[] passwordSalt);
+
+        user.Confidential!.PasswordHash = passwordHash;
+        user.Confidential!.PasswordSalt = passwordSalt;
+
+        // save the changes
+        await this._confidentialService.SaveChangesAsync();
 
         return this.Accepted();
     }

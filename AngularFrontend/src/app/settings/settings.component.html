@@ -36,28 +36,33 @@
                   <li class="nav-item" data-bs-dismiss="offcanvas">
                     <a class="nav-link d-flex mb-0 active" data-bs-toggle="tab" href="#nav-setting-tab-1"> <img
                       alt="" class="me-2 h-20px fa-fw"
-                      src="assets/images/icon/person-outline-filled.svg"><span>Account </span></a>
+                      height="16" ngSrc="assets/images/icon/person-outline-filled.svg" width="16"><span>Account </span></a>
                   </li>
                   <li class="nav-item" data-bs-dismiss="offcanvas">
                     <a class="nav-link d-flex mb-0" data-bs-toggle="tab" href="#nav-setting-tab-2"> <img
                       alt="" class="me-2 h-20px fa-fw"
-                      src="assets/images/icon/notification-outlined-filled.svg"><span>Notification </span></a>
+                      height="16" ngSrc="assets/images/icon/notification-outlined-filled.svg" width="16"><span>Notification </span></a>
                   </li>
                   <li class="nav-item" data-bs-dismiss="offcanvas">
                     <a class="nav-link d-flex mb-0" data-bs-toggle="tab" href="#nav-setting-tab-3"> <img
-                      alt="" class="me-2 h-20px fa-fw" src="assets/images/icon/shield-outline-filled.svg"><span>Privacy and safety </span></a>
+                      alt="" class="me-2 h-20px fa-fw" height="16" ngSrc="assets/images/icon/shield-outline-filled.svg"
+                      width="16"><span>Privacy and safety </span></a>
                   </li>
                   <li class="nav-item" data-bs-dismiss="offcanvas">
                     <a class="nav-link d-flex mb-0" data-bs-toggle="tab" href="#nav-setting-tab-4"> <img
-                      alt="" class="me-2 h-20px fa-fw" src="assets/images/icon/handshake-outline-filled.svg"><span>Communications </span></a>
+                      alt="" class="me-2 h-20px fa-fw" height="16"
+                      ngSrc="assets/images/icon/handshake-outline-filled.svg"
+                      width="16"><span>Communications </span></a>
                   </li>
                   <li class="nav-item" data-bs-dismiss="offcanvas">
                     <a class="nav-link d-flex mb-0" data-bs-toggle="tab" href="#nav-setting-tab-5"> <img
-                      alt="" class="me-2 h-20px fa-fw" src="assets/images/icon/chat-alt-outline-filled.svg"><span>Messaging </span></a>
+                      alt="" class="me-2 h-20px fa-fw" height="16"
+                      ngSrc="assets/images/icon/chat-alt-outline-filled.svg" width="16"><span>Messaging </span></a>
                   </li>
                   <li class="nav-item" data-bs-dismiss="offcanvas">
                     <a class="nav-link d-flex mb-0" data-bs-toggle="tab" href="#nav-setting-tab-6"> <img
-                      alt="" class="me-2 h-20px fa-fw" src="assets/images/icon/trash-var-outline-filled.svg"><span>Close account </span></a>
+                      alt="" class="me-2 h-20px fa-fw" height="16"
+                      ngSrc="assets/images/icon/trash-var-outline-filled.svg" width="16"><span>Close account </span></a>
                   </li>
                 </ul>
                 <!-- Side Nav END -->
@@ -124,7 +129,7 @@
             <!-- Card body START -->
             <div class="card-body">
               <!-- Form settings START -->
-              <form (ngSubmit)="onSubmit()" class="row g-3">
+              <form (ngSubmit)="saveChanges()" class="row g-3">
                 <!-- User name -->
                 <div class="col-sm-6">
                   <label class="form-label">User name</label>
@@ -139,9 +144,10 @@
                 <!-- Page information -->
                 <div class="col-12">
                   <label class="form-label">Signature</label>
-                  <textarea [(ngModel)]="UserData.signature" class="form-control" name="signature"
-                            placeholder="Description (Required)" rows="4">{{UserData.signature}}</textarea>
-                  <small>Character limit: 300</small>
+                  <textarea [(ngModel)]="UserData.signature" [maxLength]="500" class="form-control"
+                            name="signature" placeholder="Description (Required)"
+                            rows="4">{{UserData.signature}}</textarea>
+                  <small>Character limit: {{UserData.signature.length}}/500</small>
                 </div>
                 <!-- Button  -->
                 <div class="col-12 text-end">
@@ -164,12 +170,13 @@
             <!-- Title START -->
             <div class="card-body">
               <!-- Settings START -->
-              <form class="row g-3">
+              <form (ngSubmit)="updatePassword()" class="row g-3">
                 <!-- Current password -->
                 <div class="col-12">
                   <label class="form-label">Current password</label>
                   <div class="input-group">
-                    <input class="form-control fakepassword" placeholder="Enter your current password"
+                    <input [(ngModel)]="PasswordData['password']" class="form-control fakepassword"
+                           name="password" placeholder="Enter your current password"
                            type="{{PasswordsTypes['cp']}}">
                     <span class="input-group-text p-0">
                         <i (click)="togglePasswordVisibility('cp')"
@@ -181,7 +188,8 @@
                 <div class="col-12">
                   <label class="form-label">New password</label>
                   <div class="input-group">
-                    <input class="form-control fakepassword" placeholder="Enter new password"
+                    <input [(ngModel)]="PasswordData['newPassword']" class="form-control fakepassword"
+                           name="newPassword" placeholder="Enter new password"
                            type="{{PasswordsTypes['np']}}">
                     <span class="input-group-text p-0">
                         <i (click)="togglePasswordVisibility('np')"
@@ -196,7 +204,8 @@
                 <div class="col-12">
                   <label class="form-label">Confirm password</label>
                   <div class="input-group">
-                    <input class="form-control" placeholder="Re-enter your new password"
+                    <input [(ngModel)]="PasswordData['passwordConfirm']" class="form-control"
+                           name="passwordConfirm" placeholder="Re-enter your new password"
                            type="{{PasswordsTypes['np2']}}">
                     <span class="input-group-text p-0">
                         <i (click)="togglePasswordVisibility('np2')"

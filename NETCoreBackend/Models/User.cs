@@ -8,7 +8,6 @@ public class User : AbstractModel
     [Display(Name = "name")]
     public string Name { get; set; } = string.Empty;
 
-    [Required]
     [Display(Name = "email")]
     public string Email { get; set; } = string.Empty;
 
@@ -49,11 +48,9 @@ public class User : AbstractModel
     [Display(Name = "password")]
     public string Password { get; set; } = string.Empty;
 
-    [Required]
-    [Display(Name = "passwordHash")]
-    public byte[] PasswordHash { get; set; } = Array.Empty<byte>();
+    [NotMapped]
+    [Display(Name = "newPassword")]
+    public string NewPassword { get; set; } = string.Empty;
 
-    [Required]
-    [Display(Name = "passwordSalt")]
-    public byte[] PasswordSalt { get; set; } = Array.Empty<byte>();
+    public Confidential? Confidential { get; set; }
 }

@@ -44,10 +44,10 @@ public static class Authentications
         passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
     }
 
-    public static bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
+    public static bool VerifyPasswordHash(string password, Confidential confidential)
     {
-        using HMACSHA512 hmac = new(passwordSalt);
+        using HMACSHA512 hmac = new(confidential.PasswordSalt);
         byte[] computeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-        return computeHash.SequenceEqual(passwordHash);
+        return computeHash.SequenceEqual(confidential.PasswordHash);
     }
 }
