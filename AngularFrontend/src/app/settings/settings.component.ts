@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from "../utility.models";
 import { HttpService } from "../http.service";
-import { RegistrationValidation, UserUpdateValidation } from "../utility.validations";
+import { UserUpdateValidation } from "../utility.validations";
 
 @Component({
   selector: 'app-settings',
@@ -18,9 +18,10 @@ export class SettingsComponent {
   PasswordData: Record<string, string> = {
     "password": "", "newPassword": "", "passwordConfirm": ""
   };
-  PasswordErrorMessage: Record<string, string> = {
-    "password": "", "newPassword": "", "passwordConfirm": ""
+  ErrorMessage: Record<string, string> = {
+    "name": "", "signature": "", "password": "", "newPassword": "", "passwordConfirm": ""
   };
+  DeleteAccountConfirmed: boolean = false;
 
   constructor(
     private _httpService: HttpService
@@ -44,17 +45,23 @@ export class SettingsComponent {
   }
 
   saveChanges(): void {
-    this._httpService.updateCurrentUserInfo(this.UserData).subscribe(data => {
-      console.log(data);
-    });
+    const errors: Map<string, string> = UserUpdateValidation.checkInfo(this.UserData);
+    if (errors.size > 0) {
+      errors.forEach((value: string, key: string) => {
+        this.ErrorMessage[key] = value;
+      });
+    } else {
+      this._httpService.updateCurrentUserInfo(this.UserData).subscribe(data => {
+        console.log(data);
+      });
+    }
   }
 
   updatePassword(): void {
     const errors: Map<string, string> = UserUpdateValidation.checkPassword(this.PasswordData);
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {
-        this.PasswordErrorMessage[key] = value;
-        console.log(this.PasswordErrorMessage);
+        this.ErrorMessage[key] = value;
       });
     } else {
       this._httpService.updateCurrentUserPassword(this.PasswordData).subscribe((data: any) => {
@@ -63,5 +70,12 @@ export class SettingsComponent {
         }
       });
     }
+  }
+
+  deleteUser() {
+    this._httpService.deleteUser().subscribe((data: any) => {
+      console.log(data);
+      this._httpService.logoffUser().subscribe(() => this._httpService.gotoHomePage());
+    });
   }
 }

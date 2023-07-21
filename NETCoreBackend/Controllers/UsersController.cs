@@ -29,18 +29,30 @@ public class UsersController : ControllerBase
         this._confidentialService = new ConfidentialService(db);
     }
 
-    [HttpGet("current")]
-    public async Task<ActionResult<User>> GetCurrent()
+    private int GetCurrentUserId()
     {
         string theSId = Authentications.ReadJwtToken(this.Request).Claims
             .First(claim => claim.Type == ClaimTypes.PrimarySid).Value;
 
-        if (!int.TryParse(theSId, out int theId))
+        return !int.TryParse(theSId, out int theId) ? 0 : theId;
+    }
+
+    private async Task<User?> GetCurrentUser()
+    {
+        int theId = this.GetCurrentUserId();
+
+        if (theId > 0)
         {
-            return this.NotFound();
+            return await this._usersService.GetAsync(theId);
         }
 
-        User? user = await this._usersService.GetAsync(theId);
+        return null;
+    }
+
+    [HttpGet("current")]
+    public async Task<ActionResult<User>> GetCurrent()
+    {
+        User? user = await this.GetCurrentUser();
 
         if (user is not null)
         {
@@ -86,15 +98,16 @@ public class UsersController : ControllerBase
 
         // hashing the password
         Authentications.CreatePasswordHash(newUser.Password, out byte[] passwordHash, out byte[] passwordSalt);
-        
+
         // create an associate confidential record
         Confidential userConfidential = new()
         {
             PasswordHash = passwordHash,
             PasswordSalt = passwordSalt
         };
+
         await this._confidentialService.CreateAsync(userConfidential);
-        
+
         // update user confidential
         newUser.Confidential = userConfidential;
 
@@ -131,7 +144,7 @@ public class UsersController : ControllerBase
         return this.Accepted(new { accepted = true, token = Authentications.CreateJwtToken(theUserData) });
     }
 
-    [HttpPut("update/current/info")]
+    [HttpPut("update/info")]
     public async Task<IActionResult> UpdateInfo(User modifiedUser)
     {
         // ensure the user name length is within range
@@ -146,17 +159,8 @@ public class UsersController : ControllerBase
             return this.Conflict("Signature");
         }
 
-        // get current user id
-        string theSId = Authentications.ReadJwtToken(this.Request).Claims
-            .First(claim => claim.Type == ClaimTypes.PrimarySid).Value;
-
-        if (!int.TryParse(theSId, out int theId))
-        {
-            return this.NotFound();
-        }
-        
         // get current user
-        User? user = await this._usersService.GetAsync(theId);
+        User? user = await this.GetCurrentUser();
 
         if (user is null)
         {
@@ -174,7 +178,7 @@ public class UsersController : ControllerBase
     }
 
 
-    [HttpPut("update/current/password")]
+    [HttpPut("update/password")]
     public async Task<IActionResult> UpdatePassword(User modifiedUser)
     {
         // ensure the password length is within range
@@ -183,17 +187,8 @@ public class UsersController : ControllerBase
             return this.Conflict("Password");
         }
 
-        // get current user id
-        string theSId = Authentications.ReadJwtToken(this.Request).Claims
-            .First(claim => claim.Type == ClaimTypes.PrimarySid).Value;
-        
-        if (!int.TryParse(theSId, out int theId))
-        {
-            return this.NotFound();
-        }
-        
         // get current user
-        User? user = await this._usersService.GetAsync(theId, true);
+        User? user = await this.GetCurrentUser();
 
         if (user is null)
         {
@@ -218,14 +213,22 @@ public class UsersController : ControllerBase
         return this.Accepted();
     }
 
-    [HttpDelete("delete/{id:int}")]
-    public async Task<IActionResult> Delete(int id)
+    [HttpDelete("delete")]
+    public async Task<IActionResult> Delete()
     {
-        bool result = await this._usersService.RemoveAsync(id);
+        // get current user id
+        int theId = this.GetCurrentUserId();
+
+        if (theId == 0)
+        {
+            return this.NotFound();
+        }
+
+        bool result = await this._usersService.RemoveAsync(theId);
 
         if (result)
         {
-            return this.NoContent();
+            return this.Accepted();
         }
 
         return this.NotFound();

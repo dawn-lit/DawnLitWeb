@@ -38,23 +38,23 @@
                       alt="" class="me-2 h-20px fa-fw"
                       height="16" ngSrc="assets/images/icon/person-outline-filled.svg" width="16"><span>Account </span></a>
                   </li>
-                  <li class="nav-item" data-bs-dismiss="offcanvas">
+                  <li class="nav-item" data-bs-dismiss="offcanvas" hidden="hidden">
                     <a class="nav-link d-flex mb-0" data-bs-toggle="tab" href="#nav-setting-tab-2"> <img
                       alt="" class="me-2 h-20px fa-fw"
                       height="16" ngSrc="assets/images/icon/notification-outlined-filled.svg" width="16"><span>Notification </span></a>
                   </li>
-                  <li class="nav-item" data-bs-dismiss="offcanvas">
+                  <li class="nav-item" data-bs-dismiss="offcanvas" hidden="hidden">
                     <a class="nav-link d-flex mb-0" data-bs-toggle="tab" href="#nav-setting-tab-3"> <img
                       alt="" class="me-2 h-20px fa-fw" height="16" ngSrc="assets/images/icon/shield-outline-filled.svg"
                       width="16"><span>Privacy and safety </span></a>
                   </li>
-                  <li class="nav-item" data-bs-dismiss="offcanvas">
+                  <li class="nav-item" data-bs-dismiss="offcanvas" hidden="hidden">
                     <a class="nav-link d-flex mb-0" data-bs-toggle="tab" href="#nav-setting-tab-4"> <img
                       alt="" class="me-2 h-20px fa-fw" height="16"
                       ngSrc="assets/images/icon/handshake-outline-filled.svg"
                       width="16"><span>Communications </span></a>
                   </li>
-                  <li class="nav-item" data-bs-dismiss="offcanvas">
+                  <li class="nav-item" data-bs-dismiss="offcanvas" hidden="hidden">
                     <a class="nav-link d-flex mb-0" data-bs-toggle="tab" href="#nav-setting-tab-5"> <img
                       alt="" class="me-2 h-20px fa-fw" height="16"
                       ngSrc="assets/images/icon/chat-alt-outline-filled.svg" width="16"><span>Messaging </span></a>
@@ -79,7 +79,7 @@
           <!-- Offcanvas body -->
 
           <!-- Helper link START -->
-          <ul class="nav small mt-4 justify-content-center lh-1">
+          <ul class="nav small mt-4 justify-content-center lh-1" hidden="hidden">
             <li class="nav-item">
               <a class="nav-link" href="my-profile-about.html">About</a>
             </li>
@@ -102,7 +102,7 @@
           <!-- Helper link END -->
           <!-- Copyright -->
           <p class="small text-center mt-1">©2023 <a class="text-body" href="https://www.webestica.com/"
-                                                     target="_blank"> Webestica </a></p>
+                                                     target="_blank"> Dawn Lit </a></p>
 
         </div>
       </nav>
@@ -122,8 +122,7 @@
             <!-- Title START -->
             <div class="card-header border-0 pb-0">
               <h1 class="h5 card-title">Account Settings</h1>
-              <p class="mb-0">He moonlights difficult engrossed it, sportsmen. Interested has all Devonshire
-                difficulty gay assistance joy. Unaffected at ye of compliment alteration to.</p>
+              <p class="mb-0">Customize your account information.</p>
             </div>
             <!-- Card header START -->
             <!-- Card body START -->
@@ -135,6 +134,7 @@
                   <label class="form-label">User name</label>
                   <input [(ngModel)]="UserData.name" class="form-control" name="name" type="text"
                          value="{{UserData.name}}">
+                  <p *ngIf="ErrorMessage['name']" class="warning_messages">{{ErrorMessage['name']}}</p>
                 </div>
                 <!-- Phone number -->
                 <div class="col-sm-6">
@@ -148,6 +148,7 @@
                             name="signature" placeholder="Description (Required)"
                             rows="4">{{UserData.signature}}</textarea>
                   <small>Character limit: {{UserData.signature.length}}/500</small>
+                  <p *ngIf="ErrorMessage['signature']" class="warning_messages">{{ErrorMessage['signature']}}</p>
                 </div>
                 <!-- Button  -->
                 <div class="col-12 text-end">
@@ -165,7 +166,7 @@
             <!-- Title START -->
             <div class="card-header border-0 pb-0">
               <h5 class="card-title">Change your password</h5>
-              <p class="mb-0">See resolved goodness felicity shy civility domestic had but.</p>
+              <p class="mb-0">It is always a good idea to use strong password and change your password frequently.</p>
             </div>
             <!-- Title START -->
             <div class="card-body">
@@ -183,6 +184,7 @@
                            class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
                       </span>
                   </div>
+                  <p *ngIf="ErrorMessage['password']" class="warning_messages">{{ErrorMessage['password']}}</p>
                 </div>
                 <!-- New password -->
                 <div class="col-12">
@@ -199,6 +201,7 @@
                   <!-- Pswmeter -->
                   <div class="mt-2" id="pswmeter"></div>
                   <div class="rounded mt-1" id="pswmeter-message"></div>
+                  <p *ngIf="ErrorMessage['newPassword']" class="warning_messages">{{ErrorMessage['newPassword']}}</p>
                 </div>
                 <!-- Confirm password -->
                 <div class="col-12">
@@ -212,6 +215,8 @@
                            class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
                       </span>
                   </div>
+                  <p *ngIf="ErrorMessage['passwordConfirm']"
+                     class="warning_messages">{{ErrorMessage['passwordConfirm']}}</p>
                 </div>
                 <!-- Button  -->
                 <div class="col-12 text-end">
@@ -787,8 +792,7 @@
             <!-- Card header START -->
             <div class="card-header border-0 pb-0">
               <h5 class="card-title">Delete account</h5>
-              <p class="mb-0">He moonlights difficult engrossed it, sportsmen. Interested has all Devonshire
-                difficulty gay assistance joy. Unaffected at ye of compliment alteration to.</p>
+              <p class="mb-0">Are you sure? It is sad to see you leave!</p>
             </div>
             <!-- Card header START -->
             <!-- Card body START -->
@@ -796,15 +800,19 @@
               <!-- Delete START -->
               <h6>Before you go...</h6>
               <ul>
-                <li>Take a backup of your data <a href="#">Here</a></li>
+                <li hidden="hidden">Take a backup of your data <a href="#">Here</a></li>
                 <li>If you delete your account, you will lose your all data.</li>
               </ul>
               <div class="form-check form-check-md my-4">
-                <input class="form-check-input" id="deleteaccountCheck" type="checkbox" value="">
-                <label class="form-check-label" for="deleteaccountCheck">Yes, I'd like to delete my account</label>
+                <input [(ngModel)]="DeleteAccountConfirmed" class="form-check-input" id="deleteaccountCheck"
+                       type="checkbox">
+                <label class="form-check-label">Yes, I'd like to delete my account</label>
               </div>
-              <a class="btn btn-success-soft btn-sm mb-2 mb-sm-0" href="#">Keep my account</a>
-              <a class="btn btn-danger btn-sm mb-0" href="#">Delete my account</a>
+              <a class="btn btn-success-soft btn-sm mb-2 mb-sm-0" routerLink="/settings">Keep my account</a>
+              <button (click)="deleteUser()" class="btn btn-danger btn-sm mb-0"
+                      disabled="{{!DeleteAccountConfirmed ? 'disabled':''}}"
+                      href="">Delete my account
+              </button>
               <!-- Delete END -->
             </div>
             <!-- Card body END -->

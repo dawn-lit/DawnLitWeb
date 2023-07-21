@@ -1,4 +1,6 @@
 // validate general user information
+import { User } from "./utility.models";
+
 class UserValidation {
 
   // user name length requirements
@@ -159,15 +161,15 @@ export class LoginValidation {
 
 // validate user update information input data
 export class UserUpdateValidation {
-  public static checkInfo(UserInfoData: Record<string, string>): Map<string, string> {
+  public static checkInfo(UserInfoData: User): Map<string, string> {
     const errorMessages: Map<string, string> = new Map<string, string>();
 
-    let error = UserValidation.isNameValid(UserInfoData["name"]);
+    let error = UserValidation.isNameValid(UserInfoData.name);
     if (error != null) {
       errorMessages.set("name", error);
     }
 
-    error = UserValidation.isSignatureValid(UserInfoData["signature"]);
+    error = UserValidation.isSignatureValid(UserInfoData.signature);
     if (error != null) {
       errorMessages.set("signature", error);
     }
@@ -185,12 +187,12 @@ export class UserUpdateValidation {
 
     error = UserValidation.isPasswordValid(PasswordData["newPassword"]);
     if (error != null) {
-      errorMessages.set("new_password", error);
+      errorMessages.set("newPassword", error);
     }
 
     error = UserValidation.isConfirmPasswordMatching(PasswordData["newPassword"], PasswordData["passwordConfirm"]);
     if (error != null) {
-      errorMessages.set("password_confirm", error);
+      errorMessages.set("passwordConfirm", error);
     }
 
     return errorMessages;

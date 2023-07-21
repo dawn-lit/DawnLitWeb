@@ -52,12 +52,12 @@ export class HttpService {
 
   // update the current user's information
   updateCurrentUserInfo(data: any) {
-    return this._http.put(`/api/users/update/current/info`, data);
+    return this._http.put(`/api/users/update/info`, data);
   }
 
   // update the current user's information
   updateCurrentUserPassword(data: any) {
-    return this._http.put(`/api/users/update/current/password`, data);
+    return this._http.put(`/api/users/update/password`, data);
   }
 
   // login the user
@@ -65,10 +65,15 @@ export class HttpService {
     return this._http.post("/api/users/login", data);
   }
 
-  //登出
+  // log off current user
   logoffUser() {
     localStorage.removeItem("jwt_token");
     return this._http.get("/api/users/logoff");
+  }
+
+  // delete current user's account
+  deleteUser() {
+    return this._http.delete("/api/users/delete");
   }
 
   //新增一个版块
