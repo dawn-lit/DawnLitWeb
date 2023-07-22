@@ -11,7 +11,7 @@ import { TokenService } from "../token.service";
 })
 export class RegistrationComponent {
   RegistrationData: Record<string, string> = {
-    "name": "", "email": "", "password": "", "password_confirm": "", "captcha": "", "registerIp": "",
+    "name": "", "email": "", "password": "", "password_confirm": "", "captcha": "", "loginIp": "",
   };
   ErrorMessage: Record<string, string> = {
     "name": "", "email": "", "password": "", "password_confirm": "", "captcha": ""
@@ -35,8 +35,8 @@ export class RegistrationComponent {
     }
     // get the registration ip first
     this._httpService.getIpInfo().subscribe((res: any) => {
-      this.RegistrationData['registerIp'] = res.ip;
-      if (this.RegistrationData['registerIp'] != null && this.RegistrationData['registerIp'] != "") {
+      this.RegistrationData['loginIp'] = res.ip;
+      if (this.RegistrationData['loginIp'] != null && this.RegistrationData['loginIp'] != "") {
         const errors: Map<string, string> = RegistrationValidation.check(this.RegistrationData);
         if (errors.size > 0) {
           errors.forEach((value: string, key: string) => {

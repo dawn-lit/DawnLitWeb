@@ -31,7 +31,10 @@ export class HttpService {
 
   //获取当前用户的详细数据
   getCurrentUser() {
-    return this._http.get("/api/users/current");
+    if (this._token.isStillValid()) {
+      return this._http.get("/api/users/current");
+    }
+    return new Observable<Object>();
   }
 
   //回到主页面
@@ -68,7 +71,8 @@ export class HttpService {
   // log off current user
   logoffUser() {
     localStorage.removeItem("jwt_token");
-    return this._http.get("/api/users/logoff");
+    //return this._http.get("/api/users/logoff");
+    return new Observable<Object>();
   }
 
   // delete current user's account

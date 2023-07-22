@@ -4,7 +4,6 @@ export interface User {
   name: string;
   email: string;
   group: number;
-  registerIp: string;
   loginIp: string;
   friends: Array<User>;
   comments: Array<Comment>;
@@ -28,6 +27,7 @@ export interface Post {
 export interface Comment {
   id: number;
   content: string;
+  replies: Array<Comment>;
   author: User;
   post: Post;
   createdAt: Date;

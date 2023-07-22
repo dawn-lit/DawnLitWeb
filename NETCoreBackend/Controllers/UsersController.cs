@@ -110,9 +110,8 @@ public class UsersController : ControllerBase
 
         // update user confidential
         newUser.Confidential = userConfidential;
-
-        // set Login Ip as Register Ip
-        newUser.LoginIp = newUser.RegisterIp;
+        newUser.Confidential.LoginIp = newUser.LoginIp;
+        newUser.Confidential.RegisterIp = newUser.LoginIp;
 
         // create the user
         await this._usersService.CreateAsync(newUser);
@@ -138,6 +137,7 @@ public class UsersController : ControllerBase
         }
 
         theUserData.UpdatedAt = DateTime.UtcNow;
+        theUserData.Confidential!.LoginIp = userThatLogin.LoginIp;
 
         await this._usersService.SaveChangesAsync();
 

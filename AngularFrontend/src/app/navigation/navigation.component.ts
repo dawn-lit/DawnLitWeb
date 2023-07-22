@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from "../utility.models";
 import { HttpService } from '../http.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-navigation',
@@ -11,7 +12,8 @@ export class NavigationComponent {
   UserData: User = {} as User;
 
   constructor(
-    private _httpService: HttpService
+    private _httpService: HttpService,
+    private _router: Router
   ) {
   }
 
@@ -28,7 +30,8 @@ export class NavigationComponent {
   }
 
   logOff(): void {
-    this._httpService.logoffUser();
-    this.UserData = {} as User;
+    this._router.navigate(['/logoff']).then(() => {
+      this.UserData = {} as User;
+    });
   }
 }

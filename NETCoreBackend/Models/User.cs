@@ -20,12 +20,6 @@ public class User : AbstractModel
     [Display(Name = "comments")]
     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
-    [Display(Name = "registerIp")]
-    public string RegisterIp { get; set; } = string.Empty;
-
-    [Display(Name = "loginIp")]
-    public string LoginIp { get; set; } = string.Empty;
-
     [Display(Name = "friends")]
     public ICollection<User> Friends { get; set; } = new List<User>();
 
@@ -43,6 +37,10 @@ public class User : AbstractModel
 
     [Display(Name = "banned")]
     public bool Banned { get; set; } = false;
+
+    [NotMapped]
+    [Display(Name = "loginIp")]
+    public string LoginIp { get; set; } = string.Empty;
 
     [NotMapped]
     [Display(Name = "password")]

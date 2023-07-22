@@ -17,6 +17,7 @@ import { FormsModule } from "@angular/forms";
 import { JwtModule } from "@auth0/angular-jwt";
 import { SettingsComponent } from './settings/settings.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { LogoffComponent } from './logoff/logoff.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt_token");
@@ -30,7 +31,8 @@ export function tokenGetter() {
     WikiComponent,
     LoginComponent,
     RegistrationComponent,
-    SettingsComponent
+    SettingsComponent,
+    LogoffComponent
   ],
   imports: [
     BrowserModule,

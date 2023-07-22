@@ -10,6 +10,10 @@ public class Comment : AbstractModel
     public string Content { get; set; } = string.Empty;
 
     [Required]
+    [Display(Name = "replies")]
+    public ICollection<Comment> Replies { get; set; } = new List<Comment>();
+
+    [Required]
     [Display(Name = "author")]
     public User Author { get; set; } = null!;
 
