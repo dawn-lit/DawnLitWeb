@@ -14,10 +14,6 @@ public class Comment : AbstractModel
     public User Author { get; set; } = null!;
 
     [Required]
-    [Display(Name = "field")]
-    public PostField Field { get; set; } = null!;
-
-    [Required]
     [Display(Name = "post")]
     public Post Post { get; set; } = null!;
 }

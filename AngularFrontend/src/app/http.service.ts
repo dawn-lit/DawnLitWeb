@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpEventType } from '@angular/common/ht
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Comment, Post, PostField } from "./utility.models";
+import { Comment, Post } from "./utility.models";
 import { TokenService } from "./token.service";
 
 @Injectable({
@@ -76,22 +76,7 @@ export class HttpService {
     return this._http.delete("/api/users/delete");
   }
 
-  //新增一个版块
-  createPostField(data: PostField) {
-    return this._http.post(`/api/postFields/new`, data);
-  }
-
-  //获取所有版块的信息
-  getPostFields() {
-    return this._http.get("/api/postFields/get/all");
-  }
-
-  //获取特定版块的信息
-  getPostField(id: number) {
-    return this._http.get(`/api/postFields/get/${id}`);
-  }
-
-  //发帖
+  // create a new post
   createPost(data: Post) {
     return this._http.post(`/api/posts/new`, data);
   }
@@ -106,18 +91,18 @@ export class HttpService {
   }
 
   //获取帖子总数
-  getPostsNum(field: number) {
-    return this._http.get(`/api/posts/count/${field}`);
+  getPostsNum() {
+    return this._http.get(`/api/posts/count`);
   }
 
   //获取最新的帖子
-  getLatestPosts(field: number) {
-    return this._http.get(`/api/posts/get/latest/${field}`);
+  getLatestPosts() {
+    return this._http.get(`/api/posts/get/latest`);
   }
 
   //获取对应帖子信息
-  getPosts(field: number, num: number) {
-    return this._http.get(`/api/posts/get/list/${field}/${num}`);
+  getPosts(num: number) {
+    return this._http.get(`/api/posts/get/list/${num}`);
   }
 
   //获取最新官方贴

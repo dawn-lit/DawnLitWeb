@@ -16,16 +16,16 @@ public class PostsController : ControllerBase
         this._postsService = new PostsService(db);
     }
 
-    [HttpGet("count/{field:int}")]
-    public async Task<ActionResult<long>> Count(int field)
+    [HttpGet("count")]
+    public async Task<ActionResult<long>> Count()
     {
-        return await this._postsService.CountAsync(x => x.Field.Id == field);
+        return await this._postsService.CountAsync();
     }
 
-    [HttpGet("get/latest/{field:int}")]
-    public async Task<ActionResult<Post>> GetLatest(int field)
+    [HttpGet("get/latest")]
+    public async Task<ActionResult<Post>> GetLatest()
     {
-        Post? post = await this._postsService.GetLatestAsync(field);
+        Post? post = await this._postsService.GetLatestAsync();
 
         if (post is null)
         {
@@ -41,10 +41,10 @@ public class PostsController : ControllerBase
         return await this._postsService.GetOfficialLatestAsync(num);
     }
 
-    [HttpGet("get/list/{field:int}/{num:int}")]
-    public async Task<List<Post>> GetList(int field, int num)
+    [HttpGet("get/list/{num:int}")]
+    public async Task<List<Post>> GetList(int num)
     {
-        return await this._postsService.GetListAsync(field, num);
+        return await this._postsService.GetListAsync(num);
     }
 
     [HttpGet("get/complete/{id:int}")]

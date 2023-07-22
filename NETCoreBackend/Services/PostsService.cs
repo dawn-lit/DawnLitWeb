@@ -13,7 +13,7 @@ public class PostsService : AbstractService<Post>
     {
     }
 
-    public async Task<List<Post>> GetListAsync(int field, int num)
+    public async Task<List<Post>> GetListAsync(int num)
     {
         if (num > MAX_POSTS)
         {
@@ -21,7 +21,6 @@ public class PostsService : AbstractService<Post>
         }
 
         return await this.GetDatabaseCollection()
-            .Where(x => x.Field.Id == field)
             .Include(m => m.Author)
             .Take(num)
             .ToListAsync();
@@ -35,23 +34,21 @@ public class PostsService : AbstractService<Post>
         }
 
         return await this.GetDatabaseCollection()
-            .Where(x => x.Field.Id <= 3)
             .OrderByDescending(p => p.Id)
             .Take(num).ToListAsync();
     }
 
-    public async Task<Post?> GetLatestAsync(int field)
+    public async Task<Post?> GetLatestAsync()
     {
         return await this.GetDatabaseCollection()
             .Include(m => m.Author)
-            .FirstOrDefaultAsync(x => x.Field.Id == field);
+            .FirstOrDefaultAsync();
     }
 
     public async Task<Post?> GetCompleteAsync(int id)
     {
         return await this.GetDatabaseCollection()
             .Include(m => m.Author)
-            .Include(m => m.Field)
             .Include(m => m.Comments)
             .FirstOrDefaultAsync(x => x.Id == id);
     }
@@ -61,7 +58,6 @@ public class PostsService : AbstractService<Post>
         DatabaseContext dbContext = this.GetDatabaseContext();
 
         // setup relationships
-        dbContext.PostFields.Attach(newPost.Field);
         EntityEntry<User> authorRef = dbContext.Users.Attach(newPost.Author);
         authorRef.Entity.Posts.Add(newPost);
 

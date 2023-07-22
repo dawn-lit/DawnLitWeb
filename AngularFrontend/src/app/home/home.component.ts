@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { User } from "../utility.models";
+import { Post, User } from "../utility.models";
 import { HttpService } from "../http.service";
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { PostValidation } from "../utility.validations";
 
 @Component({
   selector: 'app-home',
@@ -9,6 +11,12 @@ import { HttpService } from "../http.service";
 })
 export class HomeComponent {
   UserData: User = {} as User;
+  editorConfig: AngularEditorConfig = {minHeight: '10rem', editable: true};
+  newPost: Post = {} as Post;
+  allPosts: Array<Post> = new Array<Post>();
+  ErrorMessage: Record<string, string> = {
+    "content": ""
+  };
 
   constructor(
     private _httpService: HttpService
@@ -17,14 +25,44 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.getUserData();
+    this.getAllPosts();
   }
 
   getUserData(): void {
     this._httpService.getCurrentUser().subscribe(data => {
       if (data != null && Object.keys(data).length > 0) {
         this.UserData = data as User;
+        this.newPost.author = this.UserData;
+        this.newPost.content = "";
         console.log(this.UserData);
       }
     });
+  }
+
+  getAllPosts(): void {
+    this._httpService.getPosts(10).subscribe(data => {
+      this.allPosts = data as Array<Post>;
+      console.log(this.allPosts);
+    });
+  }
+
+  createPost() {
+    const errors: Map<string, string> = PostValidation.check(this.newPost);
+
+    if (errors.size > 0) {
+      errors.forEach((value: string, key: string) => {
+        this.ErrorMessage[key] = value;
+      });
+    } else {
+      this._httpService.createPost(this.newPost).subscribe(data => {
+          console.log(data);
+          // reset error message
+          for (const key in this.ErrorMessage) {
+            this.ErrorMessage[key] = "";
+          }
+          window.location.reload();
+        }
+      );
+    }
   }
 }

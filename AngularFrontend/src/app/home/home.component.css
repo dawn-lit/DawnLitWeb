@@ -1,0 +1,10 @@
+#start_post {
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  border: 1px solid lightgray;
+}
+
+#start_post:hover {
+  background-color: #F6F6F6;
+}

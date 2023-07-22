@@ -15,8 +15,6 @@ public class DatabaseContext : DbContext
 
     public DbSet<Post> Posts { get; set; } = null!;
 
-    public DbSet<PostField> PostFields { get; set; } = null!;
-
     public DbSet<Comment> Comments { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

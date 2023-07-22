@@ -26,7 +26,6 @@ public class CommentsService : AbstractService<Comment>
         }
 
         // attach reference
-        this.GetDatabaseContext().PostFields.Attach(newComment.Field);
         newComment.Author = authorRef;
         newComment.Post = postRef;
 

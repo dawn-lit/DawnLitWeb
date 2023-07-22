@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { NgOptimizedImage } from "@angular/common";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,7 +16,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { FormsModule } from "@angular/forms";
 import { JwtModule } from "@auth0/angular-jwt";
 import { SettingsComponent } from './settings/settings.component';
-import { NgOptimizedImage } from "@angular/common";
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt_token");
@@ -45,6 +46,7 @@ export function tokenGetter() {
       }
     }),
     NgOptimizedImage,
+    AngularEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,8 +1,7 @@
 // validate general user information
-import { User } from "./utility.models";
+import { Post, User } from "./utility.models";
 
 class UserValidation {
-
   // user name length requirements
   private static readonly MIN_NAME_LENGTH = 2;
   private static readonly MAX_NAME_LENGTH = 16;
@@ -12,50 +11,53 @@ class UserValidation {
   // user signature length requirements
   private static readonly MIN_SIGNATURE_LENGTH = 0;
   private static readonly MAX_SIGNATURE_LENGTH = 500;
-  // error messages
-  private static readonly ERROR_MESSAGES = {
-    "name": {
-      "empty": "Please enter your username!",
-      "too_short": `Username cannot be shorter than ${this.MIN_NAME_LENGTH} characters!`,
-      "special_char_detected": `Username may not contain special characters other than "_"!`,
-      "too_long": `Username cannot be longer than ${this.MAX_NAME_LENGTH} characters!`
-    },
-    "email": {
-      "already_exist": `This Email address has already been used. If you believe your Email address has been used illegally, please use the "Forgot Password" page to retrieve your account.`,
-      "invalid": "This is not a valid Email address!",
-      "empty": "Please enter your Email address!"
-    },
-    "password": {
-      "empty": "Please enter your password!",
-      "do_not_match": "The passwords did not match!",
-      "too_short": `Password cannot be shorter than ${this.MIN_PASSWORD_LENGTH} characters!`,
-      "too_long": `Password cannot be longer than ${this.MAX_PASSWORD_LENGTH} characters!`
-    },
-    "signature": {
-      "too_short": `Signature cannot be shorter than ${this.MIN_SIGNATURE_LENGTH} characters!`,
-      "too_long": `Signature cannot be longer than ${this.MAX_SIGNATURE_LENGTH} characters!`
-    }
+  // name error messages
+  private static readonly NAME_ERROR_MESSAGES = {
+    empty: "Please enter your username!",
+    too_short: `Username cannot be shorter than ${this.MIN_NAME_LENGTH} characters!`,
+    special_char_detected: `Username may not contain special characters other than "_"!`,
+    too_long: `Username cannot be longer than ${this.MAX_NAME_LENGTH} characters!`
   };
+  // email error messages
+  private static readonly EMAIL_ERROR_MESSAGES = {
+    already_exist: `This Email address has already been used. If you believe your Email address has been used illegally, please use the "Forgot Password" page to retrieve your account.`,
+    invalid: "This is not a valid Email address!",
+    empty: "Please enter your Email address!"
+  };
+  // password error messages
+  private static readonly PASSWORD_ERROR_MESSAGES = {
+    empty: "Please enter your password!",
+    do_not_match: "The passwords did not match!",
+    too_short: `Password cannot be shorter than ${this.MIN_PASSWORD_LENGTH} characters!`,
+    too_long: `Password cannot be longer than ${this.MAX_PASSWORD_LENGTH} characters!`
+  };
+  // signature error messages
+  private static readonly SIGNATURE_ERROR_MESSAGES = {
+    too_short: `Signature cannot be shorter than ${this.MIN_SIGNATURE_LENGTH} characters!`,
+    too_long: `Signature cannot be longer than ${this.MAX_SIGNATURE_LENGTH} characters!`
+  };
+  // user name pattern
   private static readonly USERNAME_RE: RegExp = /[^A-Za-z0-9_]/;
+  // email pattern
   private static readonly EMAIL_RE: RegExp = /\S+@\S+\.\S+/;
 
   public static isNameValid(name: string): string | null {
     // if name is empty
     if (name.length <= 0) {
-      return this.ERROR_MESSAGES.name.empty;
+      return this.NAME_ERROR_MESSAGES.empty;
     }
 
     if (name.length < this.MIN_NAME_LENGTH) {
-      return this.ERROR_MESSAGES.name.too_short;
+      return this.NAME_ERROR_MESSAGES.too_short;
     }
 
     if (name.length > this.MAX_NAME_LENGTH) {
-      return this.ERROR_MESSAGES.name.too_long;
+      return this.NAME_ERROR_MESSAGES.too_long;
     }
 
     // check special characters
     if (this.USERNAME_RE.test(name)) {
-      return this.ERROR_MESSAGES.name.special_char_detected;
+      return this.NAME_ERROR_MESSAGES.special_char_detected;
     }
 
     return null;
@@ -63,40 +65,40 @@ class UserValidation {
 
   public static isEmailValid(email: string): string | null {
     if (email == null || email.length <= 0) {
-      return this.ERROR_MESSAGES.email.empty;
+      return this.EMAIL_ERROR_MESSAGES.empty;
     }
     if (!this.EMAIL_RE.test(email)) {
-      return this.ERROR_MESSAGES.email.invalid;
+      return this.EMAIL_ERROR_MESSAGES.invalid;
     }
     return null;
   }
 
   public static isSignatureValid(signature: string): string | null {
     if (signature.length < this.MIN_SIGNATURE_LENGTH) {
-      return this.ERROR_MESSAGES.signature.too_short;
+      return this.SIGNATURE_ERROR_MESSAGES.too_short;
     }
     if (signature.length > this.MAX_SIGNATURE_LENGTH) {
-      return this.ERROR_MESSAGES.signature.too_long;
+      return this.SIGNATURE_ERROR_MESSAGES.too_long;
     }
     return null;
   }
 
   public static isPasswordValid(password: string): string | null {
     if (password.length <= 0) {
-      return this.ERROR_MESSAGES.password.empty;
+      return this.PASSWORD_ERROR_MESSAGES.empty;
     }
     if (password.length < this.MIN_PASSWORD_LENGTH) {
-      return this.ERROR_MESSAGES.password.too_short;
+      return this.PASSWORD_ERROR_MESSAGES.too_short;
     }
     if (password.length > this.MAX_PASSWORD_LENGTH) {
-      return this.ERROR_MESSAGES.password.too_long;
+      return this.PASSWORD_ERROR_MESSAGES.too_long;
     }
     return null;
   }
 
   public static isConfirmPasswordMatching(password: string, confirmPassword: string): string | null {
     if (password != confirmPassword) {
-      return this.ERROR_MESSAGES.password.do_not_match;
+      return this.PASSWORD_ERROR_MESSAGES.do_not_match;
     }
     return null;
   }
@@ -200,16 +202,17 @@ export class UserUpdateValidation {
 }
 
 
-// 帖子信息预验证模块
+// validate new post input data
 export class PostValidation {
-  private static readonly ERROR_MESSAGES: Record<string, Record<string, string>> = {
-    "title": {
-      "not_empty": "帖子的标题不能为空",
-      "too_short": "帖子的标题不能短于{}个字符",
-      "too_long": "修改本站的html代码是不对的哦"
-    },
-    "content": {
-      "not_empty": "帖子的内容不能为空"
-    }
+  private static readonly ERROR_MESSAGES = {
+    empty: "Post content cannot be empty!"
   };
+
+  public static check(newPost: Post): Map<string, string> {
+    const errorMessages: Map<string, string> = new Map<string, string>();
+    if (newPost.content.length <= 0) {
+      errorMessages.set("content", this.ERROR_MESSAGES.empty);
+    }
+    return errorMessages;
+  }
 }
