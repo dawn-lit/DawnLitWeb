@@ -2,7 +2,6 @@
 
 namespace NETCoreBackend.Models;
 
-// 消息
 public class Message : AbstractModel
 {
     [Required]

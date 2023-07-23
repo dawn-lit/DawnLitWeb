@@ -114,7 +114,7 @@ export class HttpService {
     return this._http.get(`/api/posts/get/list/official/${num}`);
   }
 
-  //发表回复
+  // create a new comment
   createComment(data: Comment) {
     return this._http.post(`/api/comments/new`, data);
   }

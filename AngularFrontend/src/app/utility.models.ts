@@ -14,22 +14,20 @@ export interface User {
   updatedAt: Date;
 }
 
-export interface Post {
+export interface Content {
   id: number;
   content: string;
   author: User;
-  permission: number;
-  comments: Array<Comment>;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface Comment {
-  id: number;
-  content: string;
+export interface Post extends Content {
+  permission: number;
+  comments: Array<Comment>;
+}
+
+export interface Comment extends Content {
   replies: Array<Comment>;
-  author: User;
   post: Post;
-  createdAt: Date;
-  updatedAt: Date;
 }

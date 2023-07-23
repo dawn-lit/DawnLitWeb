@@ -2,7 +2,6 @@
 
 namespace NETCoreBackend.Models;
 
-// 奖励
 public class Reward : AbstractModel
 {
     [Required]

@@ -22,6 +22,7 @@ public class PostsService : AbstractService<Post>
 
         return await this.GetDatabaseCollection()
             .Include(m => m.Author)
+            .Include(m => m.Comments)
             .Take(num)
             .ToListAsync();
     }
@@ -42,15 +43,8 @@ public class PostsService : AbstractService<Post>
     {
         return await this.GetDatabaseCollection()
             .Include(m => m.Author)
-            .FirstOrDefaultAsync();
-    }
-
-    public async Task<Post?> GetCompleteAsync(int id)
-    {
-        return await this.GetDatabaseCollection()
-            .Include(m => m.Author)
             .Include(m => m.Comments)
-            .FirstOrDefaultAsync(x => x.Id == id);
+            .FirstOrDefaultAsync();
     }
 
     public new async Task<bool> CreateAsync(Post newPost)

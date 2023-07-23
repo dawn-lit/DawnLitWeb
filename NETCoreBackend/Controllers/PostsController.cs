@@ -47,19 +47,6 @@ public class PostsController : ControllerBase
         return await this._postsService.GetListAsync(num);
     }
 
-    [HttpGet("get/complete/{id:int}")]
-    public async Task<ActionResult<Post>> GetComplete(int id)
-    {
-        Post? post = await this._postsService.GetCompleteAsync(id);
-
-        if (post is null)
-        {
-            return this.NotFound();
-        }
-
-        return post;
-    }
-
     [HttpGet("get/{id:int}")]
     public async Task<ActionResult<Post>> Get(int id)
     {

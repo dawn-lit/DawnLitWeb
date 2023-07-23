@@ -2,8 +2,6 @@
 
 namespace NETCoreBackend.Models;
 
-// 勋章
-
 public class Medal : AbstractModel
 {
     [Required]
