@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { User } from "../utility.models";
 import { HttpService } from '../http.service';
 import { Router } from "@angular/router";
+import { DarkModeService } from "angular-dark-mode";
 
 @Component({
   selector: 'app-navigation',
@@ -13,11 +14,13 @@ export class NavigationComponent {
 
   constructor(
     private _httpService: HttpService,
-    private _router: Router
+    private _router: Router,
+    protected _darkModeService: DarkModeService
   ) {
   }
 
   ngOnInit(): void {
+    this._darkModeService.disable();
     this.getUserData();
   }
 

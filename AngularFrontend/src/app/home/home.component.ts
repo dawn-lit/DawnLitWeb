@@ -35,7 +35,6 @@ export class HomeComponent {
         this.UserData = data as User;
         this.newPost.author = this.UserData;
         this.newPost.content = "";
-        console.log(this.UserData);
       }
     });
   }
@@ -43,7 +42,6 @@ export class HomeComponent {
   getAllPosts(): void {
     this._httpService.getPosts(10).subscribe(data => {
       this.allPosts = data as Array<Post>;
-      console.log(this.allPosts);
     });
   }
 
@@ -62,8 +60,7 @@ export class HomeComponent {
         this.ErrorMessage[key] = value;
       });
     } else {
-      this._httpService.createPost(this.newPost).subscribe(data => {
-          console.log(data);
+      this._httpService.createPost(this.newPost).subscribe(() => {
           // reset error message
           for (const key in this.ErrorMessage) {
             this.ErrorMessage[key] = "";
@@ -77,7 +74,6 @@ export class HomeComponent {
   createComments(associatePost: Post) {
     const newComment = this.obtainCommentTemplate(associatePost);
     const errors: Map<string, string> = ContentValidation.check(newComment);
-    console.log(this.newComments);
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {
         this.ErrorMessage[key] = value;
@@ -85,8 +81,7 @@ export class HomeComponent {
     } else {
       newComment.post = associatePost;
       newComment.author = this.UserData;
-      this._httpService.createComment(newComment).subscribe(data => {
-          console.log(data);
+      this._httpService.createComment(newComment).subscribe(() => {
           // reset error message
           for (const key in this.ErrorMessage) {
             this.ErrorMessage[key] = "";

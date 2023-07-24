@@ -26,18 +26,19 @@
             ],
             "styles": [
               "./src/styles.css",
-              "./src/assets/css/color.css",
+              "./src/assets/css/style.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "./node_modules/katex/dist/katex.min.css"
             ],
             "scripts": [
+              "./src/assets/js/functions.js",
               "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "./node_modules/marked/marked.min.js",
               "./node_modules/emoji-toolkit/lib/js/joypixels.min.js",
               "./node_modules/katex/dist/katex.min.js",
               "./node_modules/katex/dist/contrib/auto-render.min.js",
-              "./src/assets/js/functions.js"
+              "./node_modules/angular-dark-mode/angular-dark-mode.js"
             ]
           },
           "configurations": {
