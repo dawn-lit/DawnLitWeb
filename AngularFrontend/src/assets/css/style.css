@@ -19419,18 +19419,6 @@ a.badge:hover {
   font-size: 0.8203125rem;
 }
 
-#zuck-modal-content .story-viewer .head .right {
-  padding: 0px 30px;
-}
-
-#zuck-modal-content .story-viewer .head .right .close {
-  color: #fff;
-}
-
-#zuck-modal.with-effects {
-  height: 100vh !important;
-}
-
 .stories-square.stories .story > .item-link > .item-preview {
   border-radius: 5px;
   height: 150px !important;
@@ -19483,12 +19471,6 @@ a.badge:hover {
   background-image: -webkit-gradient(linear, left top, left bottom, from(transparent), to(black));
   background-image: linear-gradient(180deg, transparent, black);
   z-index: 1;
-}
-
-@media (max-width: 1024px) {
-  #zuck-modal-content .story-viewer.with-back-button .head .left > .back {
-    color: #fff;
-  }
 }
 
 .scroll-enable.stories.carousel::-webkit-scrollbar-track {
