@@ -2,13 +2,3 @@
 .warning_messages {
   color: red;
 }
-
-body.dark-mode {
-  background-color: #2d3436 !important;
-  color: #dfe6e9 !important;
-}
-
-body.light-mode {
-  background-color: #dfe6e9 !important;
-  color: #2d3436 !important;
-}

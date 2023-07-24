@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { User } from "../utility.models";
 import { HttpService } from '../http.service';
 import { Router } from "@angular/router";
-import { DarkModeService } from "angular-dark-mode";
 
 @Component({
   selector: 'app-navigation',
@@ -14,14 +13,13 @@ export class NavigationComponent {
 
   constructor(
     private _httpService: HttpService,
-    private _router: Router,
-    protected _darkModeService: DarkModeService
+    private _router: Router
   ) {
   }
 
   ngOnInit(): void {
-    this._darkModeService.disable();
     this.getUserData();
+    this.initTheme();
   }
 
   getUserData(): void {
@@ -36,5 +34,42 @@ export class NavigationComponent {
     this._router.navigate(['/logoff']).then(() => {
       this.UserData = {} as User;
     });
+  }
+
+  initTheme(): void {
+    // init and set the theme
+    this.setTheme('theme' in localStorage ? localStorage['theme'] : this.getPreferredTheme());
+    // add the listener to detect theme changes
+    window.addEventListener('DOMContentLoaded', () => {
+      if (document.querySelector('.theme-icon-active') != undefined) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+          if (localStorage.getItem('theme') == undefined || "auto") {
+            this.setTheme(this.getPreferredTheme());
+          }
+        });
+        document.querySelectorAll('[data-bs-theme-value]')
+          .forEach(toggle => {
+            toggle.addEventListener('click', () => {
+              const theme = toggle.getAttribute('data-bs-theme-value');
+              if (theme != undefined) {
+                localStorage.setItem('theme', theme);
+                this.setTheme(theme);
+              }
+            });
+          });
+      }
+    });
+  }
+
+  getPreferredTheme(): string {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  setTheme(theme: string) {
+    if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-bs-theme', theme);
+    }
   }
 }
