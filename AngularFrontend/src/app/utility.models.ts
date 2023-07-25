@@ -6,6 +6,7 @@ export interface User {
   group: number;
   loginIp: string;
   friends: Array<User>;
+  posts: Array<Post>;
   comments: Array<Comment>;
   coins: number;
   experience: number;

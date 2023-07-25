@@ -10,14 +10,12 @@ public class UsersService : AbstractService<User>
     {
     }
 
-    public async Task<User?> GetAsync(int id, bool withConfidential)
+    public async Task<User?> GetAsync(int id)
     {
-        if (!withConfidential)
-        {
-            return await this.GetAsync(id);
-        }
-
-        return await this.GetDatabaseCollection().Include(m => m.Confidential).FirstOrDefaultAsync(x => x.Id == id);
+        return await this.GetDatabaseCollection()
+            .Include(x => x.Posts)
+            .Include(x => x.Comments)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<User?> GetAsync(string email, bool withConfidential)

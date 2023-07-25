@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Comment, Post, User } from "../utility.models";
+import { Comment, Content, Post, User } from "../utility.models";
 import { HttpService } from "../http.service";
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { ContentValidation } from "../utility.validations";
@@ -35,13 +35,14 @@ export class HomeComponent {
         this.UserData = data as User;
         this.newPost.author = this.UserData;
         this.newPost.content = "";
+        console.log(this.UserData);
       }
     });
   }
 
   getAllPosts(): void {
     this._httpService.getPosts(10).subscribe(data => {
-      this.allPosts = data as Array<Post>;
+      this.allPosts = (data as Array<Post>).sort();
     });
   }
 
@@ -60,6 +61,7 @@ export class HomeComponent {
         this.ErrorMessage[key] = value;
       });
     } else {
+      this.newPost.author = {id: this.UserData.id} as User;
       this._httpService.createPost(this.newPost).subscribe(() => {
           // reset error message
           for (const key in this.ErrorMessage) {
@@ -79,8 +81,8 @@ export class HomeComponent {
         this.ErrorMessage[key] = value;
       });
     } else {
-      newComment.post = associatePost;
-      newComment.author = this.UserData;
+      newComment.post = {id: associatePost.id, author: {id: associatePost.author.id} as User} as Post;
+      newComment.author = {id: this.UserData.id} as User;
       this._httpService.createComment(newComment).subscribe(() => {
           // reset error message
           for (const key in this.ErrorMessage) {
@@ -90,5 +92,19 @@ export class HomeComponent {
         }
       );
     }
+  }
+
+  getContentTime(content: Content): string {
+    let timeDiff = (new Date().getTime() - new Date(content.createdAt).getTime()) / 1000;
+    if (timeDiff >= 31536000) {
+      return `${Math.round(timeDiff / 31536000)}yr`;
+    } else if (timeDiff >= 2592000) {
+      return `${Math.round(timeDiff / 2592000)}mon`;
+    } else if (timeDiff >= 86400) {
+      return `${Math.round(timeDiff / 86400)}d`;
+    } else if (timeDiff >= 3600) {
+      return `${Math.round(timeDiff / 3600)}hr`;
+    }
+    return `${Math.max(Math.round(timeDiff / 60), 1)}min`;
   }
 }

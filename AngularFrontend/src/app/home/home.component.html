@@ -54,22 +54,22 @@
                     <div class="hstack gap-2 gap-xl-3 justify-content-center">
                       <!-- User stat item -->
                       <div>
-                        <h6 class="mb-0">256</h6>
+                        <h6 class="mb-0">{{UserData.posts.length}}</h6>
                         <small>Post</small>
                       </div>
                       <!-- Divider -->
                       <div class="vr"></div>
                       <!-- User stat item -->
                       <div>
-                        <h6 class="mb-0">2.5K</h6>
-                        <small>Followers</small>
+                        <h6 class="mb-0">{{UserData.comments.length}}</h6>
+                        <small>Comments</small>
                       </div>
                       <!-- Divider -->
                       <div class="vr"></div>
                       <!-- User stat item -->
                       <div>
-                        <h6 class="mb-0">365</h6>
-                        <small>Following</small>
+                        <h6 class="mb-0">{{UserData.friends.length}}</h6>
+                        <small>Connected</small>
                       </div>
                     </div>
                     <!-- User stat END -->
@@ -207,7 +207,7 @@
                 <div>
                   <div class="nav nav-divider">
                     <h6 class="nav-item card-title mb-0"><a href="#!"> {{_post.author.name}} </a></h6>
-                    <span class="nav-item small"> 2hr</span>
+                    <span class="nav-item small"> {{getContentTime(_post)}}</span>
                   </div>
                   <p class="mb-0 small">{{_post.author.signature}}</p>
                 </div>
@@ -310,7 +310,7 @@
                     <div class="bg-light rounded-start-top-0 p-3 rounded">
                       <div class="d-flex justify-content-between">
                         <h6 class="mb-1"><a href="#!">{{_comment.author.name}}</a></h6>
-                        <small class="ms-2">5hr</small>
+                        <small class="ms-2">{{getContentTime(_comment)}}</small>
                       </div>
                       <p class="small mb-0">{{_comment.content}}</p>
                     </div>
