@@ -10,12 +10,12 @@ import { ContentValidation } from "../utility.validations";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  UserData: User = {} as User;
+  userData: User = {} as User;
   editorConfig: AngularEditorConfig = {minHeight: '10rem', editable: true};
   newPost: Post = {} as Post;
   newComments: Record<string, Comment> = {};
   allPosts: Array<Post> = new Array<Post>();
-  ErrorMessage: Record<string, string> = {
+  errorMessage: Record<string, string> = {
     "content": ""
   };
 
@@ -32,10 +32,9 @@ export class HomeComponent {
   getUserData(): void {
     this._httpService.getCurrentUser().subscribe(data => {
       if (data != null && Object.keys(data).length > 0) {
-        this.UserData = data as User;
-        this.newPost.author = this.UserData;
+        this.userData = data as User;
+        this.newPost.author = this.userData;
         this.newPost.content = "";
-        console.log(this.UserData);
       }
     });
   }
@@ -58,14 +57,14 @@ export class HomeComponent {
 
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {
-        this.ErrorMessage[key] = value;
+        this.errorMessage[key] = value;
       });
     } else {
-      this.newPost.author = {id: this.UserData.id} as User;
+      this.newPost.author = {id: this.userData.id} as User;
       this._httpService.createPost(this.newPost).subscribe(() => {
           // reset error message
-          for (const key in this.ErrorMessage) {
-            this.ErrorMessage[key] = "";
+          for (const key in this.errorMessage) {
+            this.errorMessage[key] = "";
           }
           window.location.reload();
         }
@@ -78,15 +77,15 @@ export class HomeComponent {
     const errors: Map<string, string> = ContentValidation.check(newComment);
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {
-        this.ErrorMessage[key] = value;
+        this.errorMessage[key] = value;
       });
     } else {
       newComment.post = {id: associatePost.id, author: {id: associatePost.author.id} as User} as Post;
-      newComment.author = {id: this.UserData.id} as User;
+      newComment.author = {id: this.userData.id} as User;
       this._httpService.createComment(newComment).subscribe(() => {
           // reset error message
-          for (const key in this.ErrorMessage) {
-            this.ErrorMessage[key] = "";
+          for (const key in this.errorMessage) {
+            this.errorMessage[key] = "";
           }
           window.location.reload();
         }

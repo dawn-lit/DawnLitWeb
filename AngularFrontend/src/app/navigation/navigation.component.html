@@ -161,7 +161,7 @@
              data-bs-auto-close="outside"
              data-bs-display="static" data-bs-toggle="dropdown"
              href="#" id="profileDropdown" role="button">
-            <img alt="" class="avatar-img rounded-2" src="/assets/images/avatar/07.jpg">
+            <app-avatar [classTags]="'rounded-2'" [userData]="UserData" class="icon-md"></app-avatar>
           </a>
           <ul aria-labelledby="profileDropdown"
               class="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n3">
@@ -170,7 +170,7 @@
               <div class="d-flex align-items-center position-relative">
                 <!-- Avatar -->
                 <div class="avatar me-3">
-                  <img alt="avatar" class="avatar-img rounded-circle" src="/assets/images/avatar/07.jpg">
+                  <app-avatar [classTags]="'rounded-circle'" [userData]="UserData"></app-avatar>
                 </div>
                 <div>
                   <a class="h6 stretched-link" href="#">{{UserData.name}}</a>

@@ -16,31 +16,6 @@ public class PostsController : ControllerBase
         this._postsService = new PostsService(db);
     }
 
-    [HttpGet("count")]
-    public async Task<ActionResult<long>> Count()
-    {
-        return await this._postsService.CountAsync();
-    }
-
-    [HttpGet("get/latest")]
-    public async Task<ActionResult<Post>> GetLatest()
-    {
-        Post? post = await this._postsService.GetLatestAsync();
-
-        if (post is null)
-        {
-            return this.NotFound();
-        }
-
-        return post;
-    }
-
-    [HttpGet("get/list/official/{num:int}")]
-    public async Task<List<Post>> GetOfficialLatest(int num)
-    {
-        return await this._postsService.GetOfficialLatestAsync(num);
-    }
-
     [HttpGet("get/list/{num:int}")]
     public async Task<List<Post>> GetList(int num)
     {
