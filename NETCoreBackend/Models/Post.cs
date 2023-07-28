@@ -8,10 +8,13 @@ public class Post : AbstractModel
     public string Content { get; set; } = string.Empty;
 
     [Display(Name = "author")]
-    public User Author { get; set; } = null!;
+    public User? Author { get; set; }
 
     [Display(Name = "comments")]
     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
+    [Display(Name = "likedBy")]
+    public ICollection<User> LikedBy { get; set; } = new List<User>();
 
     [Display(Name = "permission")]
     public int Permission { get; set; } = 0;

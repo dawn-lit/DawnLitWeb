@@ -17,8 +17,14 @@ public class User : AbstractModel
     [Display(Name = "posts")]
     public ICollection<Post> Posts { get; set; } = new List<Post>();
 
+    [Display(Name = "likedPosts")]
+    public ICollection<Post> LikedPosts { get; set; } = new List<Post>();
+
     [Display(Name = "comments")]
     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
+    [Display(Name = "likedComments")]
+    public ICollection<Comment> LikedComments { get; set; } = new List<Comment>();
 
     [Display(Name = "friends")]
     public ICollection<User> Friends { get; set; } = new List<User>();

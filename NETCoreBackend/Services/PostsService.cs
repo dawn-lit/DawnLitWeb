@@ -23,20 +23,10 @@ public class PostsService : AbstractService<Post>
         return await this.GetDatabaseCollection()
             .Include(m => m.Author)
             .Include(m => m.Comments)
+            .ThenInclude(m => m.LikedBy)
+            .Include(m => m.LikedBy)
             .Take(num)
             .ToListAsync();
-    }
-
-    public async Task<List<Post>> GetOfficialLatestAsync(int num)
-    {
-        if (num > MAX_POSTS)
-        {
-            num = MAX_POSTS;
-        }
-
-        return await this.GetDatabaseCollection()
-            .OrderByDescending(p => p.Id)
-            .Take(num).ToListAsync();
     }
 
     public async Task<Post?> GetLatestAsync()
@@ -52,7 +42,7 @@ public class PostsService : AbstractService<Post>
         DatabaseContext dbContext = this.GetDatabaseContext();
 
         // setup relationships
-        EntityEntry<User> authorRef = dbContext.Users.Attach(newPost.Author);
+        EntityEntry<User> authorRef = dbContext.Users.Attach(newPost.Author!);
         authorRef.Entity.Posts.Add(newPost);
 
         return await base.CreateAsync(newPost);

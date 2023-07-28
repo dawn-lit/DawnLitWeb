@@ -7,7 +7,9 @@ export interface User {
   loginIp: string;
   friends: Array<User>;
   posts: Array<Post>;
+  likedPosts: Array<Post>;
   comments: Array<Comment>;
+  likedComments: Array<Comment>;
   coins: number;
   experience: number;
   signature: string;
@@ -19,6 +21,7 @@ export interface Content {
   id: number;
   content: string;
   author: User;
+  likedBy: Array<User>;
   createdAt: Date;
   updatedAt: Date;
 }

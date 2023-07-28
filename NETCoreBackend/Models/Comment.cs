@@ -15,4 +15,7 @@ public class Comment : AbstractModel
 
     [Display(Name = "post")]
     public Post? Post { get; set; }
+
+    [Display(Name = "likedBy")]
+    public ICollection<User> LikedBy { get; set; } = new List<User>();
 }

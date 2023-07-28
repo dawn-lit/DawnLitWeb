@@ -106,4 +106,18 @@ export class HomeComponent {
     }
     return `${Math.max(Math.round(timeDiff / 60), 1)}min`;
   }
+
+  hasCurrentUserCommented(_post: Post): boolean {
+    return this.userData.id != null ? _post.comments.some(comment => comment.author.id == this.userData.id) : false;
+  }
+
+  hasCurrentUserLiked(_content: Content): boolean {
+    return this.userData.id != null ? _content.likedBy.some(user => user.id == this.userData.id) : false;
+  }
+
+  likeContent(theContent: Content, contentType: string) {
+    this._httpService.likeContent(theContent, contentType).subscribe(() => {
+      location.reload();
+    });
+  }
 }

@@ -213,6 +213,50 @@ public class UsersController : ControllerBase
         return this.Accepted();
     }
 
+    [HttpPost("like/post")]
+    public async Task<IActionResult> LikePost(Post likedPost)
+    {
+        // get current user
+        User? user = await this.GetCurrentUser();
+
+        if (user is null)
+        {
+            return this.NotFound();
+        }
+
+        // set up the relationship
+        bool result = await this._usersService.LikePostAsync(user, likedPost);
+
+        if (!result)
+        {
+            return this.NotFound();
+        }
+
+        return this.Accepted();
+    }
+
+    [HttpPost("like/comment")]
+    public async Task<IActionResult> LikeComment(Comment likedComment)
+    {
+        // get current user
+        User? user = await this.GetCurrentUser();
+
+        if (user is null)
+        {
+            return this.NotFound();
+        }
+
+        // set up the relationship
+        bool result = await this._usersService.LikeCommentAsync(user, likedComment);
+
+        if (!result)
+        {
+            return this.NotFound();
+        }
+
+        return this.Accepted();
+    }
+
     [HttpDelete("delete")]
     public async Task<IActionResult> Delete()
     {

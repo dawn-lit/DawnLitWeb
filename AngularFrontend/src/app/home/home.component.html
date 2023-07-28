@@ -250,19 +250,23 @@
             <!-- Feed react START -->
             <ul class="nav nav-stack py-3 small">
               <li class="nav-item">
-                <a class="nav-link active" data-bs-container="body" data-bs-custom-class="tooltip-text-start"
+                <a (click)="likeContent(_post, 'post')" class="nav-link {{hasCurrentUserLiked(_post)? 'active':''}}"
+                   data-bs-container="body"
+                   data-bs-custom-class="tooltip-text-start"
                    data-bs-html="true"
                    data-bs-placement="top"
                    data-bs-title="Frances Guerrero<br> Lori Stevens<br> Billy Vasquez<br> Judy Nguyen<br> Larry Lawson<br> Amanda Reed<br> Louis Crawford"
                    data-bs-toggle="tooltip"
-                   href="#!">
-                  <i class="bi bi-hand-thumbs-up-fill pe-1"></i>Liked (56)</a>
+                   href="#"
+                >
+                  <i class="bi bi-hand-thumbs-up-fill pe-1"></i>Liked ({{_post.likedBy.length}})</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#!"> <i class="bi bi-chat-fill pe-1"></i>Comments ({{_post.comments.length}})</a>
+                <a class="nav-link {{hasCurrentUserCommented(_post)?'active':''}}" href="#"> <i
+                  class="bi bi-chat-fill pe-1"></i>Comments ({{_post.comments.length}})</a>
               </li>
               <!-- Card share action START -->
-              <li class="nav-item dropdown ms-sm-auto">
+              <li class="nav-item dropdown ms-sm-auto" hidden="hidden">
                 <a aria-expanded="false" class="nav-link mb-0" data-bs-toggle="dropdown" href="#" id="cardShareAction">
                   <i class="bi bi-reply-fill flip-horizontal ps-1"></i>Share (3)
                 </a>
@@ -326,13 +330,15 @@
                     <!-- Comment react -->
                     <ul class="nav nav-divider py-2 small">
                       <li class="nav-item">
-                        <a class="nav-link" href="#!"> Like (3)</a>
+                        <a (click)="likeContent(_comment, 'comment')"
+                           class="nav-link {{hasCurrentUserLiked(_comment)? 'active':''}}"
+                           href="#"> Like ({{_comment.likedBy.length}})</a>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#!"> Reply</a>
+                      <li class="nav-item" hidden="hidden">
+                        <a class="nav-link" href="#"> Reply</a>
                       </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#!"> View 5 replies</a>
+                      <li class="nav-item" hidden="hidden">
+                        <a class="nav-link" href="#"> View 5 replies</a>
                       </li>
                     </ul>
                   </div>
@@ -402,17 +408,19 @@
                   <!-- Comment item END -->
                 </ul>
                 <!-- Load more replies -->
-                <a aria-pressed="true"
-                   class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center mb-3 ms-5"
-                   data-bs-toggle="button"
-                   href="#!" role="button">
-                  <div class="spinner-dots me-2">
-                    <span class="spinner-dot"></span>
-                    <span class="spinner-dot"></span>
-                    <span class="spinner-dot"></span>
-                  </div>
-                  Load more replies
-                </a>
+                <div hidden="hidden">
+                  <a aria-pressed="true"
+                     class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center mb-3 ms-5"
+                     data-bs-toggle="button"
+                     href="#!" role="button">
+                    <div class="spinner-dots me-2">
+                      <span class="spinner-dot"></span>
+                      <span class="spinner-dot"></span>
+                      <span class="spinner-dot"></span>
+                    </div>
+                    Load more replies
+                  </a>
+                </div>
                 <!-- Comment item nested END -->
               </li>
               <!-- Comment item END -->
@@ -421,7 +429,7 @@
           </div>
           <!-- Card body END -->
           <!-- Card footer START -->
-          <div class="card-footer border-0 pt-0">
+          <div class="card-footer border-0 pt-0" hidden="hidden">
             <!-- Load more comments -->
             <a aria-pressed="true" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center"
                data-bs-toggle="button"

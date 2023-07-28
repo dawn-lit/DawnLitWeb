@@ -19,6 +19,22 @@ public class DatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.Posts)
+            .WithOne(e => e.Author);
+
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.LikedPosts)
+            .WithMany(e => e.LikedBy);
+
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.Comments)
+            .WithOne(e => e.Author);
+
+        modelBuilder.Entity<Post>()
+            .HasMany(e => e.Comments)
+            .WithOne(e => e.Post);
+
         modelBuilder.UseSerialColumns();
     }
 }

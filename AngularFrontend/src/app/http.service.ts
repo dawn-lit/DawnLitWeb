@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Comment, Post } from "./utility.models";
+import { Comment, Content, Post } from "./utility.models";
 import { TokenService } from "./token.service";
 
 @Injectable({
@@ -97,5 +97,10 @@ export class HttpService {
   // create a new comment
   createComment(data: Comment) {
     return this._http.post(`/api/comments/new`, data);
+  }
+
+  // like a content
+  likeContent(theContent: Content, contentType: string) {
+    return this._http.post(`/api/users/like/${contentType}`, theContent);
   }
 }
