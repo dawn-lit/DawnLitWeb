@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { LogoffComponent } from './logoff/logoff.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ProfileComponent } from "./profile/profile.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   {path: 'wiki', component: WikiComponent},
   {path: 'settings', component: SettingsComponent},
+  {path: 'profile', component: ProfileComponent},
   {path: '**', pathMatch: 'full', redirectTo: ''},
 ];
 

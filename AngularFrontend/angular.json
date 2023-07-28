@@ -33,11 +33,12 @@
             ],
             "scripts": [
               "./src/assets/js/functions.js",
+              "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "./node_modules/marked/marked.min.js",
               "./node_modules/emoji-toolkit/lib/js/joypixels.min.js",
               "./node_modules/katex/dist/katex.min.js",
-              "./node_modules/katex/dist/contrib/auto-render.min.js",
+              "./node_modules/katex/dist/contrib/auto-render.min.js"
             ]
           },
           "configurations": {

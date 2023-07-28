@@ -36,10 +36,11 @@ public class CommentsService : AbstractService<Comment>
         return await base.CreateAsync(newComment);
     }
 
-    public async Task<Comment?> GetCompleteAsync(int id)
+    public new async Task<Comment?> GetAsync(int id)
     {
         return await this.GetDatabaseCollection()
             .Include(m => m.Author)
+            .Include(m => m.LikedBy)
             .Include(m => m.Replies)
             .FirstOrDefaultAsync(x => x.Id == id);
     }

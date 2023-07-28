@@ -13,28 +13,26 @@ public class PostsService : AbstractService<Post>
     {
     }
 
-    public async Task<List<Post>> GetListAsync(int num)
+    public new async Task<Post?> GetAsync(int id)
     {
-        if (num > MAX_POSTS)
-        {
-            num = MAX_POSTS;
-        }
-
         return await this.GetDatabaseCollection()
             .Include(m => m.Author)
-            .Include(m => m.Comments)
-            .ThenInclude(m => m.LikedBy)
             .Include(m => m.LikedBy)
-            .Take(num)
-            .ToListAsync();
+            .Include(m => m.Comments.OrderByDescending(o => o.CreatedAt))
+            .ThenInclude(m => m.LikedBy)
+            .FirstOrDefaultAsync(x => x.Id == id);
     }
 
-    public async Task<Post?> GetLatestAsync()
+    public async Task<List<Post>> GetListAsync(int num)
     {
         return await this.GetDatabaseCollection()
             .Include(m => m.Author)
-            .Include(m => m.Comments)
-            .FirstOrDefaultAsync();
+            .Include(m => m.LikedBy)
+            .Include(m => m.Comments.OrderByDescending(o => o.CreatedAt))
+            .ThenInclude(m => m.LikedBy)
+            .OrderByDescending(o => o.CreatedAt)
+            .Take(Math.Min(num, MAX_POSTS))
+            .ToListAsync();
     }
 
     public new async Task<bool> CreateAsync(Post newPost)

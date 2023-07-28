@@ -122,7 +122,7 @@
                 <!-- Card body END -->
                 <!-- Card footer -->
                 <div class="card-footer text-center py-2">
-                  <a class="btn btn-link btn-sm" href="my-profile.html">View Profile </a>
+                  <a class="btn btn-link btn-sm" href="./profile?id={{userData.id}}">View Profile </a>
                 </div>
               </div>
               <!-- Card END -->
@@ -150,8 +150,8 @@
               </ul>
               <!-- Helper link END -->
               <!-- Copyright -->
-              <p class="small text-center mt-1">©2023 <a class="text-body" href="https://www.webestica.com/"
-                                                         target="_blank"> Webestica </a></p>
+              <p class="small text-center mt-1">©2023 <a class="text-body" href="https://www.dawnlit.com/"
+                                                         target="_blank"> Dawn Lit </a></p>
             </div>
           </div>
         </nav>
@@ -250,12 +250,11 @@
             <!-- Feed react START -->
             <ul class="nav nav-stack py-3 small">
               <li class="nav-item">
-                <a (click)="likeContent(_post, 'post')" class="nav-link {{hasCurrentUserLiked(_post)? 'active':''}}"
+                <a (click)="likePost(_post)" class="nav-link {{hasCurrentUserLiked(_post)? 'active':''}}"
                    data-bs-container="body"
                    data-bs-custom-class="tooltip-text-start"
                    data-bs-html="true"
                    data-bs-placement="top"
-                   data-bs-title="Frances Guerrero<br> Lori Stevens<br> Billy Vasquez<br> Judy Nguyen<br> Larry Lawson<br> Amanda Reed<br> Louis Crawford"
                    data-bs-toggle="tooltip"
                    href="#"
                 >
@@ -298,7 +297,7 @@
                 </a>
               </div>
               <!-- Comment box  -->
-              <form (ngSubmit)="createComments(_post)" class="nav nav-item w-100 position-relative">
+              <form (ngSubmit)="createComment(_post)" class="nav nav-item w-100 position-relative">
                 <textarea [(ngModel)]="obtainCommentTemplate(_post).content" class="form-control pe-5 bg-light"
                           data-autoresize name="content"
                           placeholder="Add a comment..." rows="1"></textarea>
@@ -330,7 +329,7 @@
                     <!-- Comment react -->
                     <ul class="nav nav-divider py-2 small">
                       <li class="nav-item">
-                        <a (click)="likeContent(_comment, 'comment')"
+                        <a (click)="likeComment(_comment)"
                            class="nav-link {{hasCurrentUserLiked(_comment)? 'active':''}}"
                            href="#"> Like ({{_comment.likedBy.length}})</a>
                       </li>
@@ -560,7 +559,7 @@
 
                 <!-- View more button -->
                 <div class="d-grid mt-3">
-                  <a class="btn btn-sm btn-primary-soft" href="#!">View more</a>
+                  <a class="btn btn-sm btn-primary-soft" hidden="hidden" href="#">View more</a>
                 </div>
               </div>
               <!-- Card body END -->

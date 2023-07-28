@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent {
-  UserData: User = {} as User;
+  userData: User = {} as User;
 
   constructor(
     private _httpService: HttpService,
@@ -25,14 +25,14 @@ export class NavigationComponent {
   getUserData(): void {
     this._httpService.getCurrentUser().subscribe(data => {
       if (data != null && Object.keys(data).length > 0) {
-        this.UserData = data as User;
+        this.userData = data as User;
       }
     });
   }
 
   logOff(): void {
     this._router.navigate(['/logoff']).then(() => {
-      this.UserData = {} as User;
+      this.userData = {} as User;
     });
   }
 

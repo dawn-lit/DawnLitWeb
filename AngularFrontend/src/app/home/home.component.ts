@@ -4,6 +4,8 @@ import { HttpService } from "../http.service";
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { ContentValidation } from "../utility.validations";
 
+declare var $: any;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -11,7 +13,7 @@ import { ContentValidation } from "../utility.validations";
 })
 export class HomeComponent {
   userData: User = {} as User;
-  editorConfig: AngularEditorConfig = {minHeight: '10rem', editable: true};
+  readonly editorConfig: AngularEditorConfig = {minHeight: '10rem', editable: true};
   newPost: Post = {} as Post;
   newComments: Record<string, Comment> = {};
   allPosts: Array<Post> = new Array<Post>();
@@ -40,8 +42,9 @@ export class HomeComponent {
   }
 
   getAllPosts(): void {
-    this._httpService.getPosts(10).subscribe(data => {
-      this.allPosts = (data as Array<Post>).sort();
+    this._httpService.getPosts(100).subscribe(data => {
+      this.allPosts = data as Array<Post>;
+      ($("#feedActionPost") as any).modal("hide");
     });
   }
 
@@ -66,13 +69,13 @@ export class HomeComponent {
           for (const key in this.errorMessage) {
             this.errorMessage[key] = "";
           }
-          window.location.reload();
+          this.getAllPosts();
         }
       );
     }
   }
 
-  createComments(associatePost: Post) {
+  createComment(associatePost: Post) {
     const newComment = this.obtainCommentTemplate(associatePost);
     const errors: Map<string, string> = ContentValidation.check(newComment);
     if (errors.size > 0) {
@@ -83,13 +86,15 @@ export class HomeComponent {
       newComment.post = {id: associatePost.id, author: {id: associatePost.author.id} as User} as Post;
       newComment.author = {id: this.userData.id} as User;
       this._httpService.createComment(newComment).subscribe(() => {
-          // reset error message
-          for (const key in this.errorMessage) {
-            this.errorMessage[key] = "";
-          }
-          window.location.reload();
+        // reset error message
+        for (const key in this.errorMessage) {
+          this.errorMessage[key] = "";
         }
-      );
+        this._httpService.getPost(associatePost.id).subscribe(data => {
+          associatePost.comments = (data as Post).comments;
+          this.newComments = {};
+        });
+      });
     }
   }
 
@@ -115,9 +120,19 @@ export class HomeComponent {
     return this.userData.id != null ? _content.likedBy.some(user => user.id == this.userData.id) : false;
   }
 
-  likeContent(theContent: Content, contentType: string) {
-    this._httpService.likeContent(theContent, contentType).subscribe(() => {
-      location.reload();
+  likePost(thePost: Post) {
+    this._httpService.likeContent(thePost, "post").subscribe(() => {
+      this._httpService.getPost(thePost.id).subscribe(data => {
+        thePost.likedBy = (data as Post).likedBy;
+      });
+    });
+  }
+
+  likeComment(theComment: Comment) {
+    this._httpService.likeContent(theComment, "comment").subscribe(() => {
+      this._httpService.getComment(theComment.id).subscribe(data => {
+        theComment.likedBy = (data as Comment).likedBy;
+      });
     });
   }
 }

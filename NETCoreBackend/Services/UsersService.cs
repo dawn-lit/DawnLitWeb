@@ -10,7 +10,7 @@ public class UsersService : AbstractService<User>
     {
     }
 
-    public async Task<User?> GetAsync(int id)
+    public new async Task<User?> GetAsync(int id)
     {
         return await this.GetDatabaseCollection()
             .Include(x => x.Posts)

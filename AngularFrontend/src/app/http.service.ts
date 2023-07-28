@@ -99,6 +99,11 @@ export class HttpService {
     return this._http.post(`/api/comments/new`, data);
   }
 
+  // get post with specific id
+  getComment(id: number) {
+    return this._http.get(`/api/comments/get/${id}`);
+  }
+
   // like a content
   likeContent(theContent: Content, contentType: string) {
     return this._http.post(`/api/users/like/${contentType}`, theContent);
