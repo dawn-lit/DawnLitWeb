@@ -35,6 +35,19 @@ public class PostsService : AbstractService<Post>
             .ToListAsync();
     }
 
+    public async Task<List<Post>> GetUserListAsync(int userId, int num)
+    {
+        return await this.GetDatabaseCollection()
+            .Where(x => x.Author!.Id == userId)
+            .Include(m => m.Author)
+            .Include(m => m.LikedBy)
+            .Include(m => m.Comments.OrderByDescending(o => o.CreatedAt))
+            .ThenInclude(m => m.LikedBy)
+            .OrderByDescending(o => o.CreatedAt)
+            .Take(Math.Min(num, MAX_POSTS))
+            .ToListAsync();
+    }
+
     public new async Task<bool> CreateAsync(Post newPost)
     {
         DatabaseContext dbContext = this.GetDatabaseContext();

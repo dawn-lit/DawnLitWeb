@@ -20,6 +20,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { LogoffComponent } from './logoff/logoff.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { ProfileComponent } from './profile/profile.component';
+import { PostsComponent } from './posts/posts.component';
+import { ProfileAboutComponent } from './profile-about/profile-about.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt_token");
@@ -36,7 +38,9 @@ export function tokenGetter() {
     SettingsComponent,
     LogoffComponent,
     AvatarComponent,
-    ProfileComponent
+    ProfileComponent,
+    PostsComponent,
+    ProfileAboutComponent
   ],
   imports: [
     BrowserModule,

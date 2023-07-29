@@ -1,0 +1,86 @@
+<!-- Card header START -->
+<div class="card-header border-0 pb-0">
+  <h5 class="card-title"> Profile Info</h5>
+</div>
+<!-- Card header END -->
+<!-- Card body START -->
+<div class="card-body">
+  <div class="rounded border px-3 py-2 mb-3">
+    <div class="d-flex align-items-center justify-content-between">
+      <h6>Overview</h6>
+      <div class="dropdown ms-auto">
+        <!-- Card share action menu -->
+        <a aria-expanded="false" class="nav nav-link text-secondary mb-0" data-bs-toggle="dropdown" href="#"
+           id="aboutAction">
+          <i class="bi bi-three-dots"></i>
+        </a>
+        <!-- Card share action dropdown menu -->
+        <ul aria-labelledby="aboutAction" class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
+          <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>{{userData.about}}</p>
+  </div>
+  <div class="row g-4">
+    <div class="col-sm-6">
+      <!-- Joined on START -->
+      <div class="d-flex align-items-center rounded border px-3 py-2">
+        <!-- Date -->
+        <p class="mb-0">
+          <i class="bi bi-geo-alt fa-fw me-2"></i> Joined on:
+          <strong> {{userData.createdAt.toLocaleDateString()}} </strong>
+        </p>
+        <div class="dropdown ms-auto">
+          <!-- Card share action menu -->
+          <a aria-expanded="false" class="nav nav-link text-secondary mb-0" data-bs-toggle="dropdown" href="#"
+             id="aboutAction6">
+            <i class="bi bi-three-dots"></i>
+          </a>
+          <!-- Card share action dropdown menu -->
+          <ul aria-labelledby="aboutAction6" class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
+            <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- Joined on END -->
+    </div>
+    <div class="col-sm-6">
+      <!-- Joined on START -->
+      <div class="d-flex align-items-center rounded border px-3 py-2">
+        <!-- Date -->
+        <p class="mb-0">
+          <i class="bi bi-envelope fa-fw me-2"></i> Email: <strong> {{userData.email}} </strong>
+        </p>
+        <div class="dropdown ms-auto">
+          <!-- Card share action menu -->
+          <a aria-expanded="false" class="nav nav-link text-secondary mb-0" data-bs-toggle="dropdown" href="#"
+             id="aboutAction7">
+            <i class="bi bi-three-dots"></i>
+          </a>
+          <!-- Card share action dropdown menu -->
+          <ul aria-labelledby="aboutAction7" class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
+            <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- Joined on END -->
+    </div>
+    <div class="col-sm-6 position-relative">
+      <!-- Workplace on START -->
+      <a class="btn btn-dashed rounded w-100" href="#!"> <i class="bi bi-plus-circle-dotted me-1"></i>Add a
+        workplace</a>
+      <!-- Workplace on END -->
+    </div>
+    <div class="col-sm-6 position-relative">
+      <!-- Education on START -->
+      <a class="btn btn-dashed rounded w-100" href="#!"> <i class="bi bi-plus-circle-dotted me-1"></i>Add a
+        education</a>
+      <!-- Education on END -->
+    </div>
+  </div>
+</div>
+<!-- Card body END -->

@@ -9,19 +9,19 @@ import { UserUpdateValidation } from "../utility.validations";
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
-  UserData: User = {} as User;
-  PasswordsTypes: Record<string, string> = {
+  userData: User = {} as User;
+  passwordsTypes: Record<string, string> = {
     "cp": "password",
     "np": "password",
     "np2": "password",
   };
-  PasswordData: Record<string, string> = {
+  passwordData: Record<string, string> = {
     "password": "", "newPassword": "", "passwordConfirm": ""
   };
-  ErrorMessage: Record<string, string> = {
-    "name": "", "signature": "", "password": "", "newPassword": "", "passwordConfirm": ""
+  errorMessage: Record<string, string> = {
+    "name": "", "signature": "", "about": "", "password": "", "newPassword": "", "passwordConfirm": ""
   };
-  DeleteAccountConfirmed: boolean = false;
+  deleteAccountConfirmed: boolean = false;
 
   constructor(
     private _httpService: HttpService
@@ -35,38 +35,38 @@ export class SettingsComponent {
   getUserData(): void {
     this._httpService.getCurrentUser().subscribe(data => {
       if (data != null && Object.keys(data).length > 0) {
-        this.UserData = data as User;
+        this.userData = data as User;
       }
     });
   }
 
   togglePasswordVisibility(k: string) {
-    this.PasswordsTypes[k] = this.PasswordsTypes[k] == "password" ? "text" : "password";
+    this.passwordsTypes[k] = this.passwordsTypes[k] == "password" ? "text" : "password";
   }
 
   saveChanges(): void {
-    const errors: Map<string, string> = UserUpdateValidation.checkInfo(this.UserData);
+    const errors: Map<string, string> = UserUpdateValidation.checkInfo(this.userData);
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {
-        this.ErrorMessage[key] = value;
+        this.errorMessage[key] = value;
       });
     } else {
-      this._httpService.updateCurrentUserInfo(this.UserData).subscribe(data => {
+      this._httpService.updateCurrentUserInfo(this.userData).subscribe(data => {
         console.log(data);
       });
     }
   }
 
   updatePassword(): void {
-    const errors: Map<string, string> = UserUpdateValidation.checkPassword(this.PasswordData);
+    const errors: Map<string, string> = UserUpdateValidation.checkPassword(this.passwordData);
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {
-        this.ErrorMessage[key] = value;
+        this.errorMessage[key] = value;
       });
     } else {
-      this._httpService.updateCurrentUserPassword(this.PasswordData).subscribe((data: any) => {
-        for (const key in this.PasswordData) {
-          this.PasswordData[key] = "";
+      this._httpService.updateCurrentUserPassword(this.passwordData).subscribe((data: any) => {
+        for (const key in this.passwordData) {
+          this.passwordData[key] = "";
         }
       });
     }

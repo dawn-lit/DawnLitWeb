@@ -90,8 +90,8 @@ export class HttpService {
   }
 
   // get a list of posts
-  getPosts(num: number) {
-    return this._http.get(`/api/posts/get/list/${num}`);
+  getPosts(num: number, userId: number = 0) {
+    return userId <= 0 ? this._http.get(`/api/posts/get/list/${num}`) : this._http.get(`/api/posts/get/list/${userId}/${num}`);
   }
 
   // create a new comment

@@ -11,6 +11,9 @@ class UserValidation {
   // user signature length requirements
   private static readonly MIN_SIGNATURE_LENGTH = 0;
   private static readonly MAX_SIGNATURE_LENGTH = 500;
+  // user about length requirements
+  private static readonly MIN_ABOUT_LENGTH = 0;
+  private static readonly MAX_ABOUT_LENGTH = 500;
   // name error messages
   private static readonly NAME_ERROR_MESSAGES = {
     empty: "Please enter your username!",
@@ -35,6 +38,11 @@ class UserValidation {
   private static readonly SIGNATURE_ERROR_MESSAGES = {
     too_short: `Signature cannot be shorter than ${this.MIN_SIGNATURE_LENGTH} characters!`,
     too_long: `Signature cannot be longer than ${this.MAX_SIGNATURE_LENGTH} characters!`
+  };
+  // about error messages
+  private static readonly ABOUT_ERROR_MESSAGES = {
+    too_short: `About cannot be shorter than ${this.MIN_SIGNATURE_LENGTH} characters!`,
+    too_long: `About cannot be longer than ${this.MAX_SIGNATURE_LENGTH} characters!`
   };
   // user name pattern
   private static readonly USERNAME_RE: RegExp = /[^A-Za-z0-9_]/;
@@ -79,6 +87,16 @@ class UserValidation {
     }
     if (signature.length > this.MAX_SIGNATURE_LENGTH) {
       return this.SIGNATURE_ERROR_MESSAGES.too_long;
+    }
+    return null;
+  }
+
+  public static isAboutValid(about: string): string | null {
+    if (about.length < this.MIN_ABOUT_LENGTH) {
+      return this.ABOUT_ERROR_MESSAGES.too_short;
+    }
+    if (about.length > this.MAX_ABOUT_LENGTH) {
+      return this.ABOUT_ERROR_MESSAGES.too_long;
     }
     return null;
   }
@@ -174,6 +192,11 @@ export class UserUpdateValidation {
     error = UserValidation.isSignatureValid(UserInfoData.signature);
     if (error != null) {
       errorMessages.set("signature", error);
+    }
+
+    error = UserValidation.isAboutValid(UserInfoData.about);
+    if (error != null) {
+      errorMessages.set("about", error);
     }
 
     return errorMessages;

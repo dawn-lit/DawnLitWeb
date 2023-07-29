@@ -19,6 +19,10 @@ public class UsersController : ControllerBase
 
     private const int MIN_SIGNATURE_LENGTH = 0;
     private const int MAX_SIGNATURE_LENGTH = 500;
+
+    private const int MIN_ABOUT_LENGTH = 0;
+    private const int MAX_ABOUT_LENGTH = 500;
+
     private readonly ConfidentialService _confidentialService;
 
     private readonly UsersService _usersService;
@@ -159,6 +163,12 @@ public class UsersController : ControllerBase
             return this.Conflict("Signature");
         }
 
+        // ensure the signature length is within range
+        if (modifiedUser.About.Length is < MIN_ABOUT_LENGTH or > MAX_ABOUT_LENGTH)
+        {
+            return this.Conflict("About");
+        }
+
         // get current user
         User? user = await this.GetCurrentUser();
 
@@ -170,6 +180,7 @@ public class UsersController : ControllerBase
         // modify user information
         user.Name = modifiedUser.Name;
         user.Signature = modifiedUser.Signature;
+        user.About = modifiedUser.About;
 
         // save the changes
         await this._usersService.SaveChangesAsync();

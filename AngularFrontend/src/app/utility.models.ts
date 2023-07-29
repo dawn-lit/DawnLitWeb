@@ -13,6 +13,7 @@ export interface User {
   coins: number;
   experience: number;
   signature: string;
+  about: string;
   createdAt: Date;
   updatedAt: Date;
 }

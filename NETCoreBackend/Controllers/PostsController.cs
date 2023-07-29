@@ -22,6 +22,12 @@ public class PostsController : ControllerBase
         return await this._postsService.GetListAsync(num);
     }
 
+    [HttpGet("get/list/{userId:int}/{num:int}")]
+    public async Task<List<Post>> GetUserList(int userId, int num)
+    {
+        return await this._postsService.GetUserListAsync(userId, num);
+    }
+
     [HttpGet("get/{id:int}")]
     public async Task<ActionResult<Post>> Get(int id)
     {

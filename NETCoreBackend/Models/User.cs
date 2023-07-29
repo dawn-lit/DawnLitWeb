@@ -38,6 +38,9 @@ public class User : AbstractModel
     [Display(Name = "signature")]
     public string Signature { get; set; } = string.Empty;
 
+    [Display(Name = "about")]
+    public string About { get; set; } = string.Empty;
+
     [Display(Name = "avatar")]
     public string Avatar { get; set; } = string.Empty;
 
