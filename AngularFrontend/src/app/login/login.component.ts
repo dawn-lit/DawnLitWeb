@@ -12,6 +12,7 @@ import { TokenService } from "../token.service";
 export class LoginComponent {
   LoginData: Record<string, string> = {"email": "", "password": "", "captcha": "", "loginIp": ""};
   ErrorMessage: Record<string, string> = {"email": "", "password": "", "captcha": ""};
+  isBlocked: boolean = false;
 
   constructor(
     private _httpService: HttpService,
@@ -22,9 +23,14 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this._httpService.ensureNotLoginAlready();
+    this.isBlocked = false;
   }
 
   onSubmit(): void {
+    if (this.isBlocked) {
+      return;
+    }
+    this.isBlocked = true;
     this._httpService.getIpInfo().subscribe((res: any) => {
       this.resetErrorMessage();
 

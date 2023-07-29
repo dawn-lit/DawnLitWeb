@@ -8,6 +8,7 @@ import { LogoffComponent } from './logoff/logoff.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ProfileComponent } from "./profile/profile.component";
+import { MessagingComponent } from "./messaging/messaging.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'wiki', component: WikiComponent},
   {path: 'settings', component: SettingsComponent},
   {path: 'profile', component: ProfileComponent},
+  {path: 'messaging', component: MessagingComponent},
   {path: '**', pathMatch: 'full', redirectTo: ''},
 ];
 

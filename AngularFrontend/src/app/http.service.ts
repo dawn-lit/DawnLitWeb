@@ -25,7 +25,7 @@ export class HttpService {
   // ensure no user is login already
   ensureNotLoginAlready(): void {
     if (this._token.isStillValid()) {
-      this.gotoHomePage();
+      this.logoffUser();
     }
   }
 

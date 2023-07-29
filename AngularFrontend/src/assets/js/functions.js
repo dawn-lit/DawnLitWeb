@@ -84,7 +84,6 @@ var e = {
       e.DropZone(),
       e.flatPicker(),
       e.avatarImg(),
-      e.customScrollbar(),
       e.toasts(),
       e.pswMeter(),
       e.fakePwd();
@@ -604,43 +603,6 @@ var e = {
     }
   },
   // END: Avatar Image
-
-  // START: 15 Custom Scrollbar
-  customScrollbar: function () {
-
-    if (e.isVariableDefined(e.select(".custom-scrollbar"))) {
-      document.addEventListener("DOMContentLoaded", function () {
-        var instances = OverlayScrollbars(e.selectAll('.custom-scrollbar'), {
-          resize: "none",
-          scrollbars: {
-            autoHide: 'leave',
-            autoHideDelay: 200
-          },
-          overflowBehavior: {
-            x: "visible-hidden",
-            y: "scroll"
-          }
-        });
-      });
-    }
-
-    if (e.isVariableDefined(e.select(".custom-scrollbar-y"))) {
-      document.addEventListener("DOMContentLoaded", function () {
-        var instances = OverlayScrollbars(e.selectAll('.custom-scrollbar-y'), {
-          resize: "none",
-          scrollbars: {
-            autoHide: 'leave',
-            autoHideDelay: 200
-          },
-          overflowBehavior: {
-            x: "scroll",
-            y: "scroll"
-          }
-        });
-      });
-    }
-  },
-  // END: Custom Scrollbar
 
   // START: 16 Toasts
   toasts: function () {

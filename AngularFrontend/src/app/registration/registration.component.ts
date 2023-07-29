@@ -16,6 +16,7 @@ export class RegistrationComponent {
   ErrorMessage: Record<string, string> = {
     "name": "", "email": "", "password": "", "password_confirm": "", "captcha": ""
   };
+  isBlocked: boolean = false;
 
   constructor(
     private _httpService: HttpService,
@@ -26,9 +27,14 @@ export class RegistrationComponent {
 
   ngOnInit(): void {
     this._httpService.ensureNotLoginAlready();
+    this.isBlocked = false;
   }
 
   onSubmit(): void {
+    if (this.isBlocked) {
+      return;
+    }
+    this.isBlocked = true;
     // reset error message
     for (const key in this.ErrorMessage) {
       this.ErrorMessage[key] = "";

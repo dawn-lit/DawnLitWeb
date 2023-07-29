@@ -19,6 +19,7 @@
                    type="text">
             <p *ngIf="ErrorMessage['name']" class="warning_messages">{{ErrorMessage['name']}}</p>
           </div>
+          <!-- Email -->
           <div class="mb-3 input-group-lg">
             <p>Email:</p>
             <input [(ngModel)]="RegistrationData['email']" class="form-control" name="email" placeholder="Enter email"

@@ -15,19 +15,22 @@ public class User : AbstractModel
     public int Group { get; set; } = 0;
 
     [Display(Name = "posts")]
-    public ICollection<Post> Posts { get; set; } = new List<Post>();
+    public ICollection<Post> Posts { get; } = new List<Post>();
 
     [Display(Name = "likedPosts")]
-    public ICollection<Post> LikedPosts { get; set; } = new List<Post>();
+    public ICollection<Post> LikedPosts { get; } = new List<Post>();
 
     [Display(Name = "comments")]
-    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+    public ICollection<Comment> Comments { get; } = new List<Comment>();
 
     [Display(Name = "likedComments")]
-    public ICollection<Comment> LikedComments { get; set; } = new List<Comment>();
+    public ICollection<Comment> LikedComments { get; } = new List<Comment>();
 
     [Display(Name = "friends")]
-    public ICollection<User> Friends { get; set; } = new List<User>();
+    public ICollection<User> Friends { get; } = new List<User>();
+
+    [Display(Name = "friendRequests")]
+    public ICollection<User> FriendRequests { get; } = new List<User>();
 
     [Display(Name = "coins")]
     public int Coins { get; set; } = 0;
@@ -52,12 +55,12 @@ public class User : AbstractModel
     public string LoginIp { get; set; } = string.Empty;
 
     [NotMapped]
-    [Display(Name = "password")]
-    public string Password { get; set; } = string.Empty;
-
-    [NotMapped]
     [Display(Name = "newPassword")]
     public string NewPassword { get; set; } = string.Empty;
+
+    [NotMapped]
+    [Display(Name = "password")]
+    public string Password { get; set; } = string.Empty;
 
     public Confidential? Confidential { get; set; }
 }

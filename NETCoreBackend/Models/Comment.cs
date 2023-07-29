@@ -2,20 +2,14 @@
 
 namespace NETCoreBackend.Models;
 
-public class Comment : AbstractModel
+public class Comment : Message
 {
-    [Display(Name = "content")]
-    public string Content { get; set; } = string.Empty;
-
-    [Display(Name = "replies")]
-    public ICollection<Comment> Replies { get; set; } = new List<Comment>();
-
-    [Display(Name = "author")]
-    public User? Author { get; set; }
-
     [Display(Name = "post")]
     public Post? Post { get; set; }
 
     [Display(Name = "likedBy")]
-    public ICollection<User> LikedBy { get; set; } = new List<User>();
+    public ICollection<User> LikedBy { get; } = new List<User>();
+
+    [Display(Name = "replies")]
+    public ICollection<Comment> Replies { get; } = new List<Comment>();
 }

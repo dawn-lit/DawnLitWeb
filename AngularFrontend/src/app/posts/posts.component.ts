@@ -49,6 +49,7 @@ export class PostsComponent {
           for (const key in this.errorMessage) {
             this.errorMessage[key] = "";
           }
+          this.newPost["content"] = "";
           // make parent update all the posts
           this.childEvent.emit();
           ($("#feedActionPost") as any).modal("hide");
