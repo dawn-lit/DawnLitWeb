@@ -40,7 +40,7 @@ export class RegistrationComponent {
       this.ErrorMessage[key] = "";
     }
     // get the registration ip first
-    this._httpService.getIpInfo().subscribe((res: any) => {
+    this._httpService.getIpInfo().subscribe(res => {
       this.RegistrationData['loginIp'] = res.ip;
       if (this.RegistrationData['loginIp'] != null && this.RegistrationData['loginIp'] != "") {
         const errors: Map<string, string> = RegistrationValidation.check(this.RegistrationData);

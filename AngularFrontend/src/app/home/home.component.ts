@@ -31,7 +31,7 @@ export class HomeComponent {
 
   getAllPosts(): void {
     this._httpService.getPosts(100).subscribe(data => {
-      this.allPosts = data as Array<Post>;
+      this.allPosts = data;
     });
   }
 }

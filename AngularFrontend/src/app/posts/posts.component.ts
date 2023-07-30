@@ -74,7 +74,7 @@ export class PostsComponent {
           this.errorMessage[key] = "";
         }
         this._httpService.getPost(associatePost.id).subscribe(data => {
-          associatePost.comments = (data as Post).comments;
+          associatePost.comments = data.comments;
           this.newComments = {};
         });
       });
@@ -106,7 +106,7 @@ export class PostsComponent {
   likePost(thePost: Post) {
     this._httpService.likeContent(thePost, "post").subscribe(() => {
       this._httpService.getPost(thePost.id).subscribe(data => {
-        thePost.likedBy = (data as Post).likedBy;
+        thePost.likedBy = data.likedBy;
       });
     });
   }
@@ -114,7 +114,7 @@ export class PostsComponent {
   likeComment(theComment: Comment) {
     this._httpService.likeContent(theComment, "comment").subscribe(() => {
       this._httpService.getComment(theComment.id).subscribe(data => {
-        theComment.likedBy = (data as Comment).likedBy;
+        theComment.likedBy = data.likedBy;
       });
     });
   }

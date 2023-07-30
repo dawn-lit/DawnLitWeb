@@ -19,7 +19,7 @@ export class HttpService {
 
   // get the ip of the client
   getIpInfo(): Observable<any> {
-    return this._http.get('https://jsonip.com');
+    return this._http.get<any>('https://jsonip.com');
   }
 
   // ensure no user is login already
@@ -30,7 +30,7 @@ export class HttpService {
   }
 
   // get current user data
-  getCurrentUser() {
+  getCurrentUser(): Observable<User> {
     if (this._token.isStillValid()) {
       return this._http.get<User>("/api/users/current");
     }
@@ -69,7 +69,7 @@ export class HttpService {
   }
 
   // log off current user
-  logoffUser() {
+  logoffUser(): Observable<Object> {
     localStorage.removeItem("jwt_token");
     return new Observable<Object>();
   }
@@ -101,13 +101,13 @@ export class HttpService {
   }
 
   // get post with specific id
-  getPost(id: number) {
-    return this._http.get(`/api/posts/get/${id}`);
+  getPost(id: number): Observable<Post> {
+    return this._http.get<Post>(`/api/posts/get/${id}`);
   }
 
   // get a list of posts
-  getPosts(num: number, userId: number = 0) {
-    return userId <= 0 ? this._http.get(`/api/posts/get/list/${num}`) : this._http.get(`/api/posts/get/list/${userId}/${num}`);
+  getPosts(num: number, userId: number = 0): Observable<Array<Post>> {
+    return userId <= 0 ? this._http.get<Array<Post>>(`/api/posts/get/list/${num}`) : this._http.get<Array<Post>>(`/api/posts/get/list/${userId}/${num}`);
   }
 
   // create a new comment
@@ -116,8 +116,8 @@ export class HttpService {
   }
 
   // get post with specific id
-  getComment(id: number) {
-    return this._http.get(`/api/comments/get/${id}`);
+  getComment(id: number): Observable<Comment> {
+    return this._http.get<Comment>(`/api/comments/get/${id}`);
   }
 
   // like a content

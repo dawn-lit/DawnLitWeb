@@ -31,10 +31,11 @@ export class LoginComponent {
       return;
     }
     this.isBlocked = true;
-    this._httpService.getIpInfo().subscribe((res: any) => {
-      this.resetErrorMessage();
-
+    this._httpService.getIpInfo().subscribe(res => {
+      // set ip
       this.LoginData["loginIp"] = res.ip;
+      // update error message
+      this.resetErrorMessage();
       const errors: Map<string, string> = LoginValidation.check(this.LoginData);
 
       if (errors.size > 0) {

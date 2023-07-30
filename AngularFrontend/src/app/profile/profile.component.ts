@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Post, User } from "../utility.models";
+import { User } from "../utility.models";
 import { HttpService } from "../http.service";
 import { ActivatedRoute } from "@angular/router";
 import { FriendshipStatus } from "../utility.enums";
@@ -38,7 +38,7 @@ export class ProfileComponent {
           this.profileUserData.posts = [];
           this.profileUserData.createdAt = new Date(this.profileUserData.createdAt);
           this._httpService.getPosts(10, this.profileUserData.id).subscribe(data => {
-            this.profileUserData.posts = data as Array<Post>;
+            this.profileUserData.posts = data;
           });
         }
       });
