@@ -29,8 +29,8 @@ public class User : AbstractModel
     [Display(Name = "friends")]
     public ICollection<User> Friends { get; } = new List<User>();
 
-    [Display(Name = "friendRequests")]
-    public ICollection<User> FriendRequests { get; } = new List<User>();
+    [Display(Name = "requests")]
+    public ICollection<Request> Requests { get; set; } = new List<Request>();
 
     [Display(Name = "coins")]
     public int Coins { get; set; } = 0;

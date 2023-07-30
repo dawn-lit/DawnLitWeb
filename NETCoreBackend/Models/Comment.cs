@@ -2,13 +2,10 @@
 
 namespace NETCoreBackend.Models;
 
-public class Comment : Message
+public class Comment : Discussion
 {
     [Display(Name = "post")]
     public Post? Post { get; set; }
-
-    [Display(Name = "likedBy")]
-    public ICollection<User> LikedBy { get; } = new List<User>();
 
     [Display(Name = "replies")]
     public ICollection<Comment> Replies { get; } = new List<Comment>();

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Comment, Content, Post } from "./utility.models";
+import { Comment, Discussion, Post, User } from "./utility.models";
 import { TokenService } from "./token.service";
 
 @Injectable({
@@ -32,9 +32,9 @@ export class HttpService {
   // get current user data
   getCurrentUser() {
     if (this._token.isStillValid()) {
-      return this._http.get("/api/users/current");
+      return this._http.get<User>("/api/users/current");
     }
-    return new Observable<Object>();
+    return new Observable<User>();
   }
 
   // navigate back to home page
@@ -50,7 +50,7 @@ export class HttpService {
 
   // get the information of a user
   getUser(id: number) {
-    return this._http.get(`/api/users/get/${id}`);
+    return this._http.get<User>(`/api/users/get/${id}`);
   }
 
   // update the current user's information
@@ -79,6 +79,22 @@ export class HttpService {
     return this._http.delete("/api/users/delete");
   }
 
+  // send friend request
+  sendFriendRequest(targetUser: User) {
+    return this._http.post("/api/users/connect/request", targetUser);
+  }
+
+  // accept friend request
+  acceptFriendRequest(targetUser: User) {
+    return this._http.post("/api/users/connect/accept", targetUser);
+  }
+
+  // reject friend request
+  rejectFriendRequest(targetUser: User) {
+    return this._http.post("/api/users/connect/reject", targetUser);
+  }
+
+
   // create a new post
   createPost(data: Post) {
     return this._http.post(`/api/posts/new`, data);
@@ -105,7 +121,7 @@ export class HttpService {
   }
 
   // like a content
-  likeContent(theContent: Content, contentType: string) {
+  likeContent(theContent: Discussion, contentType: string) {
     return this._http.post(`/api/users/like/${contentType}`, theContent);
   }
 }

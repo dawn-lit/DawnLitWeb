@@ -25,7 +25,7 @@ export class NavigationComponent {
   getUserData(): void {
     this._httpService.getCurrentUser().subscribe(data => {
       if (data != null && Object.keys(data).length > 0) {
-        this.userData = data as User;
+        this.userData = data;
       }
     });
   }
@@ -58,6 +58,18 @@ export class NavigationComponent {
             });
           });
       }
+    });
+  }
+
+  acceptFriendRequest(reqFrom: User) {
+    this._httpService.acceptFriendRequest(reqFrom).subscribe(() => {
+      this.getUserData();
+    });
+  }
+
+  rejectFriendRequest(reqFrom: User) {
+    this._httpService.rejectFriendRequest(reqFrom).subscribe(() => {
+      this.getUserData();
     });
   }
 

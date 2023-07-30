@@ -17,8 +17,14 @@ public class DatabaseContext : DbContext
 
     public DbSet<Comment> Comments { get; set; } = null!;
 
+    public DbSet<Request> Requests { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.Requests)
+            .WithOne(e => e.Receiver);
+
         modelBuilder.Entity<User>()
             .HasMany(e => e.Posts)
             .WithOne(e => e.Author);

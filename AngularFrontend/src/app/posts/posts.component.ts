@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Comment, Content, Post, User } from "../utility.models";
+import { Comment, Discussion, Post, User } from "../utility.models";
 import { HttpService } from "../http.service";
 import { ContentValidation } from "../utility.validations";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
@@ -66,7 +66,7 @@ export class PostsComponent {
         this.errorMessage[key] = value;
       });
     } else {
-      newComment.post = {id: associatePost.id, author: {id: associatePost.author.id} as User} as Post;
+      newComment.post = {id: associatePost.id} as Post;
       newComment.author = {id: this.userData.id} as User;
       this._httpService.createComment(newComment).subscribe(() => {
         // reset error message
@@ -81,7 +81,7 @@ export class PostsComponent {
     }
   }
 
-  getContentTime(content: Content): string {
+  getContentTime(content: Discussion): string {
     let timeDiff = (new Date().getTime() - new Date(content.createdAt).getTime()) / 1000;
     if (timeDiff >= 31536000) {
       return `${Math.round(timeDiff / 31536000)}yr`;
@@ -99,7 +99,7 @@ export class PostsComponent {
     return this.userData.id != null ? _post.comments.some(comment => comment.author.id == this.userData.id) : false;
   }
 
-  hasCurrentUserLiked(_content: Content): boolean {
+  hasCurrentUserLiked(_content: Discussion): boolean {
     return this.userData.id != null ? _content.likedBy.some(user => user.id == this.userData.id) : false;
   }
 

@@ -35,7 +35,7 @@ export class SettingsComponent {
   getUserData(): void {
     this._httpService.getCurrentUser().subscribe(data => {
       if (data != null && Object.keys(data).length > 0) {
-        this.userData = data as User;
+        this.userData = data;
       }
     });
   }
@@ -51,8 +51,7 @@ export class SettingsComponent {
         this.errorMessage[key] = value;
       });
     } else {
-      this._httpService.updateCurrentUserInfo(this.userData).subscribe(data => {
-        console.log(data);
+      this._httpService.updateCurrentUserInfo(this.userData).subscribe(() => {
       });
     }
   }
@@ -74,7 +73,6 @@ export class SettingsComponent {
 
   deleteUser() {
     this._httpService.deleteUser().subscribe((data: any) => {
-      console.log(data);
       this._httpService.logoffUser().subscribe(() => this._httpService.gotoHomePage());
     });
   }

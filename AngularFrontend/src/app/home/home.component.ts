@@ -24,7 +24,7 @@ export class HomeComponent {
   getUserData(): void {
     this._httpService.getCurrentUser().subscribe(data => {
       if (data != null && Object.keys(data).length > 0) {
-        this.userData = data as User;
+        this.userData = data;
       }
     });
   }

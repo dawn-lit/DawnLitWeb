@@ -24,6 +24,7 @@ import { FormsModule } from "@angular/forms";
 import { JwtModule } from "@auth0/angular-jwt";
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { OverlayscrollbarsModule } from "overlayscrollbars-ngx";
+import { ProfileConnectionsComponent } from './profile-connections/profile-connections.component';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt_token");
@@ -43,7 +44,8 @@ export function tokenGetter() {
     ProfileComponent,
     PostsComponent,
     ProfileAboutComponent,
-    MessagingComponent
+    MessagingComponent,
+    ProfileConnectionsComponent
   ],
   imports: [
     BrowserModule,

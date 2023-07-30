@@ -23,14 +23,11 @@ public class UsersController : ControllerBase
     private const int MIN_ABOUT_LENGTH = 0;
     private const int MAX_ABOUT_LENGTH = 500;
 
-    private readonly ConfidentialService _confidentialService;
-
     private readonly UsersService _usersService;
 
     public UsersController(DatabaseContext db)
     {
         this._usersService = new UsersService(db);
-        this._confidentialService = new ConfidentialService(db);
     }
 
     private int GetCurrentUserId()
@@ -83,7 +80,8 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> Post(User newUser)
     {
         // ensure the email is not empty and valid
-        if (newUser.Email.Length <= 0 || !new EmailAddressAttribute().IsValid(newUser.Email))
+        if (newUser.Email.Length <= 0 || !new EmailAddressAttribute().IsValid(newUser.Email) ||
+            await this._usersService.GetAsync(newUser.Email, false) != null)
         {
             return this.Conflict("Email");
         }
@@ -99,23 +97,6 @@ public class UsersController : ControllerBase
         {
             return this.Conflict("Password");
         }
-
-        // hashing the password
-        Authentications.CreatePasswordHash(newUser.Password, out byte[] passwordHash, out byte[] passwordSalt);
-
-        // create an associate confidential record
-        Confidential userConfidential = new()
-        {
-            PasswordHash = passwordHash,
-            PasswordSalt = passwordSalt
-        };
-
-        await this._confidentialService.CreateAsync(userConfidential);
-
-        // update user confidential
-        newUser.Confidential = userConfidential;
-        newUser.Confidential.LoginIp = newUser.LoginIp;
-        newUser.Confidential.RegisterIp = newUser.LoginIp;
 
         // create the user
         await this._usersService.CreateAsync(newUser);
@@ -212,14 +193,8 @@ public class UsersController : ControllerBase
             return this.Conflict(new { accepted = false, password = "password_incorrect" });
         }
 
-        // hashing the new password
-        Authentications.CreatePasswordHash(modifiedUser.NewPassword, out byte[] passwordHash, out byte[] passwordSalt);
-
-        user.Confidential!.PasswordHash = passwordHash;
-        user.Confidential!.PasswordSalt = passwordSalt;
-
-        // save the changes
-        await this._confidentialService.SaveChangesAsync();
+        // update the new password
+        await this._usersService.ChangePasswordAsync(user, modifiedUser.NewPassword);
 
         return this.Accepted();
     }
@@ -264,6 +239,81 @@ public class UsersController : ControllerBase
         {
             return this.NotFound();
         }
+
+        return this.Accepted();
+    }
+
+    [HttpPost("connect/request")]
+    public async Task<IActionResult> SendFriendRequest(User targetUser)
+    {
+        // get current user
+        User? currentUser = await this.GetCurrentUser();
+
+        if (currentUser is null)
+        {
+            return this.NotFound("current user");
+        }
+
+        // get target user
+        targetUser = (await this._usersService.GetAsync(targetUser.Id))!;
+
+        // ensure not the same user
+        if (currentUser.Id == targetUser.Id)
+        {
+            return this.Conflict();
+        }
+
+        await this._usersService.SendFriendRequest(currentUser, targetUser);
+
+        return this.Accepted();
+    }
+
+    [HttpPost("connect/accept")]
+    public async Task<IActionResult> AcceptFriendRequest(User targetUser)
+    {
+        // get current user
+        User? currentUser = await this.GetCurrentUser();
+
+        if (currentUser is null)
+        {
+            return this.NotFound("current user");
+        }
+
+        // get target user
+        targetUser = (await this._usersService.GetAsync(targetUser.Id))!;
+
+        // ensure not the same user
+        if (currentUser.Id == targetUser.Id)
+        {
+            return this.Conflict();
+        }
+
+        await this._usersService.AcceptFriendRequest(currentUser, targetUser);
+
+        return this.Accepted();
+    }
+
+    [HttpPost("connect/reject")]
+    public async Task<IActionResult> RejectFriendReject(User targetUser)
+    {
+        // get current user
+        User? currentUser = await this.GetCurrentUser();
+
+        if (currentUser is null)
+        {
+            return this.NotFound("current user");
+        }
+
+        // get target user
+        targetUser = (await this._usersService.GetAsync(targetUser.Id))!;
+
+        // ensure not the same user
+        if (currentUser.Id == targetUser.Id)
+        {
+            return this.Conflict();
+        }
+
+        await this._usersService.RejectFriendRequest(currentUser, targetUser);
 
         return this.Accepted();
     }

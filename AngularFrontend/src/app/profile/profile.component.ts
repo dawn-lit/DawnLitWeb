@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Post, User } from "../utility.models";
 import { HttpService } from "../http.service";
 import { ActivatedRoute } from "@angular/router";
+import { FriendshipStatus } from "../utility.enums";
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +14,7 @@ export class ProfileComponent {
   profileUserData: User = {} as User;
   currentUserData: User = {} as User;
   currentActive: string = "posts";
+  protected readonly FriendshipStatus = FriendshipStatus;
 
   constructor(
     private _httpService: HttpService,
@@ -32,7 +34,7 @@ export class ProfileComponent {
     if (this.profileUserId > 0) {
       this._httpService.getUser(this.profileUserId).subscribe(data => {
         if (data != null && Object.keys(data).length > 0) {
-          this.profileUserData = data as User;
+          this.profileUserData = data;
           this.profileUserData.posts = [];
           this.profileUserData.createdAt = new Date(this.profileUserData.createdAt);
           this._httpService.getPosts(10, this.profileUserData.id).subscribe(data => {
@@ -43,7 +45,7 @@ export class ProfileComponent {
     }
     this._httpService.getCurrentUser().subscribe(data => {
       if (data != null && Object.keys(data).length > 0) {
-        this.currentUserData = data as User;
+        this.currentUserData = data;
       }
     });
   }
@@ -58,5 +60,22 @@ export class ProfileComponent {
 
   setActiveCategory(category: string) {
     this.currentActive = category;
+  }
+
+  getFriendShipStatus() {
+    if (this.currentUserData.friends == null || this.profileUserData.friends == null) {
+      return FriendshipStatus.UnClear;
+    } else if (this.currentUserData.friends.some(f => f.id == this.profileUserData.id)) {
+      return FriendshipStatus.AreFriends;
+    } else if (this.profileUserData.requests.some(r => r.sender.id == this.currentUserData.id)) {
+      return FriendshipStatus.RequestSent;
+    }
+    return FriendshipStatus.NoRequestSent;
+  }
+
+  sendRequest() {
+    this._httpService.sendFriendRequest(this.profileUserData).subscribe(() => {
+      this.initUserData();
+    });
   }
 }

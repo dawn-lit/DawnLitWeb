@@ -1,5 +1,5 @@
 // validate general user information
-import { Content, User } from "./utility.models";
+import { Discussion, User } from "./utility.models";
 
 class UserValidation {
   // user name length requirements
@@ -231,7 +231,7 @@ export class ContentValidation {
     empty: "Content cannot be empty!"
   };
 
-  public static check(newContent: Content): Map<string, string> {
+  public static check(newContent: Discussion): Map<string, string> {
     const errorMessages: Map<string, string> = new Map<string, string>();
     if (newContent.content.length <= 0) {
       errorMessages.set("content", this.ERROR_MESSAGES.empty);

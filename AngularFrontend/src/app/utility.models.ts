@@ -6,6 +6,7 @@ export interface User {
   group: number;
   loginIp: string;
   friends: Array<User>;
+  requests: Array<Request>;
   posts: Array<Post>;
   likedPosts: Array<Post>;
   comments: Array<Comment>;
@@ -18,21 +19,28 @@ export interface User {
   updatedAt: Date;
 }
 
-export interface Content {
+export interface Request {
   id: number;
-  content: string;
+  sender: User;
+  type: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Discussion {
+  id: number;
   author: User;
+  content: string;
   likedBy: Array<User>;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface Post extends Content {
-  permission: number;
+export interface Post extends Discussion {
   comments: Array<Comment>;
 }
 
-export interface Comment extends Content {
-  replies: Array<Comment>;
+export interface Comment extends Discussion {
   post: Post;
+  replies: Array<Comment>;
 }
