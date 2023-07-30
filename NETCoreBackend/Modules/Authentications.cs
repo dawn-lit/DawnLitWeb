@@ -31,10 +31,10 @@ public static class Authentications
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public static JwtSecurityToken ReadJwtToken(HttpRequest theRequest)
+    public static JwtSecurityToken? ReadJwtToken(HttpRequest theRequest)
     {
         string theTokenString = theRequest.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
-        return new JwtSecurityTokenHandler().ReadJwtToken(theTokenString);
+        return theTokenString.Equals(string.Empty) ? null : new JwtSecurityTokenHandler().ReadJwtToken(theTokenString);
     }
 
     public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

@@ -6,6 +6,7 @@ namespace NETCoreBackend.Services;
 
 public class UsersService : AbstractService<User>
 {
+    private const int MAX_USERS = 10;
     private readonly ConfidentialService _confidentialService;
     private readonly RequestsService _requestsService;
 
@@ -62,6 +63,18 @@ public class UsersService : AbstractService<User>
             .ThenInclude(x => x.Sender)
             .Include(x => x.Friends)
             .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task<List<User>> GetListAsync(int currentUserId, int num)
+    {
+        return await this.GetDatabaseCollection()
+            .Where(x => x.Id != currentUserId)
+            .Include(x => x.Friends)
+            .Include(x => x.Requests)
+            .ThenInclude(x => x.Sender)
+            .OrderByDescending(o => o.CreatedAt)
+            .Take(Math.Min(num, MAX_USERS))
+            .ToListAsync();
     }
 
     public async Task<User?> GetAsync(string email, bool withConfidential)
@@ -223,5 +236,21 @@ public class UsersService : AbstractService<User>
         await this.SaveChangesAsync();
 
         return true;
+    }
+
+    public async Task RemoveFriend(User currentUser, User targetUser)
+    {
+        if (currentUser.Friends.Contains(targetUser))
+        {
+            currentUser.Friends.Remove(targetUser);
+        }
+
+        if (targetUser.Friends.Contains(currentUser))
+        {
+            targetUser.Friends.Remove(currentUser);
+        }
+
+        // save the changes
+        await this.SaveChangesAsync();
     }
 }

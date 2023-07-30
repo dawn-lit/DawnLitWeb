@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Post, User } from "../utility.models";
 import { HttpService } from "../http.service";
+import { FriendshipStatus } from "../utility.enums";
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,9 @@ import { HttpService } from "../http.service";
 })
 export class HomeComponent {
   userData: User = {} as User;
+  userRecentlyCrated: Array<User> = [];
   allPosts: Array<Post> = new Array<Post>();
+  protected readonly FriendshipStatus = FriendshipStatus;
 
   constructor(
     private _httpService: HttpService
@@ -19,6 +22,7 @@ export class HomeComponent {
   ngOnInit(): void {
     this.getUserData();
     this.getAllPosts();
+    this.getUserRecentlyCreated();
   }
 
   getUserData(): void {
@@ -32,6 +36,25 @@ export class HomeComponent {
   getAllPosts(): void {
     this._httpService.getPosts(100).subscribe(data => {
       this.allPosts = data;
+    });
+  }
+
+  getUserRecentlyCreated() {
+    this._httpService.getUsers(5).subscribe(data => {
+      this.userRecentlyCrated = data;
+    });
+  }
+
+  getFriendShipStatus(targetUser: User) {
+    return FriendshipStatus.getStatus(this.userData, targetUser);
+  }
+
+  sendFriendRequest(targetUser: User) {
+    this._httpService.sendFriendRequest(targetUser).subscribe(() => {
+      this._httpService.getUser(targetUser.id).subscribe(data => {
+        targetUser.friends = data.friends;
+        targetUser.requests = data.requests;
+      });
     });
   }
 }

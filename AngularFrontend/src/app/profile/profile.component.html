@@ -107,8 +107,8 @@
                    class="vstack gap-4"></app-posts>
         <app-profile-about *ngIf="getActiveStatus('about')=='active'" [userData]="profileUserData"
                            class="card"></app-profile-about>
-        <app-profile-connections *ngIf="getActiveStatus('connections')=='active'" [enableButtons]="isLookingAtOwnPage()"
-                                 [friends]="profileUserData.friends"
+        <app-profile-connections (childEvent)="initUserData()" *ngIf="getActiveStatus('connections')=='active'"
+                                 [enableButtons]="isLookingAtOwnPage()" [friends]="profileUserData.friends"
                                  class="card"></app-profile-connections>
       </div>
       <!-- Main content END -->

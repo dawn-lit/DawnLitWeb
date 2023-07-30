@@ -63,14 +63,7 @@ export class ProfileComponent {
   }
 
   getFriendShipStatus() {
-    if (this.currentUserData.friends == null || this.profileUserData.friends == null) {
-      return FriendshipStatus.UnClear;
-    } else if (this.currentUserData.friends.some(f => f.id == this.profileUserData.id)) {
-      return FriendshipStatus.AreFriends;
-    } else if (this.profileUserData.requests.some(r => r.sender.id == this.currentUserData.id)) {
-      return FriendshipStatus.RequestSent;
-    }
-    return FriendshipStatus.NoRequestSent;
+    return FriendshipStatus.getStatus(this.currentUserData, this.profileUserData);
   }
 
   sendRequest() {

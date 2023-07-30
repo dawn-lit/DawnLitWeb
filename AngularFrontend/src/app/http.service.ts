@@ -53,6 +53,11 @@ export class HttpService {
     return this._http.get<User>(`/api/users/get/${id}`);
   }
 
+  // get the information of a user
+  getUsers(num: number) {
+    return this._http.get<Array<User>>(`/api/users/get/list/${num}`);
+  }
+
   // update the current user's information
   updateCurrentUserInfo(data: any) {
     return this._http.put(`/api/users/update/info`, data);
@@ -92,6 +97,11 @@ export class HttpService {
   // reject friend request
   rejectFriendRequest(targetUser: User) {
     return this._http.post("/api/users/connect/reject", targetUser);
+  }
+
+  // remove friend
+  removeFriend(targetUser: User) {
+    return this._http.post("/api/users/connect/remove", targetUser);
   }
 
 

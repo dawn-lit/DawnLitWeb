@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using NETCoreBackend.Models;
@@ -32,10 +33,16 @@ public class UsersController : ControllerBase
 
     private int GetCurrentUserId()
     {
-        string theSId = Authentications.ReadJwtToken(this.Request).Claims
+        JwtSecurityToken? theToken = Authentications.ReadJwtToken(this.Request);
+        if (theToken == null)
+        {
+            return 0;
+        }
+
+        string theSId = theToken.Claims
             .First(claim => claim.Type == ClaimTypes.PrimarySid).Value;
 
-        return !int.TryParse(theSId, out int theId) ? 0 : theId;
+        return int.TryParse(theSId, out int theId) ? theId : 0;
     }
 
     private async Task<User?> GetCurrentUser()
@@ -74,6 +81,12 @@ public class UsersController : ControllerBase
         }
 
         return user;
+    }
+
+    [HttpGet("get/list/{num:int}")]
+    public async Task<List<User>> GetList(int num)
+    {
+        return await this._usersService.GetListAsync(this.GetCurrentUserId(), num);
     }
 
     [HttpPost("new")]
@@ -294,7 +307,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("connect/reject")]
-    public async Task<IActionResult> RejectFriendReject(User targetUser)
+    public async Task<IActionResult> RejectFriendRequest(User targetUser)
     {
         // get current user
         User? currentUser = await this.GetCurrentUser();
@@ -314,6 +327,31 @@ public class UsersController : ControllerBase
         }
 
         await this._usersService.RejectFriendRequest(currentUser, targetUser);
+
+        return this.Accepted();
+    }
+
+    [HttpPost("connect/remove")]
+    public async Task<IActionResult> RemoveFriend(User targetUser)
+    {
+        // get current user
+        User? currentUser = await this.GetCurrentUser();
+
+        if (currentUser is null)
+        {
+            return this.NotFound("current user");
+        }
+
+        // get target user
+        targetUser = (await this._usersService.GetAsync(targetUser.Id))!;
+
+        // ensure not the same user
+        if (currentUser.Id == targetUser.Id)
+        {
+            return this.Conflict();
+        }
+
+        await this._usersService.RemoveFriend(currentUser, targetUser);
 
         return this.Accepted();
     }

@@ -15,7 +15,7 @@
       <!-- Info -->
       <div class="w-100">
         <div class="d-sm-flex align-items-start">
-          <h6 class="mb-0"><a href="#!">{{friend.name}}</a></h6>
+          <h6 class="mb-0"><a href="/profile?id={{friend.id}}">{{friend.name}}</a></h6>
           <p class="small ms-sm-2 mb-0">{{friend.signature}}</p>
         </div>
         <!-- Connections START -->
@@ -44,7 +44,7 @@
       </div>
       <!-- Button -->
       <div *ngIf="enableButtons" class="ms-md-auto d-flex">
-        <button class="btn btn-danger-soft btn-sm mb-0 me-2"> Remove</button>
+        <button (click)="removeFriend(friend)" class="btn btn-danger-soft btn-sm mb-0 me-2"> Remove</button>
         <button class="btn btn-primary-soft btn-sm mb-0"> Message</button>
       </div>
     </div>

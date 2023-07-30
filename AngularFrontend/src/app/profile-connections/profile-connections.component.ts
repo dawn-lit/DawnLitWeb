@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from "../utility.models";
+import { HttpService } from "../http.service";
 
 @Component({
   selector: 'app-profile-connections',
@@ -9,4 +10,17 @@ import { User } from "../utility.models";
 export class ProfileConnectionsComponent {
   @Input() friends: Array<User> = [];
   @Input() enableButtons: boolean = false;
+  @Output() childEvent = new EventEmitter();
+
+  constructor(
+    private _httpService: HttpService,
+  ) {
+  }
+
+  removeFriend(user: User) {
+    this._httpService.removeFriend(user).subscribe(() => {
+      // make parent update friend list
+      this.childEvent.emit();
+    });
+  }
 }
