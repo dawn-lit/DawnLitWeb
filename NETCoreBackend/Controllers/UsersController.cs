@@ -356,6 +356,56 @@ public class UsersController : ControllerBase
         return this.Accepted();
     }
 
+    [HttpPost("chats/new")]
+    public async Task<IActionResult> NewChat(User targetUser)
+    {
+        // get current user
+        User? currentUser = await this.GetCurrentUser();
+
+        if (currentUser is null)
+        {
+            return this.NotFound("current user");
+        }
+
+        // get target user
+        targetUser = (await this._usersService.GetAsync(targetUser.Id))!;
+
+        // ensure not the same user
+        if (currentUser.Id == targetUser.Id)
+        {
+            return this.Conflict();
+        }
+
+        await this._usersService.NewChat(currentUser, targetUser);
+
+        return this.Accepted();
+    }
+
+    [HttpPost("chats/delete")]
+    public async Task<IActionResult> RemoveChat(User targetUser)
+    {
+        // get current user
+        User? currentUser = await this.GetCurrentUser();
+
+        if (currentUser is null)
+        {
+            return this.NotFound("current user");
+        }
+
+        // get target user
+        targetUser = (await this._usersService.GetAsync(targetUser.Id))!;
+
+        // ensure not the same user
+        if (currentUser.Id == targetUser.Id)
+        {
+            return this.Conflict();
+        }
+
+        await this._usersService.RemoveChat(currentUser, targetUser);
+
+        return this.Accepted();
+    }
+
     [HttpDelete("delete")]
     public async Task<IActionResult> Delete()
     {

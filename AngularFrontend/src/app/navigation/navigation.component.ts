@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { User } from "../utility.models";
 import { HttpService } from '../http.service';
 import { Router } from "@angular/router";
+import { getExistenceTime } from "../utility.functions";
 
 @Component({
   selector: 'app-navigation',
@@ -10,6 +11,7 @@ import { Router } from "@angular/router";
 })
 export class NavigationComponent {
   userData: User = {} as User;
+  protected readonly getExistenceTime = getExistenceTime;
 
   constructor(
     private _httpService: HttpService,

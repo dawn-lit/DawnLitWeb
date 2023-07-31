@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from "../utility.models";
 import { HttpService } from "../http.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { FriendshipStatus } from "../utility.enums";
 
 @Component({
@@ -18,7 +18,8 @@ export class ProfileComponent {
 
   constructor(
     private _httpService: HttpService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _router: Router
   ) {
   }
 
@@ -69,6 +70,14 @@ export class ProfileComponent {
   sendRequest() {
     this._httpService.sendFriendRequest(this.profileUserData).subscribe(() => {
       this.initUserData();
+    });
+  }
+
+  sendMessage() {
+    this._httpService.newChat(this.profileUserData).subscribe(data => {
+      console.log(data);
+      this._router.navigate(['/messaging']).then(() => {
+      });
     });
   }
 }

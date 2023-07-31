@@ -10,7 +10,7 @@ Dawn Lit is not only a platform built for individuals, but also a platform built
 
 ## 🔗Live Demo:
 
-[dawnlit.com:18989](dawnlit.com:18989)
+http://dawnlit.com:18989
 
 **Warning**: The website is still in the early development phase, and we will perform data deletion occasionally due to technical limitations. We do not recommend that individuals divulge any confidential information at this stage due to the potential security apprehension.
 

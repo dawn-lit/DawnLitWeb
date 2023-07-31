@@ -47,7 +47,7 @@
           <div class="nav nav-divider">
             <h6 class="nav-item card-title mb-0"><a href="./profile?id={{_post.author.id}}"> {{_post.author.name}} </a>
             </h6>
-            <span class="nav-item small"> {{getContentTime(_post)}}</span>
+            <span class="nav-item small"> {{getExistenceTime(_post)}}</span>
           </div>
           <p class="mb-0 small">{{_post.author.signature}}</p>
         </div>
@@ -79,9 +79,7 @@
   <!-- Card header END -->
   <!-- Card body START -->
   <div class="card-body">
-    <p>{{_post.content}}</p>
-    <!-- Card img -->
-    <img alt="Post" class="card-img" src="/assets/images/post/3by2/01.jpg">
+    <p [innerHTML]="_post.content"></p>
     <!-- Feed react START -->
     <ul class="nav nav-stack py-3 small">
       <li class="nav-item">
@@ -157,7 +155,7 @@
             <div class="bg-light rounded-start-top-0 p-3 rounded">
               <div class="d-flex justify-content-between">
                 <h6 class="mb-1"><a href="./profile?id={{_comment.author.id}}">{{_comment.author.name}}</a></h6>
-                <small class="ms-2">{{getContentTime(_comment)}}</small>
+                <small class="ms-2">{{getExistenceTime(_comment)}}</small>
               </div>
               <p class="small mb-0">{{_comment.content}}</p>
             </div>

@@ -3,6 +3,7 @@ import { Comment, Discussion, Post, User } from "../utility.models";
 import { HttpService } from "../http.service";
 import { ContentValidation } from "../utility.validations";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
+import { getExistenceTime } from "../utility.functions";
 
 declare var $: any;
 
@@ -23,6 +24,7 @@ export class PostsComponent {
   newPost: Post = {"content": ""} as Post;
   newComments: Record<string, Comment> = {};
   errorMessage: Record<string, string> = {"content": ""};
+  protected readonly getExistenceTime = getExistenceTime;
 
   constructor(
     private _httpService: HttpService
@@ -79,20 +81,6 @@ export class PostsComponent {
         });
       });
     }
-  }
-
-  getContentTime(content: Discussion): string {
-    let timeDiff = (new Date().getTime() - new Date(content.createdAt).getTime()) / 1000;
-    if (timeDiff >= 31536000) {
-      return `${Math.round(timeDiff / 31536000)}yr`;
-    } else if (timeDiff >= 2592000) {
-      return `${Math.round(timeDiff / 2592000)}mon`;
-    } else if (timeDiff >= 86400) {
-      return `${Math.round(timeDiff / 86400)}d`;
-    } else if (timeDiff >= 3600) {
-      return `${Math.round(timeDiff / 3600)}hr`;
-    }
-    return `${Math.max(Math.round(timeDiff / 60), 1)}min`;
   }
 
   hasCurrentUserCommented(_post: Post): boolean {

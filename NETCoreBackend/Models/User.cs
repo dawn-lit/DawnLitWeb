@@ -32,6 +32,9 @@ public class User : AbstractModel
     [Display(Name = "requests")]
     public ICollection<Request> Requests { get; set; } = new List<Request>();
 
+    [Display(Name = "chats")]
+    public ICollection<Chat> Chats { get; set; } = new List<Chat>();
+
     [Display(Name = "coins")]
     public int Coins { get; set; } = 0;
 

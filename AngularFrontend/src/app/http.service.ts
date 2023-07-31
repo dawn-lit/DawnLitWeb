@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Comment, Discussion, Post, User } from "./utility.models";
+import { Chat, Comment, Discussion, Message, Post, User } from "./utility.models";
 import { TokenService } from "./token.service";
 
 @Injectable({
@@ -133,5 +133,25 @@ export class HttpService {
   // like a content
   likeContent(theContent: Discussion, contentType: string) {
     return this._http.post(`/api/users/like/${contentType}`, theContent);
+  }
+
+  // start a new chat
+  newChat(targetUser: User) {
+    return this._http.post(`/api/users/chats/new`, {id: targetUser.id} as User);
+  }
+
+  // get a chat
+  getChat(id: number): Observable<Chat> {
+    return this._http.get<Chat>(`/api/chats/get/${id}`);
+  }
+
+  // remove chat
+  removeChat(targetUser: User) {
+    return this._http.post(`/api/users/chats/delete`, targetUser);
+  }
+
+  // new message
+  newMessage(message: Message) {
+    return this._http.post(`/api/messages/new`, message);
   }
 }

@@ -1,5 +1,10 @@
-export interface User {
+export interface DatabaseRecord {
   id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface User extends DatabaseRecord {
   avatar: any;
   name: string;
   email: string;
@@ -7,6 +12,7 @@ export interface User {
   loginIp: string;
   friends: Array<User>;
   requests: Array<Request>;
+  chats: Array<Chat>;
   posts: Array<Post>;
   likedPosts: Array<Post>;
   comments: Array<Comment>;
@@ -15,25 +21,29 @@ export interface User {
   experience: number;
   signature: string;
   about: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
-export interface Request {
-  id: number;
+export interface Request extends DatabaseRecord {
   sender: User;
   type: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
-export interface Discussion {
-  id: number;
+export interface Chat extends DatabaseRecord {
+  owner: User;
+  target: User;
+  messages: Array<Message>;
+}
+
+export interface Message extends DatabaseRecord {
+  chat: Chat;
+  sender: User;
+  content: string;
+}
+
+export interface Discussion extends DatabaseRecord {
   author: User;
   content: string;
   likedBy: Array<User>;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface Post extends Discussion {

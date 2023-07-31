@@ -19,11 +19,19 @@ public class DatabaseContext : DbContext
 
     public DbSet<Request> Requests { get; set; } = null!;
 
+    public DbSet<Chat> Chats { get; set; } = null!;
+
+    public DbSet<Message> Messages { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>()
             .HasMany(e => e.Requests)
             .WithOne(e => e.Receiver);
+
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.Chats)
+            .WithOne(e => e.Owner);
 
         modelBuilder.Entity<User>()
             .HasMany(e => e.Posts)
@@ -40,6 +48,10 @@ public class DatabaseContext : DbContext
         modelBuilder.Entity<Post>()
             .HasMany(e => e.Comments)
             .WithOne(e => e.Post);
+
+        modelBuilder.Entity<Chat>()
+            .HasMany(e => e.Messages)
+            .WithOne(e => e.Chat);
 
         modelBuilder.UseSerialColumns();
     }
