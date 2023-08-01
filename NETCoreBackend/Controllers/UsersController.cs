@@ -1,6 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using NETCoreBackend.Models;
 using NETCoreBackend.Modules;
@@ -10,7 +8,7 @@ namespace NETCoreBackend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UsersController : ControllerBase
+public class UsersController : AbstractUserController
 {
     private const int MIN_NAME_LENGTH = 2;
     private const int MAX_NAME_LENGTH = 16;
@@ -29,20 +27,6 @@ public class UsersController : ControllerBase
     public UsersController(DatabaseContext db)
     {
         this._usersService = new UsersService(db);
-    }
-
-    private int GetCurrentUserId()
-    {
-        JwtSecurityToken? theToken = Authentications.ReadJwtToken(this.Request);
-        if (theToken == null)
-        {
-            return 0;
-        }
-
-        string theSId = theToken.Claims
-            .First(claim => claim.Type == ClaimTypes.PrimarySid).Value;
-
-        return int.TryParse(theSId, out int theId) ? theId : 0;
     }
 
     private async Task<User?> GetCurrentUser()
@@ -352,56 +336,6 @@ public class UsersController : ControllerBase
         }
 
         await this._usersService.RemoveFriend(currentUser, targetUser);
-
-        return this.Accepted();
-    }
-
-    [HttpPost("chats/new")]
-    public async Task<IActionResult> NewChat(User targetUser)
-    {
-        // get current user
-        User? currentUser = await this.GetCurrentUser();
-
-        if (currentUser is null)
-        {
-            return this.NotFound("current user");
-        }
-
-        // get target user
-        targetUser = (await this._usersService.GetAsync(targetUser.Id))!;
-
-        // ensure not the same user
-        if (currentUser.Id == targetUser.Id)
-        {
-            return this.Conflict();
-        }
-
-        await this._usersService.NewChat(currentUser, targetUser);
-
-        return this.Accepted();
-    }
-
-    [HttpPost("chats/delete")]
-    public async Task<IActionResult> RemoveChat(User targetUser)
-    {
-        // get current user
-        User? currentUser = await this.GetCurrentUser();
-
-        if (currentUser is null)
-        {
-            return this.NotFound("current user");
-        }
-
-        // get target user
-        targetUser = (await this._usersService.GetAsync(targetUser.Id))!;
-
-        // ensure not the same user
-        if (currentUser.Id == targetUser.Id)
-        {
-            return this.Conflict();
-        }
-
-        await this._usersService.RemoveChat(currentUser, targetUser);
 
         return this.Accepted();
     }

@@ -74,7 +74,7 @@ export class ProfileComponent {
   }
 
   sendMessage() {
-    this._httpService.newChat(this.profileUserData).subscribe(data => {
+    this._httpService.newChat(this.currentUserData, this.profileUserData).subscribe(data => {
       console.log(data);
       this._router.navigate(['/messaging']).then(() => {
       });

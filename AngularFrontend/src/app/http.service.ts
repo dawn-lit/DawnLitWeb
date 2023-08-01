@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Chat, Comment, Discussion, Message, Post, User } from "./utility.models";
+import { Chat, Comment, Discussion, Message, Post, User, UserDummy } from "./utility.models";
 import { TokenService } from "./token.service";
 
 @Injectable({
@@ -136,8 +136,8 @@ export class HttpService {
   }
 
   // start a new chat
-  newChat(targetUser: User) {
-    return this._http.post(`/api/users/chats/new`, {id: targetUser.id} as User);
+  newChat(fromUser: User, toUser: User) {
+    return this._http.post("/api/chats/new", {owner: UserDummy(fromUser), target: UserDummy(toUser)} as Chat);
   }
 
   // get a chat
@@ -146,8 +146,8 @@ export class HttpService {
   }
 
   // remove chat
-  removeChat(targetUser: User) {
-    return this._http.post(`/api/users/chats/delete`, targetUser);
+  removeChat(id: number) {
+    return this._http.delete(`/api/chats/delete/${id}`);
   }
 
   // new message

@@ -59,7 +59,7 @@ export class MessagingComponent {
     if (this.selectedChat == null) {
       return;
     }
-    this._httpService.removeChat(this.selectedChat.target).subscribe(() => this.getUserData());
+    this._httpService.removeChat(this.selectedChat.id).subscribe(() => this.getUserData());
   }
 
   sendMessage() {

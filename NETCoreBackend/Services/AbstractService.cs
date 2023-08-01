@@ -66,6 +66,11 @@ public abstract class AbstractService<T> where T : AbstractModel
             return false;
         }
 
+        return await this.RemoveAsync(model);
+    }
+
+    public async Task<bool> RemoveAsync(T model)
+    {
         this.GetDatabaseCollection().Remove(model);
         await this.SaveChangesAsync();
 

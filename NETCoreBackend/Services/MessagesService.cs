@@ -6,11 +6,11 @@ namespace NETCoreBackend.Services;
 
 public class MessagesService : AbstractService<Message>
 {
-    private readonly UsersService _usersService;
+    private readonly ChatsService _chatsService;
 
     public MessagesService(DatabaseContext db) : base(db, db.Messages)
     {
-        this._usersService = new UsersService(db);
+        this._chatsService = new ChatsService(db);
     }
 
     public new async Task<bool> CreateAsync(Message newMessage)
@@ -44,7 +44,13 @@ public class MessagesService : AbstractService<Message>
         // add message to self chat
         await base.CreateAsync(newMessage);
 
-        await this._usersService.NewChat(newMessage.Chat.Target, newMessage.Chat.Owner);
+        await this._chatsService.CreateAsync(
+            new Chat
+            {
+                Owner = newMessage.Chat.Target,
+                Target = newMessage.Chat.Owner
+            }
+        );
 
         // get the newest copy of target user data
         authorRef = await dbContext.Users

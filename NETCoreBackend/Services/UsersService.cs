@@ -7,7 +7,6 @@ namespace NETCoreBackend.Services;
 public class UsersService : AbstractService<User>
 {
     private const int MAX_USERS = 10;
-    private readonly ChatsService _chatsService;
     private readonly ConfidentialService _confidentialService;
     private readonly RequestsService _requestsService;
 
@@ -15,7 +14,6 @@ public class UsersService : AbstractService<User>
     {
         this._confidentialService = new ConfidentialService(db);
         this._requestsService = new RequestsService(db);
-        this._chatsService = new ChatsService(db);
     }
 
     public new async Task<bool> CreateAsync(User newUser)
@@ -235,55 +233,6 @@ public class UsersService : AbstractService<User>
 
         // current user remove target user from all existing requests
         currentUser.Requests.Remove(existsCurrentUserRequest);
-
-        // save the changes
-        await this.SaveChangesAsync();
-
-        return true;
-    }
-
-    public async Task<bool> NewChat(User currentUser, User targetUser)
-    {
-        // try find existing chat
-        Chat? existsChat = currentUser.Chats.FirstOrDefault(r => r.Target.Id == targetUser.Id);
-
-        if (existsChat != null)
-        {
-            existsChat.UpdatedAt = DateTime.UtcNow;
-        }
-        else
-        {
-            // create new chat
-            Chat newChat = new()
-            {
-                Owner = currentUser,
-                Target = targetUser
-            };
-
-            await this._chatsService.CreateAsync(newChat);
-
-            // add chat
-            currentUser.Chats.Add(newChat);
-        }
-
-        // save the changes
-        await this.SaveChangesAsync();
-
-        return true;
-    }
-
-    public async Task<bool> RemoveChat(User currentUser, User targetUser)
-    {
-        // try find existing chat
-        Chat? existsChat = currentUser.Chats.FirstOrDefault(r => r.Target == targetUser);
-
-        if (existsChat == null)
-        {
-            return false;
-        }
-
-        // remove chat
-        currentUser.Chats.Remove(existsChat);
 
         // save the changes
         await this.SaveChangesAsync();

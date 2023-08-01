@@ -23,6 +23,10 @@ export interface User extends DatabaseRecord {
   about: string;
 }
 
+export function UserDummy(user: User): User {
+  return {id: user.id} as User;
+}
+
 export interface Request extends DatabaseRecord {
   sender: User;
   type: string;
