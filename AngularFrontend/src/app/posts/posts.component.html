@@ -37,7 +37,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center">
         <!-- Avatar -->
-        <div class="avatar {{_post.author.id ==userData.id? 'avatar-story':''}} me-2">
+        <div class="avatar {{userData != null && _post.author.id == userData.id? 'avatar-story' : ''}} me-2">
           <a href="./profile?id={{_post.author.id}}">
             <app-avatar [classTags]="'rounded-circle'" [userData]="_post.author"></app-avatar>
           </a>
@@ -122,7 +122,7 @@
     <!-- Feed react END -->
 
     <!-- Add comment -->
-    <div *ngIf="userData.id!=null" class="d-flex mb-3">
+    <div *ngIf="userData!=null" class="d-flex mb-3">
       <!-- Avatar -->
       <div class="avatar avatar-xs me-2">
         <a href="./profile?id={{userData.id}}">

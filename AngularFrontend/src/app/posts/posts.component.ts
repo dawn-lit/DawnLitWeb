@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Comment, Discussion, Post, User } from "../utility.models";
+import { Comment, Discussion, Post, User, UserDummy } from "../utility.models";
 import { HttpService } from "../http.service";
 import { ContentValidation } from "../utility.validations";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
@@ -16,8 +16,8 @@ export class PostsComponent {
 
   @Input() posts: Array<Post> = [];
   @Input() enablePost: boolean = false;
-  @Input() userData: User = {} as User;
-  @Output() childEvent = new EventEmitter();
+  @Input() userData: User | null = null;
+  @Output() childEvent: EventEmitter<any> = new EventEmitter();
 
   readonly editorConfig: AngularEditorConfig = {minHeight: '10rem', editable: true};
 
@@ -45,7 +45,7 @@ export class PostsComponent {
         this.errorMessage[key] = value;
       });
     } else {
-      this.newPost.author = {id: this.userData.id} as User;
+      this.newPost.author = UserDummy(this.userData);
       this._httpService.createPost(this.newPost).subscribe(() => {
           // reset error message
           for (const key in this.errorMessage) {
@@ -69,7 +69,7 @@ export class PostsComponent {
       });
     } else {
       newComment.post = {id: associatePost.id} as Post;
-      newComment.author = {id: this.userData.id} as User;
+      newComment.author = UserDummy(this.userData);
       this._httpService.createComment(newComment).subscribe(() => {
         // reset error message
         for (const key in this.errorMessage) {
@@ -84,11 +84,11 @@ export class PostsComponent {
   }
 
   hasCurrentUserCommented(_post: Post): boolean {
-    return this.userData.id != null ? _post.comments.some(comment => comment.author.id == this.userData.id) : false;
+    return this.userData != null ? _post.comments.some(comment => comment.author.id == this.userData!.id) : false;
   }
 
   hasCurrentUserLiked(_content: Discussion): boolean {
-    return this.userData.id != null ? _content.likedBy.some(user => user.id == this.userData.id) : false;
+    return this.userData != null ? _content.likedBy.some(user => user.id == this.userData!.id) : false;
   }
 
   likePost(thePost: Post) {

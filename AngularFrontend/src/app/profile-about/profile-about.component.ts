@@ -7,5 +7,5 @@ import { User } from "../utility.models";
   styleUrls: ['./profile-about.component.css']
 })
 export class ProfileAboutComponent {
-  @Input() userData: User = {} as User;
+  @Input() userData: User | null = null;
 }

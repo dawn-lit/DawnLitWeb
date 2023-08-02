@@ -14,17 +14,17 @@
           <!-- Email -->
           <div class="mb-3 input-group-lg">
             <p>Username:</p>
-            <input [(ngModel)]="RegistrationData['name']" class="form-control" name="name"
+            <input [(ngModel)]="registrationData['name']" class="form-control" name="name"
                    placeholder="Enter username"
                    type="text">
-            <p *ngIf="ErrorMessage['name']" class="warning_messages">{{ErrorMessage['name']}}</p>
+            <p *ngIf="errorMessage['name']" class="warning_messages">{{errorMessage['name']}}</p>
           </div>
           <!-- Email -->
           <div class="mb-3 input-group-lg">
             <p>Email:</p>
-            <input [(ngModel)]="RegistrationData['email']" class="form-control" name="email" placeholder="Enter email"
+            <input [(ngModel)]="registrationData['email']" class="form-control" name="email" placeholder="Enter email"
                    type="email">
-            <p *ngIf="ErrorMessage['email']" class="warning_messages">{{ErrorMessage['email']}}</p>
+            <p *ngIf="errorMessage['email']" class="warning_messages">{{errorMessage['email']}}</p>
           </div>
           <!-- New password -->
           <div class="mb-3 position-relative">
@@ -32,7 +32,7 @@
             <p>Password:</p>
             <div class="input-group input-group-lg">
               <br>
-              <input [(ngModel)]="RegistrationData['password']" class="form-control fakepassword" id="psw-input"
+              <input [(ngModel)]="registrationData['password']" class="form-control fakepassword" id="psw-input"
                      name="password"
                      placeholder="Enter new password"
                      type="password">
@@ -43,7 +43,7 @@
             <!-- Pswmeter -->
             <div class="mt-2" id="pswmeter"></div>
             <div class="d-flex mt-1">
-              <p *ngIf="ErrorMessage['password']" class="warning_messages">{{ErrorMessage['password']}}</p>
+              <p *ngIf="errorMessage['password']" class="warning_messages">{{errorMessage['password']}}</p>
               <div class="rounded" id="pswmeter-message"></div>
               <!-- Password message notification -->
               <div class="ms-auto">
@@ -58,11 +58,11 @@
           <!-- Confirm password -->
           <div class="mb-3 input-group-lg">
             <p>Please confirm password</p>
-            <input [(ngModel)]="RegistrationData['password_confirm']" class="form-control" name="password_confirm"
+            <input [(ngModel)]="registrationData['password_confirm']" class="form-control" name="password_confirm"
                    placeholder="Confirm password"
                    type="password">
-            <p *ngIf="ErrorMessage['password_confirm']"
-               class="warning_messages">{{ErrorMessage['password_confirm']}}</p>
+            <p *ngIf="errorMessage['password_confirm']"
+               class="warning_messages">{{errorMessage['password_confirm']}}</p>
           </div>
           <!-- Keep me signed in -->
           <div class="mb-3 text-start">

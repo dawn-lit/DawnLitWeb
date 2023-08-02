@@ -24,7 +24,7 @@
         <!-- Advanced filter responsive toggler END -->
 
         <!-- Navbar START-->
-        <nav *ngIf="userData.id!=null" class="navbar navbar-expand-lg mx-0">
+        <nav *ngIf="userData!=null" class="navbar navbar-expand-lg mx-0">
           <div class="offcanvas offcanvas-start" id="offcanvasSideNavbar" tabindex="-1">
             <!-- Offcanvas header -->
             <div class="offcanvas-header">
@@ -162,7 +162,7 @@
       <!-- Sidenav END -->
 
       <!-- Main content START -->
-      <app-posts (childEvent)="getAllPosts()" [enablePost]="userData.id != null" [posts]="allPosts"
+      <app-posts (childEvent)="getAllPosts()" [enablePost]="userData != null" [posts]="allPosts"
                  [userData]="userData"
                  class="col-md-8 col-lg-6 vstack gap-4"></app-posts>
       <!-- Main content END -->
@@ -171,7 +171,7 @@
       <div class="col-lg-3">
         <div class="row g-4">
           <!-- Card follow START -->
-          <div *ngIf="userData.id!=null" class="col-sm-6 col-lg-12">
+          <div *ngIf="userData!=null" class="col-sm-6 col-lg-12">
             <div class="card">
               <!-- Card header START -->
               <div class="card-header pb-0 border-0">

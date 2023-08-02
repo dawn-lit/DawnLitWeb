@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Chat, Message, User } from "../utility.models";
+import { Chat, ChatDummy, Message, User, UserDummy } from "../utility.models";
 import { HttpService } from "../http.service";
 
 @Component({
@@ -70,12 +70,8 @@ export class MessagingComponent {
       return;
     }
     let newMessage: Message = this.messagesEntered[this.selectedChat.id];
-    newMessage.chat = {
-      id: this.selectedChat.id,
-      owner: {id: this.selectedChat.owner.id} as User,
-      target: {id: this.selectedChat.target.id} as User
-    } as Chat;
-    newMessage.sender = {id: this.userData.id} as User;
+    newMessage.chat = ChatDummy(this.selectedChat);
+    newMessage.sender = UserDummy(this.userData);
     this._httpService.newMessage(newMessage).subscribe(() => {
       this.getUserData();
     });

@@ -8,8 +8,8 @@ export enum FriendshipStatus {
 }
 
 export namespace FriendshipStatus {
-  export function getStatus(user1: User, user2: User) {
-    if (user1.friends == null || user2.friends == null) {
+  export function getStatus(user1: User | null, user2: User | null) {
+    if (user1 == null || user1.friends == null || user2 == null || user2.friends == null) {
       return FriendshipStatus.UnClear;
     } else if (user1.friends.some(f => f.id == user2.id)) {
       return FriendshipStatus.AreFriends;

@@ -48,17 +48,17 @@
 
     <!-- Nav right START -->
     <ul class="nav flex-nowrap align-items-center ms-sm-3 list-unstyled">
-      <li *ngIf="userData.id!=null" class="nav-item ms-2">
+      <li *ngIf="userData!=null" class="nav-item ms-2">
         <a class="nav-link icon-md btn btn-light p-0" href="/messaging">
           <i class="bi bi-chat-left-text-fill fs-6"> </i>
         </a>
       </li>
-      <li *ngIf="userData.id!=null" class="nav-item ms-2">
+      <li *ngIf="userData!=null" class="nav-item ms-2">
         <a class="nav-link icon-md btn btn-light p-0" href="/settings">
           <i class="bi bi-gear-fill fs-6"> </i>
         </a>
       </li>
-      <li *ngIf="userData.id!=null" class="nav-item dropdown ms-2">
+      <li *ngIf="userData!=null" class="nav-item dropdown ms-2">
         <a aria-expanded="false" class="nav-link icon-md btn btn-light p-0" data-bs-auto-close="outside"
            data-bs-toggle="dropdown"
            href="#" id="notifDropdown" role="button">
@@ -111,16 +111,16 @@
       <!-- Notification dropdown END -->
 
       <li class="nav-item ms-2 dropdown">
-        <a *ngIf="userData.id==null" class="nav-link icon-md btn btn-light p-0" href="/login">
+        <a *ngIf="userData==null" class="nav-link icon-md btn btn-light p-0" href="/login">
           <i class="bi bi-door-open-fill fs-6"> </i>
         </a>
-        <a *ngIf="userData.id!=null" aria-expanded="false" class="nav-link btn icon-md p-0"
+        <a *ngIf="userData!=null" aria-expanded="false" class="nav-link btn icon-md p-0"
            data-bs-auto-close="outside"
            data-bs-display="static" data-bs-toggle="dropdown"
            href="#" id="profileDropdown" role="button">
           <app-avatar [classTags]="'rounded-2'" [userData]="userData" class="icon-md"></app-avatar>
         </a>
-        <ul aria-labelledby="profileDropdown"
+        <ul *ngIf="userData!=null" aria-labelledby="profileDropdown"
             class="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n3">
           <!-- Profile info -->
           <li class="px-3">

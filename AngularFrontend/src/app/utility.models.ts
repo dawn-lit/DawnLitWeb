@@ -23,8 +23,8 @@ export interface User extends DatabaseRecord {
   about: string;
 }
 
-export function UserDummy(user: User): User {
-  return {id: user.id} as User;
+export function UserDummy(user: User | null): User {
+  return (user == null ? {} : {id: user.id}) as User;
 }
 
 export interface Request extends DatabaseRecord {
@@ -36,6 +36,10 @@ export interface Chat extends DatabaseRecord {
   owner: User;
   target: User;
   messages: Array<Message>;
+}
+
+export function ChatDummy(chat: Chat): Chat {
+  return {id: chat.id, owner: UserDummy(chat.owner), target: UserDummy(chat.target)} as Chat;
 }
 
 export interface Message extends DatabaseRecord {

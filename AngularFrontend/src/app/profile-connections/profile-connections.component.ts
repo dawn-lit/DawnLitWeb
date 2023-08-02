@@ -10,7 +10,7 @@ import { HttpService } from "../http.service";
 export class ProfileConnectionsComponent {
   @Input() friends: Array<User> = [];
   @Input() enableButtons: boolean = false;
-  @Output() childEvent = new EventEmitter();
+  @Output() childEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _httpService: HttpService,

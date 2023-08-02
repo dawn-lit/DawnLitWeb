@@ -10,8 +10,8 @@ import { TokenService } from "../token.service";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  LoginData: Record<string, string> = {"email": "", "password": "", "captcha": "", "loginIp": ""};
-  ErrorMessage: Record<string, string> = {"email": "", "password": "", "captcha": ""};
+  loginData: Record<string, string> = {"email": "", "password": "", "captcha": "", "loginIp": ""};
+  errorMessage: Record<string, string> = {"email": "", "password": "", "captcha": ""};
   isBlocked: boolean = false;
 
   constructor(
@@ -33,17 +33,17 @@ export class LoginComponent {
     this.isBlocked = true;
     this._httpService.getIpInfo().subscribe(res => {
       // set ip
-      this.LoginData["loginIp"] = res.ip;
+      this.loginData["loginIp"] = res.ip;
       // update error message
       this.resetErrorMessage();
-      const errors: Map<string, string> = LoginValidation.check(this.LoginData);
+      const errors: Map<string, string> = LoginValidation.check(this.loginData);
 
       if (errors.size > 0) {
         errors.forEach((value: string, key: string) => {
-          this.ErrorMessage[key] = value;
+          this.errorMessage[key] = value;
         });
       } else {
-        this._httpService.loginUser(this.LoginData).subscribe({
+        this._httpService.loginUser(this.loginData).subscribe({
           next: (data: any) => {
             if (data.accepted == true) {
               this._token.set(data.token);
@@ -51,7 +51,7 @@ export class LoginComponent {
               this.resetLoginData();
             } else {
               Object.entries(data).forEach(
-                ([key, value]) => this.ErrorMessage[key] = LoginValidation.getMessage(value as string)
+                ([key, value]) => this.errorMessage[key] = LoginValidation.getMessage(value as string)
               );
             }
           },
@@ -63,14 +63,14 @@ export class LoginComponent {
   }
 
   resetLoginData(): void {
-    for (const key in this.LoginData) {
-      this.LoginData[key] = "";
+    for (const key in this.loginData) {
+      this.loginData[key] = "";
     }
   }
 
   resetErrorMessage(): void {
-    for (const key in this.ErrorMessage) {
-      this.ErrorMessage[key] = "";
+    for (const key in this.errorMessage) {
+      this.errorMessage[key] = "";
     }
   }
 }

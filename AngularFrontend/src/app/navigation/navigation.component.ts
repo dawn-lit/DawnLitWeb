@@ -10,7 +10,7 @@ import { getExistenceTime } from "../utility.functions";
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent {
-  userData: User = {} as User;
+  userData: User | null = null;
   protected readonly getExistenceTime = getExistenceTime;
 
   constructor(
@@ -34,7 +34,7 @@ export class NavigationComponent {
 
   logOff(): void {
     this._router.navigate(['/logoff']).then(() => {
-      this.userData = {} as User;
+      this.userData = null;
     });
   }
 

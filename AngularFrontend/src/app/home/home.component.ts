@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Post, User } from "../utility.models";
 import { HttpService } from "../http.service";
 import { FriendshipStatus } from "../utility.enums";
+import { map } from "rxjs";
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,7 @@ import { FriendshipStatus } from "../utility.enums";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  userData: User = {} as User;
+  userData: User | null = null;
   userRecentlyCrated: Array<User> = [];
   allPosts: Array<Post> = new Array<Post>();
   protected readonly FriendshipStatus = FriendshipStatus;
@@ -26,23 +27,15 @@ export class HomeComponent {
   }
 
   getUserData(): void {
-    this._httpService.getCurrentUser().subscribe(data => {
-      if (data != null && Object.keys(data).length > 0) {
-        this.userData = data;
-      }
-    });
+    this._httpService.getCurrentUser().pipe(map(data => this.userData = data)).subscribe();
   }
 
   getAllPosts(): void {
-    this._httpService.getPosts(100).subscribe(data => {
-      this.allPosts = data;
-    });
+    this._httpService.getPosts(100).pipe(map(data => this.allPosts = data)).subscribe();
   }
 
   getUserRecentlyCreated() {
-    this._httpService.getUsers(5).subscribe(data => {
-      this.userRecentlyCrated = data;
-    });
+    this._httpService.getUsers(5).pipe(map(data => this.userRecentlyCrated = data)).subscribe();
   }
 
   getFriendShipStatus(targetUser: User) {

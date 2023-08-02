@@ -11,24 +11,24 @@
         <form (ngSubmit)="onSubmit()" class="mt-sm-4">
           <!-- Email -->
           <div class="mb-3 input-group-lg">
-            <input [(ngModel)]="LoginData['email']" class="form-control"
+            <input [(ngModel)]="loginData['email']" class="form-control"
                    name="email" placeholder="Enter email" type="email">
-            <p *ngIf="ErrorMessage['email']" class="warning_messages"
-               style="text-align: left !important;">{{ErrorMessage['email']}}</p>
+            <p *ngIf="errorMessage['email']" class="warning_messages"
+               style="text-align: left !important;">{{errorMessage['email']}}</p>
           </div>
           <!-- New password -->
           <div class="mb-3 position-relative">
             <!-- Password -->
             <div class="input-group input-group-lg">
-              <input [(ngModel)]="LoginData['password']" class="form-control fakepassword" id="psw-input"
+              <input [(ngModel)]="loginData['password']" class="form-control fakepassword" id="psw-input"
                      name="password" placeholder="Enter new password"
                      type="password">
               <span class="input-group-text p-0">
                   <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
                 </span>
             </div>
-            <p *ngIf="ErrorMessage['password']" class="warning_messages"
-               style="text-align: left !important;">{{ErrorMessage['password']}}</p>
+            <p *ngIf="errorMessage['password']" class="warning_messages"
+               style="text-align: left !important;">{{errorMessage['password']}}</p>
           </div>
           <!-- Remember me -->
           <div class="mb-3 d-sm-flex justify-content-between">

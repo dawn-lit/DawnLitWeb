@@ -11,8 +11,8 @@ import { FriendshipStatus } from "../utility.enums";
 })
 export class ProfileComponent {
   profileUserId: number = 0;
-  profileUserData: User = {} as User;
-  currentUserData: User = {} as User;
+  profileUserData: User | null = null;
+  currentUserData: User | null = null;
   currentActive: string = "posts";
   protected readonly FriendshipStatus = FriendshipStatus;
 
@@ -39,7 +39,7 @@ export class ProfileComponent {
           this.profileUserData.posts = [];
           this.profileUserData.createdAt = new Date(this.profileUserData.createdAt);
           this._httpService.getPosts(10, this.profileUserData.id).subscribe(data => {
-            this.profileUserData.posts = data;
+            this.profileUserData!.posts = data;
           });
         }
       });
@@ -52,7 +52,7 @@ export class ProfileComponent {
   }
 
   isLookingAtOwnPage() {
-    return this.currentUserData.id != null && this.currentUserData.id == this.profileUserData.id;
+    return this.currentUserData != null && this.profileUserData != null && this.currentUserData.id == this.profileUserData.id;
   }
 
   getActiveStatus(category: string) {
@@ -68,16 +68,14 @@ export class ProfileComponent {
   }
 
   sendRequest() {
-    this._httpService.sendFriendRequest(this.profileUserData).subscribe(() => {
+    this._httpService.sendFriendRequest(this.profileUserData!).subscribe(() => {
       this.initUserData();
     });
   }
 
   sendMessage() {
-    this._httpService.newChat(this.currentUserData, this.profileUserData).subscribe(data => {
-      console.log(data);
-      this._router.navigate(['/messaging']).then(() => {
-      });
-    });
+    this._httpService.newChat(this.currentUserData!, this.profileUserData!)
+      .subscribe(() => this._router.navigate(['/messaging']).then(() => {
+      }));
   }
 }

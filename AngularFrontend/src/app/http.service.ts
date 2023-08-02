@@ -86,22 +86,22 @@ export class HttpService {
 
   // send friend request
   sendFriendRequest(targetUser: User) {
-    return this._http.post("/api/users/connect/request", targetUser);
+    return this._http.post("/api/users/connect/request", UserDummy(targetUser));
   }
 
   // accept friend request
   acceptFriendRequest(targetUser: User) {
-    return this._http.post("/api/users/connect/accept", targetUser);
+    return this._http.post("/api/users/connect/accept", UserDummy(targetUser));
   }
 
   // reject friend request
   rejectFriendRequest(targetUser: User) {
-    return this._http.post("/api/users/connect/reject", targetUser);
+    return this._http.post("/api/users/connect/reject", UserDummy(targetUser));
   }
 
   // remove friend
   removeFriend(targetUser: User) {
-    return this._http.post("/api/users/connect/remove", targetUser);
+    return this._http.post("/api/users/connect/remove", UserDummy(targetUser));
   }
 
 

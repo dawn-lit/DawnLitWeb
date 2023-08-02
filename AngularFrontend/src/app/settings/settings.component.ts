@@ -9,7 +9,7 @@ import { UserUpdateValidation } from "../utility.validations";
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
-  userData: User = {} as User;
+  userData: User | null = null;
   passwordsTypes: Record<string, string> = {
     "cp": "password",
     "np": "password",
@@ -45,6 +45,9 @@ export class SettingsComponent {
   }
 
   saveChanges(): void {
+    if (this.userData == null) {
+      return;
+    }
     const errors: Map<string, string> = UserUpdateValidation.checkInfo(this.userData);
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {

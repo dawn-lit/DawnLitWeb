@@ -10,10 +10,10 @@ import { TokenService } from "../token.service";
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent {
-  RegistrationData: Record<string, string> = {
+  registrationData: Record<string, string> = {
     "name": "", "email": "", "password": "", "password_confirm": "", "captcha": "", "loginIp": "",
   };
-  ErrorMessage: Record<string, string> = {
+  errorMessage: Record<string, string> = {
     "name": "", "email": "", "password": "", "password_confirm": "", "captcha": ""
   };
   isBlocked: boolean = false;
@@ -36,25 +36,25 @@ export class RegistrationComponent {
     }
     this.isBlocked = true;
     // reset error message
-    for (const key in this.ErrorMessage) {
-      this.ErrorMessage[key] = "";
+    for (const key in this.errorMessage) {
+      this.errorMessage[key] = "";
     }
     // get the registration ip first
     this._httpService.getIpInfo().subscribe(res => {
-      this.RegistrationData['loginIp'] = res.ip;
-      if (this.RegistrationData['loginIp'] != null && this.RegistrationData['loginIp'] != "") {
-        const errors: Map<string, string> = RegistrationValidation.check(this.RegistrationData);
+      this.registrationData['loginIp'] = res.ip;
+      if (this.registrationData['loginIp'] != null && this.registrationData['loginIp'] != "") {
+        const errors: Map<string, string> = RegistrationValidation.check(this.registrationData);
         if (errors.size > 0) {
           errors.forEach((value: string, key: string) => {
-            this.ErrorMessage[key] = value;
+            this.errorMessage[key] = value;
           });
         } else {
-          this._httpService.registerUser(this.RegistrationData).subscribe((data: any) => {
+          this._httpService.registerUser(this.registrationData).subscribe((data: any) => {
             this._token.set(data.token);
             this._httpService.gotoHomePage();
             // reset registration ngmodel
-            for (const key in this.RegistrationData) {
-              this.RegistrationData[key] = "";
+            for (const key in this.registrationData) {
+              this.registrationData[key] = "";
             }
           });
         }

@@ -8,7 +8,7 @@ import { HttpService } from "../http.service";
   styleUrls: ['./avatar.component.css']
 })
 export class AvatarComponent {
-  @Input() userData: User = {} as User;
+  @Input() userData: User | null = null;
   @Input() classTags: string = "";
   private colors: string[] = [
     "ff0000", "ffa500", "ffff00", "008000", "0000ff", "4b0082", "ee82ee",
@@ -21,7 +21,7 @@ export class AvatarComponent {
   }
 
   getStyle(): string {
-    let bgColor = this.colors[this.userData.id % this.colors.length];
+    let bgColor: string = this.userData != null ? this.colors[this.userData.id % this.colors.length] : "000000";
     return `border: 1px solid #${bgColor}; background-color: #${bgColor}`;
   }
 
