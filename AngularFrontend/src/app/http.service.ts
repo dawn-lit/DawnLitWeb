@@ -140,9 +140,9 @@ export class HttpService {
     return this._http.post("/api/chats/new", {owner: UserDummy(fromUser), target: UserDummy(toUser)} as Chat);
   }
 
-  // get a chat
-  getChat(id: number): Observable<Chat> {
-    return this._http.get<Chat>(`/api/chats/get/${id}`);
+  // get all the chats of current user
+  getCurrentUserChats(): Observable<Array<Chat>> {
+    return this._http.get<Array<Chat>>("/api/chats/get/list");
   }
 
   // remove chat

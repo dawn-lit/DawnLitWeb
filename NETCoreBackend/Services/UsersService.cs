@@ -62,8 +62,6 @@ public class UsersService : AbstractService<User>
             .Include(x => x.Requests)
             .ThenInclude(x => x.Sender)
             .Include(x => x.Friends)
-            .Include(x => x.Chats.OrderByDescending(o => o.CreatedAt))
-            .ThenInclude(c => c.Target)
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 

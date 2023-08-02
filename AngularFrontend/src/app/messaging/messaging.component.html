@@ -61,11 +61,13 @@
                     <ul *ngFor="let chat of userData.chats" class="nav flex-column nav-pills nav-pills-soft">
                       <li data-bs-dismiss="offcanvas">
                         <!-- Chat user tab item -->
-                        <a class="nav-link {{chat === selectedChat? 'active':''}} text-start" data-bs-toggle="pill"
-                           href="#" id="chat-1-tab"
+                        <a (click)="selectedChat=chat"
+                           class="nav-link {{chat === selectedChat? 'active':''}} text-start"
+                           data-bs-toggle="pill" href="#" id="chat-1-tab"
                            role="tab">
                           <div class="d-flex">
-                            <div class="flex-shrink-0 avatar avatar-story me-2 status-online">
+                            <div
+                              class="flex-shrink-0 avatar {{selectedChat === chat? 'avatar-story':''}} me-2 status-online">
                               <app-avatar [classTags]="'rounded-circle'" [userData]="chat.target"></app-avatar>
                             </div>
                             <div class="flex-grow-1 d-block">

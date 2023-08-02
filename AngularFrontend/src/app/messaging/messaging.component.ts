@@ -42,24 +42,27 @@ export class MessagingComponent {
     this._httpService.getCurrentUser().subscribe(data => {
       if (data != null && Object.keys(data).length > 0) {
         this.userData = data;
-        this.selectedChat = null;
-        for (let i = 0; i < this.userData.chats.length; i++) {
-          this._httpService.getChat(this.userData.chats[i].id).subscribe(chat => {
-            this.userData!.chats[i] = chat;
-            if (i == 0) {
-              this.selectedChat = chat;
-            }
-          });
-        }
+        this.getChats();
       }
     });
+  }
+
+  getChats(): void {
+    this.selectedChat = null;
+    this._httpService.getCurrentUserChats().subscribe(chats => {
+        this.userData!.chats = chats;
+        if (this.userData!.chats.length > 0) {
+          this.selectedChat = this.userData!.chats[0];
+        }
+      }
+    );
   }
 
   removeChat() {
     if (this.selectedChat == null) {
       return;
     }
-    this._httpService.removeChat(this.selectedChat.id).subscribe(() => this.getUserData());
+    this._httpService.removeChat(this.selectedChat.id).subscribe(() => this.getChats());
   }
 
   sendMessage() {

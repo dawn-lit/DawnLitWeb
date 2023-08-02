@@ -30,6 +30,12 @@ public class ChatsController : AbstractUserController
         return chat;
     }
 
+    [HttpGet("get/list")]
+    public async Task<List<Chat>> GetUserAll()
+    {
+        return await this._chatsService.GetListAsync(this.GetCurrentUserId());
+    }
+
     [HttpPost("new")]
     public async Task<IActionResult> NewChat(Chat newChat)
     {

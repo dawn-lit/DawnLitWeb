@@ -37,7 +37,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center">
         <!-- Avatar -->
-        <div class="avatar avatar-story me-2">
+        <div class="avatar {{_post.author.id ==userData.id? 'avatar-story':''}} me-2">
           <a href="./profile?id={{_post.author.id}}">
             <app-avatar [classTags]="'rounded-circle'" [userData]="_post.author"></app-avatar>
           </a>
@@ -89,12 +89,12 @@
            data-bs-html="true"
            data-bs-placement="top"
            data-bs-toggle="tooltip"
-           href="#"
+           type="button"
         >
           <i class="bi bi-hand-thumbs-up-fill pe-1"></i>Liked ({{_post.likedBy.length}})</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{hasCurrentUserCommented(_post)?'active':''}}" href="#"> <i
+        <a class="nav-link {{hasCurrentUserCommented(_post)?'active':''}}" type="button"> <i
           class="bi bi-chat-fill pe-1"></i>Comments ({{_post.comments.length}})</a>
       </li>
       <!-- Card share action START -->
@@ -164,13 +164,13 @@
               <li class="nav-item">
                 <a (click)="likeComment(_comment)"
                    class="nav-link {{hasCurrentUserLiked(_comment)? 'active':''}}"
-                   href="#"> Like ({{_comment.likedBy.length}})</a>
+                   type="button"> Like ({{_comment.likedBy.length}})</a>
               </li>
               <li class="nav-item" hidden="hidden">
-                <a class="nav-link" href="#"> Reply</a>
+                <a class="nav-link" type="button"> Reply</a>
               </li>
               <li class="nav-item" hidden="hidden">
-                <a class="nav-link" href="#"> View 5 replies</a>
+                <a class="nav-link" type="button"> View 5 replies</a>
               </li>
             </ul>
           </div>

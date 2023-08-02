@@ -13,11 +13,23 @@ public class ChatsService : AbstractService<Chat>
     public new async Task<Chat?> GetAsync(int id)
     {
         return await this.GetDatabaseCollection()
-            .Include(c => c.Target)
             .Include(c => c.Owner)
+            .Include(c => c.Target)
             .Include(c => c.Messages)
             .ThenInclude(m => m.Sender)
             .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task<List<Chat>> GetListAsync(int userId)
+    {
+        return await this.GetDatabaseCollection()
+            .Include(c => c.Owner)
+            .Include(c => c.Target)
+            .Include(c => c.Messages)
+            .ThenInclude(m => m.Sender)
+            .OrderByDescending(c => c.CreatedAt)
+            .Where(x => x.Owner.Id == userId)
+            .ToListAsync();
     }
 
     public new async Task<bool> CreateAsync(Chat newChat)
