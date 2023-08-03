@@ -3,6 +3,7 @@ import { User } from "../utility.models";
 import { HttpService } from '../http.service';
 import { Router } from "@angular/router";
 import { getExistenceTime } from "../utility.functions";
+import { map } from "rxjs";
 
 @Component({
   selector: 'app-navigation',
@@ -25,11 +26,7 @@ export class NavigationComponent {
   }
 
   getUserData(): void {
-    this._httpService.getCurrentUser().subscribe(data => {
-      if (data != null && Object.keys(data).length > 0) {
-        this.userData = data;
-      }
-    });
+    this._httpService.getCurrentUser().pipe(map(data => this.userData = data)).subscribe();
   }
 
   logOff(): void {

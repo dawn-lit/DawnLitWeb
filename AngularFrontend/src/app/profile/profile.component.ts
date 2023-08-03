@@ -3,6 +3,7 @@ import { User } from "../utility.models";
 import { HttpService } from "../http.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FriendshipStatus } from "../utility.enums";
+import { map } from "rxjs";
 
 @Component({
   selector: 'app-profile',
@@ -44,11 +45,7 @@ export class ProfileComponent {
         }
       });
     }
-    this._httpService.getCurrentUser().subscribe(data => {
-      if (data != null && Object.keys(data).length > 0) {
-        this.currentUserData = data;
-      }
-    });
+    this._httpService.getCurrentUser().pipe(map(data => this.currentUserData = data)).subscribe();
   }
 
   isLookingAtOwnPage() {

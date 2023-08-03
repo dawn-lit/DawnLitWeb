@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { User } from "../utility.models";
 import { HttpService } from "../http.service";
 import { UserUpdateValidation } from "../utility.validations";
+import { map } from "rxjs";
 
 @Component({
   selector: 'app-settings',
@@ -33,11 +34,7 @@ export class SettingsComponent {
   }
 
   getUserData(): void {
-    this._httpService.getCurrentUser().subscribe(data => {
-      if (data != null && Object.keys(data).length > 0) {
-        this.userData = data;
-      }
-    });
+    this._httpService.getCurrentUser().pipe(map(data => this.userData = data)).subscribe();
   }
 
   togglePasswordVisibility(k: string) {

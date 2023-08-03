@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Chat, ChatDummy, Message, User, UserDummy } from "../utility.models";
 import { HttpService } from "../http.service";
+import { interval, mergeMap } from "rxjs";
 
 @Component({
   selector: 'app-messaging',
@@ -39,20 +40,25 @@ export class MessagingComponent {
   }
 
   getUserData(): void {
-    this._httpService.getCurrentUser().subscribe(data => {
-      if (data != null && Object.keys(data).length > 0) {
+    interval(1000)
+      .pipe(mergeMap(() => this._httpService.getCurrentUser()))
+      .subscribe(data => {
+        // since chats is not included, use old chat data first before the new data arrived
+        if (this.userData != null) {
+          data.chats = this.userData.chats;
+        }
         this.userData = data;
         this.getChats();
-      }
-    });
+      });
   }
 
   getChats(): void {
-    this.selectedChat = null;
     this._httpService.getCurrentUserChats().subscribe(chats => {
         this.userData!.chats = chats;
         if (this.userData!.chats.length > 0) {
-          this.selectedChat = this.userData!.chats[0];
+          this.selectedChat = this.selectedChat != null
+            ? this.userData!.chats.find(c => c.id == this.selectedChat!.id)!
+            : this.userData!.chats[0];
         }
       }
     );
@@ -72,9 +78,7 @@ export class MessagingComponent {
     let newMessage: Message = this.messagesEntered[this.selectedChat.id];
     newMessage.chat = ChatDummy(this.selectedChat);
     newMessage.sender = UserDummy(this.userData);
-    this._httpService.newMessage(newMessage).subscribe(() => {
-      this.getUserData();
-    });
+    this._httpService.newMessage(newMessage).subscribe();
     this.messagesEntered[this.selectedChat.id] = {content: ""} as Message;
   }
 }
