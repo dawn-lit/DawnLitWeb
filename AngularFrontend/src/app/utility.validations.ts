@@ -10,7 +10,7 @@ class UserValidation {
   private static readonly MAX_PASSWORD_LENGTH = 16;
   // user signature length requirements
   private static readonly MIN_SIGNATURE_LENGTH = 0;
-  private static readonly MAX_SIGNATURE_LENGTH = 500;
+  private static readonly MAX_SIGNATURE_LENGTH = 100;
   // user about length requirements
   private static readonly MIN_ABOUT_LENGTH = 0;
   private static readonly MAX_ABOUT_LENGTH = 500;

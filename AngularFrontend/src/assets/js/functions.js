@@ -85,7 +85,6 @@ var e = {
       e.flatPicker(),
       e.avatarImg(),
       e.toasts(),
-      e.pswMeter(),
       e.fakePwd();
   },
   isVariableDefined: function (el) {
@@ -619,33 +618,6 @@ var e = {
     }
   },
   // END: Toasts
-
-  // START: 17 pswMeter
-  pswMeter: function () {
-    if (e.isVariableDefined(e.select('#pswmeter'))) {
-      const myPassMeter = passwordStrengthMeter({
-        containerElement: '#pswmeter',
-        passwordInput: '#psw-input',
-        showMessage: true,
-        messageContainer: '#pswmeter-message',
-        messagesList: [
-          'Write your password...',
-          'Easy peasy!',
-          'That is a simple one',
-          'That is better',
-          'Yeah! that password rocks ;)'
-        ],
-        height: 8,
-        borderRadius: 4,
-        pswMinLength: 8,
-        colorScore1: '#dc3545',
-        colorScore2: '#f7c32e',
-        colorScore3: '#4f9ef8',
-        colorScore4: '#0cbc87'
-      });
-    }
-  },
-  // END: pswMeter
 
   // START: 18 Fake Password
   fakePwd: function () {

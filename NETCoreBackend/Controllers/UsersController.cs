@@ -17,7 +17,7 @@ public class UsersController : AbstractUserController
     private const int MAX_PASSWORD_LENGTH = 16;
 
     private const int MIN_SIGNATURE_LENGTH = 0;
-    private const int MAX_SIGNATURE_LENGTH = 500;
+    private const int MAX_SIGNATURE_LENGTH = 100;
 
     private const int MIN_ABOUT_LENGTH = 0;
     private const int MAX_ABOUT_LENGTH = 500;
@@ -157,6 +157,7 @@ public class UsersController : AbstractUserController
 
         // modify user information
         user.Name = modifiedUser.Name;
+        user.Github = modifiedUser.Github;
         user.Signature = modifiedUser.Signature;
         user.About = modifiedUser.About;
 

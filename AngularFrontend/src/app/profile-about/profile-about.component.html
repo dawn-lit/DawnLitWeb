@@ -16,8 +16,7 @@
         </a>
         <!-- Card share action dropdown menu -->
         <ul aria-labelledby="aboutAction" class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
-          <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
+          <li><a class="dropdown-item" href="/settings"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
         </ul>
       </div>
     </div>
@@ -29,21 +28,9 @@
       <div class="d-flex align-items-center rounded border px-3 py-2">
         <!-- Date -->
         <p class="mb-0">
-          <i class="bi bi-geo-alt fa-fw me-2"></i> Joined on:
+          <i class="bi bi-calendar2-plus fa-fw me-2"></i> Joined on:
           <strong> {{userData.createdAt.toLocaleDateString()}} </strong>
         </p>
-        <div class="dropdown ms-auto">
-          <!-- Card share action menu -->
-          <a aria-expanded="false" class="nav nav-link text-secondary mb-0" data-bs-toggle="dropdown" href="#"
-             id="aboutAction6">
-            <i class="bi bi-three-dots"></i>
-          </a>
-          <!-- Card share action dropdown menu -->
-          <ul aria-labelledby="aboutAction6" class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
-            <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
-          </ul>
-        </div>
       </div>
       <!-- Joined on END -->
     </div>
@@ -54,18 +41,16 @@
         <p class="mb-0">
           <i class="bi bi-envelope fa-fw me-2"></i> Email: <strong> {{userData.email}} </strong>
         </p>
-        <div class="dropdown ms-auto">
-          <!-- Card share action menu -->
-          <a aria-expanded="false" class="nav nav-link text-secondary mb-0" data-bs-toggle="dropdown" href="#"
-             id="aboutAction7">
-            <i class="bi bi-three-dots"></i>
-          </a>
-          <!-- Card share action dropdown menu -->
-          <ul aria-labelledby="aboutAction7" class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit</a></li>
-            <li><a class="dropdown-item" href="#"> <i class="bi bi-trash fa-fw pe-2"></i>Delete</a></li>
-          </ul>
-        </div>
+      </div>
+      <!-- Joined on END -->
+    </div>
+    <div *ngIf="userData.github" class="col-sm-6">
+      <!-- Joined on START -->
+      <div class="d-flex align-items-center rounded border px-3 py-2">
+        <!-- Date -->
+        <p class="mb-0">
+          <i class="bi bi-github fa-fw me-2"></i> GitHub: <strong> {{userData.github}} </strong>
+        </p>
       </div>
       <!-- Joined on END -->
     </div>

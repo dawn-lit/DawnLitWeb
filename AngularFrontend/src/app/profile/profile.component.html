@@ -134,8 +134,11 @@
                 <ul class="list-unstyled mt-3 mb-0">
                   <li class="mb-2"><i class="bi bi-envelope fa-fw pe-1"></i> Email:
                     <strong> {{profileUserData!.email}} </strong></li>
-                  <li><i class="bi bi-calendar2-plus me-1"></i> Joined on:
+                  <li class="mb-2"><i class="bi bi-calendar2-plus me-1"></i> Joined on:
                     <strong> {{profileUserData!.createdAt.toLocaleDateString()}} </strong></li>
+                  <li *ngIf="profileUserData!.github"><i class="bi bi-github me-1"></i> GitHub:
+                    <strong> <a href="https://github.com/{{profileUserData!.github}}"
+                                style="color: #676a79">{{profileUserData!.github}}</a> </strong></li>
                 </ul>
               </div>
               <!-- Card body END -->

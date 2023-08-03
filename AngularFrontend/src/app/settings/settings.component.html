@@ -142,18 +142,24 @@
                            value="{{userData.name}}">
                     <p *ngIf="errorMessage['name']" class="warning_messages">{{errorMessage['name']}}</p>
                   </div>
-                  <!-- Phone number -->
+                  <!-- Email -->
                   <div class="col-sm-6">
                     <label class="form-label">Email</label>
                     <input class="form-control" disabled type="text" value="{{userData.email}}">
                   </div>
+                  <!-- Github -->
+                  <div class="col-sm-6">
+                    <label class="form-label">Github</label>
+                    <input [(ngModel)]="userData.github" [maxLength]="40" class="form-control" name="github" type="text"
+                           value="{{userData.github}}">
+                  </div>
                   <!-- Page information -->
                   <div class="col-12">
                     <label class="form-label">Signature</label>
-                    <textarea [(ngModel)]="userData.signature" [maxLength]="500" class="form-control"
+                    <textarea [(ngModel)]="userData.signature" [maxLength]="100" class="form-control"
                               name="signature" placeholder="Description (Required)"
-                              rows="4">{{userData.signature}}</textarea>
-                    <small>Character limit: {{userData.signature.length}}/500</small>
+                              rows="2">{{userData.signature}}</textarea>
+                    <small>Character limit: {{userData.signature.length}}/100</small>
                     <p *ngIf="errorMessage['signature']" class="warning_messages">{{errorMessage['signature']}}</p>
                   </div>
                   <div class="col-12">
@@ -213,8 +219,7 @@
                       </span>
                     </div>
                     <!-- Pswmeter -->
-                    <div class="mt-2" id="pswmeter"></div>
-                    <div class="rounded mt-1" id="pswmeter-message"></div>
+                    <password-strength-meter [password]="passwordData['newPassword']"></password-strength-meter>
                     <p *ngIf="errorMessage['newPassword']" class="warning_messages">{{errorMessage['newPassword']}}</p>
                   </div>
                   <!-- Confirm password -->

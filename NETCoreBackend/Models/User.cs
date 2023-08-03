@@ -11,6 +11,9 @@ public class User : AbstractModel
     [Display(Name = "email")]
     public string Email { get; set; } = string.Empty;
 
+    [Display(Name = "github")]
+    public string Github { get; set; } = string.Empty;
+
     [Display(Name = "group")]
     public int Group { get; set; } = 0;
 

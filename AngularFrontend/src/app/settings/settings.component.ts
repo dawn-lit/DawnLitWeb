@@ -51,8 +51,7 @@ export class SettingsComponent {
         this.errorMessage[key] = value;
       });
     } else {
-      this._httpService.updateCurrentUserInfo(this.userData).subscribe(() => {
-      });
+      this._httpService.updateCurrentUserInfo(this.userData).subscribe();
     }
   }
 
@@ -63,7 +62,7 @@ export class SettingsComponent {
         this.errorMessage[key] = value;
       });
     } else {
-      this._httpService.updateCurrentUserPassword(this.passwordData).subscribe((data: any) => {
+      this._httpService.updateCurrentUserPassword(this.passwordData).subscribe(() => {
         for (const key in this.passwordData) {
           this.passwordData[key] = "";
         }

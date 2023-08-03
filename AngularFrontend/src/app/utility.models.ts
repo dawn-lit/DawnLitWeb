@@ -8,6 +8,7 @@ export interface User extends DatabaseRecord {
   avatar: any;
   name: string;
   email: string;
+  github: string;
   group: number;
   loginIp: string;
   friends: Array<User>;
