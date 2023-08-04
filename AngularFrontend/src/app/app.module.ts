@@ -26,6 +26,14 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { OverlayscrollbarsModule } from "overlayscrollbars-ngx";
 import { ProfileConnectionsComponent } from './profile-connections/profile-connections.component';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
+import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dropzone-wrapper';
+
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  // Change this to your upload POST address:
+  url: 'https://httpbin.org/post',
+  maxFilesize: 50,
+  acceptedFiles: 'image/*'
+};
 
 export function tokenGetter() {
   return localStorage.getItem("jwt_token");
@@ -64,9 +72,15 @@ export function tokenGetter() {
     NgOptimizedImage,
     AngularEditorModule,
     OverlayscrollbarsModule,
-    PasswordStrengthMeterModule.forRoot()
+    PasswordStrengthMeterModule.forRoot(),
+    DropzoneModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: DROPZONE_CONFIG,
+      useValue: DEFAULT_DROPZONE_CONFIG
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

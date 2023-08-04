@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "dropzone"
+            ],
             "outputPath": "dist/angular-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
