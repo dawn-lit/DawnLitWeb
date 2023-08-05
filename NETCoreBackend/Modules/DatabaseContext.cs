@@ -23,6 +23,8 @@ public class DatabaseContext : DbContext
 
     public DbSet<Message> Messages { get; set; } = null!;
 
+    public DbSet<FileItem> Files { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>()
@@ -44,6 +46,10 @@ public class DatabaseContext : DbContext
         modelBuilder.Entity<User>()
             .HasMany(e => e.Comments)
             .WithOne(e => e.Author);
+
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.Files)
+            .WithOne(e => e.Creator);
 
         modelBuilder.Entity<Post>()
             .HasMany(e => e.Comments)

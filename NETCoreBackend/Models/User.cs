@@ -53,6 +53,9 @@ public class User : AbstractModel
     [Display(Name = "avatar")]
     public string Avatar { get; set; } = string.Empty;
 
+    [Display(Name = "files")]
+    public ICollection<FileItem> Files { get; set; } = new List<FileItem>();
+
     [Display(Name = "banned")]
     public bool Banned { get; set; } = false;
 

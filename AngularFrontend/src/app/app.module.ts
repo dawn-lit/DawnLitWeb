@@ -30,9 +30,9 @@ import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dr
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
-  url: 'https://httpbin.org/post',
-  maxFilesize: 50,
-  acceptedFiles: 'image/*'
+  url: '/api/files/new',
+  acceptedFiles: 'image/*',
+  headers: {"Authorization": 'Bearer ' + tokenGetter()},
 };
 
 export function tokenGetter() {
