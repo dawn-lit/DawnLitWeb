@@ -11,19 +11,21 @@ public class DatabaseContext : DbContext
 
     public DbSet<User> Users { get; set; } = null!;
 
-    public DbSet<Confidential> Confidential { get; set; } = null!;
-
-    public DbSet<Post> Posts { get; set; } = null!;
-
-    public DbSet<Comment> Comments { get; set; } = null!;
-
-    public DbSet<Request> Requests { get; set; } = null!;
+    public DbSet<Blog> Blogs { get; set; } = null!;
 
     public DbSet<Chat> Chats { get; set; } = null!;
 
-    public DbSet<Message> Messages { get; set; } = null!;
+    public DbSet<Comment> Comments { get; set; } = null!;
+
+    public DbSet<Confidential> Confidential { get; set; } = null!;
 
     public DbSet<FileItem> Files { get; set; } = null!;
+
+    public DbSet<Message> Messages { get; set; } = null!;
+
+    public DbSet<Post> Posts { get; set; } = null!;
+
+    public DbSet<Request> Requests { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -46,6 +48,18 @@ public class DatabaseContext : DbContext
         modelBuilder.Entity<User>()
             .HasMany(e => e.Comments)
             .WithOne(e => e.Author);
+
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.LikedComments)
+            .WithMany(e => e.LikedBy);
+
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.Blogs)
+            .WithOne(e => e.Author);
+
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.LikedBlogs)
+            .WithMany(e => e.LikedBy);
 
         modelBuilder.Entity<User>()
             .HasMany(e => e.Files)

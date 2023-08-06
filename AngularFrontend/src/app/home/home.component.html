@@ -84,31 +84,31 @@
                   <!-- Side Nav START -->
                   <ul class="nav nav-link-secondary flex-column fw-bold gap-2">
                     <li class="nav-item">
-                      <a class="nav-link" href="my-profile.html"> <img alt=""
-                                                                       class="me-2 h-20px fa-fw"
-                                                                       src="/assets/images/icon/home-outline-filled.svg"><span>Feed </span></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="my-profile-connections.html"> <img alt=""
+                      <a class="nav-link" href="/profile?id={{userData.id}}"> <img alt=""
                                                                                    class="me-2 h-20px fa-fw"
-                                                                                   src="/assets/images/icon/person-outline-filled.svg"><span>Connections </span></a>
+                                                                                   src="/assets/images/icon/home-outline-filled.svg"><span>Feed </span></a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="blog.html"> <img alt=""
-                                                                 class="me-2 h-20px fa-fw"
-                                                                 src="/assets/images/icon/earth-outline-filled.svg"><span>Latest News </span></a>
+                      <a class="nav-link" href="/profile?id={{userData.id}}&select=connections"> <img alt=""
+                                                                                                      class="me-2 h-20px fa-fw"
+                                                                                                      src="/assets/images/icon/person-outline-filled.svg"><span>Connections </span></a>
                     </li>
                     <li class="nav-item">
+                      <a class="nav-link" href="/profile?id={{userData.id}}&select=blogs"> <img alt=""
+                                                                                                class="me-2 h-20px fa-fw"
+                                                                                                src="/assets/images/icon/earth-outline-filled.svg"><span>Blogs </span></a>
+                    </li>
+                    <li class="nav-item" hidden="hidden">
                       <a class="nav-link" href="events.html"> <img alt=""
                                                                    class="me-2 h-20px fa-fw"
                                                                    src="/assets/images/icon/calendar-outline-filled.svg"><span>Events </span></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" hidden="hidden">
                       <a class="nav-link" href="groups.html"> <img alt=""
                                                                    class="me-2 h-20px fa-fw"
                                                                    src="/assets/images/icon/chat-outline-filled.svg"><span>Groups </span></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" hidden="hidden">
                       <a class="nav-link" href="notifications.html"> <img alt=""
                                                                           class="me-2 h-20px fa-fw"
                                                                           src="/assets/images/icon/notification-outlined-filled.svg"><span>Notifications </span></a>
@@ -220,31 +220,15 @@
             <div class="card">
               <!-- Card header START -->
               <div class="card-header pb-0 border-0">
-                <h5 class="card-title mb-0">Today’s news</h5>
+                <h5 class="card-title mb-0">Announcements</h5>
               </div>
               <!-- Card header END -->
               <!-- Card body START -->
               <div class="card-body">
                 <!-- News item -->
-                <div class="mb-3">
-                  <h6 class="mb-0"><a href="blog-details.html">Ten questions you should answer truthfully</a></h6>
-                  <small>2hr</small>
-                </div>
-                <!-- News item -->
-                <div class="mb-3">
-                  <h6 class="mb-0"><a href="blog-details.html">Five unbelievable facts about money</a></h6>
-                  <small>3hr</small>
-                </div>
-                <!-- News item -->
-                <div class="mb-3">
-                  <h6 class="mb-0"><a href="blog-details.html">Best Pinterest Boards for learning about business</a>
-                  </h6>
-                  <small>4hr</small>
-                </div>
-                <!-- News item -->
-                <div class="mb-3">
-                  <h6 class="mb-0"><a href="blog-details.html">Skills that you can learn from business</a></h6>
-                  <small>6hr</small>
+                <div *ngFor="let announcement of announcements" class="mb-3">
+                  <h6 class="mb-0"><a href="/blog?id={{announcement.id}}">{{announcement.title}}</a></h6>
+                  <small>{{getExistenceTime(announcement)}}</small>
                 </div>
                 <!-- Load more comments -->
                 <a aria-pressed="true"

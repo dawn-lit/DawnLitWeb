@@ -29,6 +29,12 @@ public class User : AbstractModel
     [Display(Name = "likedComments")]
     public ICollection<Comment> LikedComments { get; } = new List<Comment>();
 
+    [Display(Name = "blogs")]
+    public ICollection<Blog> Blogs { get; set; } = new List<Blog>();
+
+    [Display(Name = "likedBlogs")]
+    public ICollection<Blog> LikedBlogs { get; } = new List<Blog>();
+
     [Display(Name = "friends")]
     public ICollection<User> Friends { get; } = new List<User>();
 
@@ -49,9 +55,6 @@ public class User : AbstractModel
 
     [Display(Name = "about")]
     public string About { get; set; } = string.Empty;
-
-    [Display(Name = "avatar")]
-    public string Avatar { get; set; } = string.Empty;
 
     [Display(Name = "files")]
     public ICollection<FileItem> Files { get; set; } = new List<FileItem>();

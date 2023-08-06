@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Post, User } from "../utility.models";
+import { Blog, Post, User } from "../utility.models";
 import { HttpService } from "../http.service";
 import { FriendshipStatus } from "../utility.enums";
 import { map } from "rxjs";
+import { getExistenceTime } from "../utility.functions";
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,9 @@ export class HomeComponent {
   userData: User | null = null;
   userRecentlyCrated: Array<User> = [];
   allPosts: Array<Post> = new Array<Post>();
+  announcements: Array<Blog> = new Array<Blog>();
   protected readonly FriendshipStatus = FriendshipStatus;
+  protected readonly getExistenceTime = getExistenceTime;
 
   constructor(
     private _httpService: HttpService
@@ -23,6 +26,7 @@ export class HomeComponent {
   ngOnInit(): void {
     this.getUserData();
     this.getAllPosts();
+    this.getAnnouncements();
     this.getUserRecentlyCreated();
   }
 
@@ -32,6 +36,10 @@ export class HomeComponent {
 
   getAllPosts(): void {
     this._httpService.getPosts(100).pipe(map(data => this.allPosts = data)).subscribe();
+  }
+
+  getAnnouncements(): void {
+    this._httpService.getAnnouncements(5).pipe(map(data => this.announcements = data)).subscribe();
   }
 
   getUserRecentlyCreated() {

@@ -1,5 +1,9 @@
-﻿namespace NETCoreBackend.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class Blog : Post
+namespace NETCoreBackend.Models;
+
+public class Blog : AbstractPost
 {
+    [Display(Name = "title")]
+    public string Title { get; set; } = string.Empty;
 }

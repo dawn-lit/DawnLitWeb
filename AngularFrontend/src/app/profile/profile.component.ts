@@ -28,6 +28,10 @@ export class ProfileComponent {
     this._route.queryParamMap.subscribe(params => {
       let _id = params.get("id");
       this.profileUserId = _id != null ? Number(_id) : 0;
+      let selectComponent = params.get("select");
+      if (selectComponent != null) {
+        this.currentActive = selectComponent;
+      }
       this.initUserData();
     });
   }

@@ -1,12 +1,13 @@
 <!-- Story START -->
-<div class="d-flex gap-2 mb-n3">
-  <div class="position-relative" hidden="hidden">
+<div *ngIf="enablePost" class="d-flex gap-2 mb-n3">
+  <div class="position-relative">
     <div
       class="card border border-2 border-dashed h-150px px-4 px-sm-5 shadow-none d-flex align-items-center justify-content-center text-center">
       <div>
-        <a class="stretched-link btn btn-light rounded-circle icon-md" href="#!"><i
+        <a class="stretched-link btn btn-light rounded-circle icon-md" data-bs-target="#feedActionBlog"
+           data-bs-toggle="modal" type="button"><i
           class="fa-solid fa-plus"></i></a>
-        <h6 class="mt-2 mb-0 small">Post a Story</h6>
+        <h6 class="mt-2 mb-0 small">Post a Blog</h6>
       </div>
     </div>
   </div>
@@ -23,8 +24,8 @@
     <div class="avatar avatar-xs me-2">
       <app-avatar [classTags]="'rounded-circle'" [userData]="userData"></app-avatar>
     </div>
-    <a class="nav-link py-1 px-2" data-bs-target="#feedActionPost" data-bs-toggle="modal" href="#"
-       id="start_post">Start a post</a>
+    <a class="nav-link py-1 px-2" data-bs-target="#feedActionPost" data-bs-toggle="modal" id="start_post"
+       type="button">Start a post</a>
   </div>
   <!-- Share feed toolbar END -->
 </div>
@@ -289,7 +290,48 @@
 </a>
 <!-- Load more button END -->
 
-<!-- Modal create Feed photo START -->
+<!-- Modal create blog START -->
+<div aria-hidden="true" aria-labelledby="feedActionBlogLabel" class="modal fade" id="feedActionBlog" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal feed header START -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="feedActionBlogLabel">What do you want to talk about?</h5>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <!-- Modal feed header END -->
+
+      <!-- Modal feed body START -->
+      <div class="modal-body">
+        <!-- Add Feed -->
+        <div class="mb-3">
+          <!-- Avatar -->
+          <p><strong>Title:</strong></p>
+          <input [(ngModel)]="newBlog.title">
+          <p *ngIf="blogErrorMessage['title']" class="warning_messages">{{blogErrorMessage['title']}}</p>
+          <p></p>
+          <p><strong>Content:</strong></p>
+          <angular-editor [(ngModel)]="newBlog.content" [config]="editorConfig"
+                          [placeholder]="'Enter text here...'"></angular-editor>
+          <p *ngIf="blogErrorMessage['content']" class="warning_messages">{{blogErrorMessage['content']}}</p>
+        </div>
+
+      </div>
+      <!-- Modal feed body END -->
+
+      <!-- Modal feed footer -->
+      <div class="modal-footer ">
+        <!-- Button -->
+        <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
+        <button (click)="createBlog()" class="btn btn-success-soft" type="button">Post</button>
+      </div>
+      <!-- Modal feed footer -->
+    </div>
+  </div>
+</div>
+<!-- Modal create blog END -->
+
+<!-- Modal create post START -->
 <div aria-hidden="true" aria-labelledby="feedActionPostLabel" class="modal fade" id="feedActionPost" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -311,7 +353,7 @@
           <angular-editor [(ngModel)]="newPost.content" [config]="editorConfig"
                           [placeholder]="'Enter text here...'"></angular-editor>
         </div>
-        <p *ngIf="errorMessage['content']" class="warning_messages">{{errorMessage['content']}}</p>
+        <p *ngIf="postErrorMessage['content']" class="warning_messages">{{postErrorMessage['content']}}</p>
       </div>
       <!-- Modal feed body END -->
 
@@ -325,4 +367,4 @@
     </div>
   </div>
 </div>
-<!-- Modal create Feed photo END -->
+<!-- Modal create post END -->

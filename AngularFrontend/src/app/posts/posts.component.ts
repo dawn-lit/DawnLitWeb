@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Comment, Discussion, Post, User, UserDummy } from "../utility.models";
+import { Blog, Comment, Discussion, Post, User, UserDummy } from "../utility.models";
 import { HttpService } from "../http.service";
 import { ContentValidation } from "../utility.validations";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
@@ -21,9 +21,11 @@ export class PostsComponent {
 
   readonly editorConfig: AngularEditorConfig = {minHeight: '10rem', editable: true};
 
-  newPost: Post = {"content": ""} as Post;
+  newPost: Post = {content: ""} as Post;
+  newBlog: Blog = {title: "", content: ""} as Blog;
   newComments: Record<string, Comment> = {};
-  errorMessage: Record<string, string> = {"content": ""};
+  postErrorMessage: Record<string, string> = {"title": "", "content": ""};
+  blogErrorMessage: Record<string, string> = {"content": ""};
   protected readonly getExistenceTime = getExistenceTime;
 
   constructor(
@@ -42,14 +44,14 @@ export class PostsComponent {
     const errors: Map<string, string> = ContentValidation.check(this.newPost);
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {
-        this.errorMessage[key] = value;
+        this.postErrorMessage[key] = value;
       });
     } else {
       this.newPost.author = UserDummy(this.userData);
       this._httpService.createPost(this.newPost).subscribe(() => {
           // reset error message
-          for (const key in this.errorMessage) {
-            this.errorMessage[key] = "";
+          for (const key in this.postErrorMessage) {
+            this.postErrorMessage[key] = "";
           }
           this.newPost["content"] = "";
           // make parent update all the posts
@@ -60,20 +62,42 @@ export class PostsComponent {
     }
   }
 
+  createBlog() {
+    const errors: Map<string, string> = ContentValidation.check(this.newBlog);
+    if (errors.size > 0) {
+      errors.forEach((value: string, key: string) => {
+        this.blogErrorMessage[key] = value;
+      });
+    } else {
+      this.newBlog.author = UserDummy(this.userData);
+      this._httpService.createBlog(this.newBlog).subscribe(() => {
+          // reset error message
+          for (const key in this.blogErrorMessage) {
+            this.blogErrorMessage[key] = "";
+          }
+          this.newBlog["content"] = "";
+          // make parent update all the blogs
+          this.childEvent.emit();
+          ($("#feedActionBlog") as any).modal("hide");
+        }
+      );
+    }
+  }
+
   createComment(associatePost: Post) {
     const newComment = this.obtainCommentTemplate(associatePost);
     const errors: Map<string, string> = ContentValidation.check(newComment);
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {
-        this.errorMessage[key] = value;
+        this.postErrorMessage[key] = value;
       });
     } else {
       newComment.post = {id: associatePost.id} as Post;
       newComment.author = UserDummy(this.userData);
       this._httpService.createComment(newComment).subscribe(() => {
         // reset error message
-        for (const key in this.errorMessage) {
-          this.errorMessage[key] = "";
+        for (const key in this.postErrorMessage) {
+          this.postErrorMessage[key] = "";
         }
         this._httpService.getPost(associatePost.id).subscribe(data => {
           associatePost.comments = data.comments;

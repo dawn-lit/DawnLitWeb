@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Chat, Comment, Discussion, Message, Post, User, UserDummy } from "./utility.models";
+import { Blog, Chat, Comment, Discussion, Message, Post, User, UserDummy } from "./utility.models";
 import { TokenService } from "./token.service";
 
 @Injectable({
@@ -133,6 +133,16 @@ export class HttpService {
   // like a content
   likeContent(theContent: Discussion, contentType: string) {
     return this._http.post(`/api/users/like/${contentType}`, theContent);
+  }
+
+  // create a new Blog
+  createBlog(data: Blog) {
+    return this._http.post(`/api/blogs/new`, data);
+  }
+
+  // create announcements from admin
+  getAnnouncements(num: number) {
+    return this._http.get<Array<Blog>>(`/api/blogs/get/announcements/${num}`);
   }
 
   // start a new chat

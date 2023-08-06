@@ -5,7 +5,6 @@ export interface DatabaseRecord {
 }
 
 export interface User extends DatabaseRecord {
-  avatar: any;
   name: string;
   email: string;
   github: string;
@@ -62,4 +61,8 @@ export interface Post extends Discussion {
 export interface Comment extends Discussion {
   post: Post;
   replies: Array<Comment>;
+}
+
+export interface Blog extends Post {
+  title: string;
 }
