@@ -56,9 +56,6 @@ public class UsersService : AbstractService<User>
     {
         return await this.GetDatabaseCollection()
             .Include(x => x.Posts)
-            .Include(x => x.Comments)
-            .Include(x => x.LikedPosts)
-            .Include(x => x.LikedComments)
             .Include(x => x.Requests)
             .ThenInclude(x => x.Sender)
             .Include(x => x.Friends)
@@ -117,25 +114,25 @@ public class UsersService : AbstractService<User>
         return true;
     }
 
-    public async Task<bool> LikeCommentAsync(User likeByUser, Comment likedComment)
+    public async Task<bool> LikePostCommentAsync(User likeByUser, PostComment likedPostComment)
     {
         // find the true post
-        Comment? trueLikedComment = await this.GetDatabaseContext().Comments.FindAsync(likedComment.Id);
+        PostComment? trueLikedComment = await this.GetDatabaseContext().PostComments.FindAsync(likedPostComment.Id);
 
         if (trueLikedComment is null)
         {
             return false;
         }
 
-        if (likeByUser.LikedComments.Contains(trueLikedComment))
+        if (likeByUser.LikedPostComments.Contains(trueLikedComment))
         {
             // remove relationship if exists
-            likeByUser.LikedComments.Remove(trueLikedComment);
+            likeByUser.LikedPostComments.Remove(trueLikedComment);
         }
         else
         {
             // setup relationships
-            likeByUser.LikedComments.Add(trueLikedComment);
+            likeByUser.LikedPostComments.Add(trueLikedComment);
         }
 
         // save the changes

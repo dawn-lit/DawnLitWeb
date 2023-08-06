@@ -9,23 +9,19 @@ namespace NETCoreBackend.Controllers;
 [Route("api/[controller]")]
 public class CommentsController : ControllerBase
 {
-    private readonly CommentsService _commentsService;
+    private readonly BlogCommentsService _blogCommentsService;
+    private readonly PostCommentsService _postCommentsService;
 
     public CommentsController(DatabaseContext db)
     {
-        this._commentsService = new CommentsService(db);
+        this._postCommentsService = new PostCommentsService(db);
+        this._blogCommentsService = new BlogCommentsService(db);
     }
 
-    [HttpGet("get/all")]
-    public async Task<List<Comment>> Get()
+    [HttpGet("post/get/{id:int}")]
+    public async Task<ActionResult<PostComment>> PostCommentGet(int id)
     {
-        return await this._commentsService.GetAsync();
-    }
-
-    [HttpGet("get/{id:int}")]
-    public async Task<ActionResult<Comment>> Get(int id)
-    {
-        Comment? comment = await this._commentsService.GetAsync(id);
+        PostComment? comment = await this._postCommentsService.GetAsync(id);
 
         if (comment is null)
         {
@@ -35,22 +31,47 @@ public class CommentsController : ControllerBase
         return comment;
     }
 
-    [HttpPost("new")]
-    public async Task<IActionResult> Post(Comment newComment)
+    [HttpPost("post/new")]
+    public async Task<IActionResult> PostCommentPost(PostComment newPostComment)
     {
         // create the post
-        if (await this._commentsService.CreateAsync(newComment))
+        if (await this._postCommentsService.CreateAsync(newPostComment))
         {
-            return this.Accepted(new { id = newComment.Id });
+            return this.Accepted(new { id = newPostComment.Id });
         }
 
         return this.Conflict();
     }
 
-    [HttpDelete("delete/{id:int}")]
-    public async Task<IActionResult> Delete(int id)
+    [HttpDelete("post/delete/{id:int}")]
+    public async Task<IActionResult> PostCommentDelete(int id)
     {
-        bool result = await this._commentsService.RemoveAsync(id);
+        bool result = await this._postCommentsService.RemoveAsync(id);
+
+        if (result)
+        {
+            return this.NoContent();
+        }
+
+        return this.NotFound();
+    }
+
+    [HttpPost("blog/new")]
+    public async Task<IActionResult> BlogCommentPost(BlogComment newPostComment)
+    {
+        // create the post
+        if (await this._blogCommentsService.CreateAsync(newPostComment))
+        {
+            return this.Accepted(new { id = newPostComment.Id });
+        }
+
+        return this.Conflict();
+    }
+
+    [HttpDelete("blog/delete/{id:int}")]
+    public async Task<IActionResult> BlogCommentDelete(int id)
+    {
+        bool result = await this._blogCommentsService.RemoveAsync(id);
 
         if (result)
         {

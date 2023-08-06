@@ -1,5 +1,9 @@
-﻿namespace NETCoreBackend.Models;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class Post : AbstractPost
+namespace NETCoreBackend.Models;
+
+public class Post : Discussion
 {
+    [Display(Name = "comments")]
+    public ICollection<PostComment> Comments { get; } = new List<PostComment>();
 }

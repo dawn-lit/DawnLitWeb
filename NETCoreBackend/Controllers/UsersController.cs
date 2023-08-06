@@ -220,7 +220,7 @@ public class UsersController : AbstractUserController
     }
 
     [HttpPost("like/comment")]
-    public async Task<IActionResult> LikeComment(Comment likedComment)
+    public async Task<IActionResult> LikeComment(PostComment likedPostComment)
     {
         // get current user
         User? user = await this.GetCurrentUser();
@@ -231,7 +231,7 @@ public class UsersController : AbstractUserController
         }
 
         // set up the relationship
-        bool result = await this._usersService.LikeCommentAsync(user, likedComment);
+        bool result = await this._usersService.LikePostCommentAsync(user, likedPostComment);
 
         if (!result)
         {

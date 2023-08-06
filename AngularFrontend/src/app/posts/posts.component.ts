@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Blog, Comment, Discussion, Post, User, UserDummy } from "../utility.models";
+import { Blog, Discussion, Post, PostComment, User, UserDummy } from "../utility.models";
 import { HttpService } from "../http.service";
 import { ContentValidation } from "../utility.validations";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
@@ -23,7 +23,7 @@ export class PostsComponent {
 
   newPost: Post = {content: ""} as Post;
   newBlog: Blog = {title: "", content: ""} as Blog;
-  newComments: Record<string, Comment> = {};
+  newComments: Record<string, PostComment> = {};
   postErrorMessage: Record<string, string> = {"title": "", "content": ""};
   blogErrorMessage: Record<string, string> = {"content": ""};
   protected readonly getExistenceTime = getExistenceTime;
@@ -35,7 +35,7 @@ export class PostsComponent {
 
   obtainCommentTemplate(associatePost: Post) {
     if (!(associatePost.id in this.newComments)) {
-      this.newComments[associatePost.id] = {content: ""} as Comment;
+      this.newComments[associatePost.id] = {content: ""} as PostComment;
     }
     return this.newComments[associatePost.id];
   }
@@ -94,7 +94,7 @@ export class PostsComponent {
     } else {
       newComment.post = {id: associatePost.id} as Post;
       newComment.author = UserDummy(this.userData);
-      this._httpService.createComment(newComment).subscribe(() => {
+      this._httpService.createPostComment(newComment).subscribe(() => {
         // reset error message
         for (const key in this.postErrorMessage) {
           this.postErrorMessage[key] = "";
@@ -123,9 +123,9 @@ export class PostsComponent {
     });
   }
 
-  likeComment(theComment: Comment) {
+  likeComment(theComment: PostComment) {
     this._httpService.likeContent(theComment, "comment").subscribe(() => {
-      this._httpService.getComment(theComment.id).subscribe(data => {
+      this._httpService.getPostComment(theComment.id).subscribe(data => {
         theComment.likedBy = data.likedBy;
       });
     });

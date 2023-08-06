@@ -13,6 +13,16 @@ public class BlogsService : AbstractService<Blog>
     {
     }
 
+    public new async Task<Blog?> GetAsync(int id)
+    {
+        return await this.GetDatabaseCollection()
+            .Include(b => b.Author)
+            .Include(b => b.Comments)
+            .ThenInclude(c => c.Author)
+            .Include(b => b.LikedBy)
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public new async Task<bool> CreateAsync(Blog newBlog)
     {
         DatabaseContext dbContext = this.GetDatabaseContext();

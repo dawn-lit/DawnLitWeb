@@ -15,8 +15,10 @@ export interface User extends DatabaseRecord {
   chats: Array<Chat>;
   posts: Array<Post>;
   likedPosts: Array<Post>;
-  comments: Array<Comment>;
-  likedComments: Array<Comment>;
+  postComments: Array<PostComment>;
+  likedPostComments: Array<PostComment>;
+  blogComments: Array<BlogComment>;
+  likedBlogComments: Array<BlogComment>;
   coins: number;
   experience: number;
   signature: string;
@@ -55,14 +57,22 @@ export interface Discussion extends DatabaseRecord {
 }
 
 export interface Post extends Discussion {
-  comments: Array<Comment>;
+  comments: Array<PostComment>;
 }
 
-export interface Comment extends Discussion {
+export interface PostComment extends Discussion {
   post: Post;
-  replies: Array<Comment>;
 }
 
-export interface Blog extends Post {
+export interface Blog extends Discussion {
   title: string;
+  comments: Array<BlogComment>;
+}
+
+export function BlogDummy(blog: Blog): Blog {
+  return {id: blog.id} as Blog;
+}
+
+export interface BlogComment extends Discussion {
+  blog: Blog;
 }

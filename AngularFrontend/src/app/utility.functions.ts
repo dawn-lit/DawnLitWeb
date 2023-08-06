@@ -14,3 +14,7 @@ export function getExistenceTime(content: DatabaseRecord): string {
   let minutes = Math.round(timeDiff / 60);
   return minutes > 0 ? `${minutes}min` : "Just now";
 }
+
+export function getDateString(date: Date): string {
+  return new Date(date).toDateString();
+}

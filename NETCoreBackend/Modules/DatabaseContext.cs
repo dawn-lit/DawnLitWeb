@@ -15,7 +15,9 @@ public class DatabaseContext : DbContext
 
     public DbSet<Chat> Chats { get; set; } = null!;
 
-    public DbSet<Comment> Comments { get; set; } = null!;
+    public DbSet<PostComment> PostComments { get; set; } = null!;
+
+    public DbSet<BlogComment> BlogComments { get; set; } = null!;
 
     public DbSet<Confidential> Confidential { get; set; } = null!;
 
@@ -46,11 +48,19 @@ public class DatabaseContext : DbContext
             .WithMany(e => e.LikedBy);
 
         modelBuilder.Entity<User>()
-            .HasMany(e => e.Comments)
+            .HasMany(e => e.PostComments)
             .WithOne(e => e.Author);
 
         modelBuilder.Entity<User>()
-            .HasMany(e => e.LikedComments)
+            .HasMany(e => e.LikedPostComments)
+            .WithMany(e => e.LikedBy);
+
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.BlogComments)
+            .WithOne(e => e.Author);
+
+        modelBuilder.Entity<User>()
+            .HasMany(e => e.LikedBlogComments)
             .WithMany(e => e.LikedBy);
 
         modelBuilder.Entity<User>()
@@ -68,6 +78,10 @@ public class DatabaseContext : DbContext
         modelBuilder.Entity<Post>()
             .HasMany(e => e.Comments)
             .WithOne(e => e.Post);
+
+        modelBuilder.Entity<Blog>()
+            .HasMany(e => e.Comments)
+            .WithOne(e => e.Blog);
 
         modelBuilder.Entity<Chat>()
             .HasMany(e => e.Messages)

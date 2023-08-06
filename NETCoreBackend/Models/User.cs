@@ -23,17 +23,23 @@ public class User : AbstractModel
     [Display(Name = "likedPosts")]
     public ICollection<Post> LikedPosts { get; } = new List<Post>();
 
-    [Display(Name = "comments")]
-    public ICollection<Comment> Comments { get; } = new List<Comment>();
+    [Display(Name = "postComments")]
+    public ICollection<PostComment> PostComments { get; } = new List<PostComment>();
 
-    [Display(Name = "likedComments")]
-    public ICollection<Comment> LikedComments { get; } = new List<Comment>();
+    [Display(Name = "likedPostComments")]
+    public ICollection<PostComment> LikedPostComments { get; } = new List<PostComment>();
 
     [Display(Name = "blogs")]
-    public ICollection<Blog> Blogs { get; set; } = new List<Blog>();
+    public ICollection<Blog> Blogs { get; } = new List<Blog>();
 
     [Display(Name = "likedBlogs")]
     public ICollection<Blog> LikedBlogs { get; } = new List<Blog>();
+
+    [Display(Name = "blogComments")]
+    public ICollection<BlogComment> BlogComments { get; } = new List<BlogComment>();
+
+    [Display(Name = "likedBlogComments")]
+    public ICollection<BlogComment> LikedBlogComments { get; } = new List<BlogComment>();
 
     [Display(Name = "friends")]
     public ICollection<User> Friends { get; } = new List<User>();

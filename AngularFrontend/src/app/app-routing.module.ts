@@ -9,6 +9,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ProfileComponent } from "./profile/profile.component";
 import { MessagingComponent } from "./messaging/messaging.component";
+import { BlogComponent } from "./blog/blog.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'settings', component: SettingsComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'messaging', component: MessagingComponent},
+  {path: 'blog', component: BlogComponent},
   {path: '**', pathMatch: 'full', redirectTo: ''},
 ];
 

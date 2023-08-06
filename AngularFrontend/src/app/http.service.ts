@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Blog, Chat, Comment, Discussion, Message, Post, User, UserDummy } from "./utility.models";
+import { Blog, BlogComment, Chat, Discussion, Message, Post, PostComment, User, UserDummy } from "./utility.models";
 import { TokenService } from "./token.service";
 
 @Injectable({
@@ -117,17 +117,19 @@ export class HttpService {
 
   // get a list of posts
   getPosts(num: number, userId: number = 0): Observable<Array<Post>> {
-    return userId <= 0 ? this._http.get<Array<Post>>(`/api/posts/get/list/${num}`) : this._http.get<Array<Post>>(`/api/posts/get/list/${userId}/${num}`);
+    return userId <= 0
+      ? this._http.get<Array<Post>>(`/api/posts/get/list/${num}`)
+      : this._http.get<Array<Post>>(`/api/posts/get/list/${userId}/${num}`);
   }
 
-  // create a new comment
-  createComment(data: Comment) {
-    return this._http.post(`/api/comments/new`, data);
+  // create a new comment for post
+  createPostComment(data: PostComment) {
+    return this._http.post(`/api/comments/post/new`, data);
   }
 
-  // get post with specific id
-  getComment(id: number): Observable<Comment> {
-    return this._http.get<Comment>(`/api/comments/get/${id}`);
+  // get post comment with specific id
+  getPostComment(id: number): Observable<PostComment> {
+    return this._http.get<PostComment>(`/api/comments/post/get/${id}`);
   }
 
   // like a content
@@ -137,12 +139,22 @@ export class HttpService {
 
   // create a new Blog
   createBlog(data: Blog) {
-    return this._http.post(`/api/blogs/new`, data);
+    return this._http.post("/api/blogs/new", data);
+  }
+
+  // get a Blog
+  getBlog(id: number): Observable<Blog> {
+    return this._http.get<Blog>(`/api/blogs/get/${id}`);
   }
 
   // create announcements from admin
-  getAnnouncements(num: number) {
+  getAnnouncements(num: number): Observable<Array<Blog>> {
     return this._http.get<Array<Blog>>(`/api/blogs/get/announcements/${num}`);
+  }
+
+  // create a new comment for blog
+  createBlogComment(data: BlogComment) {
+    return this._http.post(`/api/comments/blog/new`, data);
   }
 
   // start a new chat
