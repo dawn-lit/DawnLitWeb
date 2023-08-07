@@ -90,22 +90,24 @@ public class UsersService : AbstractService<User>
     public async Task<bool> LikePostAsync(User likeByUser, Post likedPost)
     {
         // find the true post
-        Post? trueLikedPost = await this.GetDatabaseContext().Posts.FindAsync(likedPost.Id);
+        Post? trueLikedPost = await this.GetDatabaseContext().Posts
+            .Include(p => p.LikedBy)
+            .FirstOrDefaultAsync(p => p.Id == likedPost.Id);
 
         if (trueLikedPost is null)
         {
             return false;
         }
 
-        if (likeByUser.LikedPosts.Contains(trueLikedPost))
+        if (trueLikedPost.LikedBy.Contains(likeByUser))
         {
             // remove relationship if exists
-            likeByUser.LikedPosts.Remove(trueLikedPost);
+            trueLikedPost.LikedBy.Remove(likeByUser);
         }
         else
         {
             // setup relationships
-            likeByUser.LikedPosts.Add(trueLikedPost);
+            trueLikedPost.LikedBy.Add(likeByUser);
         }
 
         // save the changes
@@ -117,22 +119,24 @@ public class UsersService : AbstractService<User>
     public async Task<bool> LikePostCommentAsync(User likeByUser, PostComment likedPostComment)
     {
         // find the true post
-        PostComment? trueLikedComment = await this.GetDatabaseContext().PostComments.FindAsync(likedPostComment.Id);
+        PostComment? trueLikedComment = await this.GetDatabaseContext().PostComments
+            .Include(p => p.LikedBy)
+            .FirstOrDefaultAsync(p => p.Id == likedPostComment.Id);
 
         if (trueLikedComment is null)
         {
             return false;
         }
 
-        if (likeByUser.LikedPostComments.Contains(trueLikedComment))
+        if (trueLikedComment.LikedBy.Contains(likeByUser))
         {
             // remove relationship if exists
-            likeByUser.LikedPostComments.Remove(trueLikedComment);
+            trueLikedComment.LikedBy.Remove(likeByUser);
         }
         else
         {
             // setup relationships
-            likeByUser.LikedPostComments.Add(trueLikedComment);
+            trueLikedComment.LikedBy.Add(likeByUser);
         }
 
         // save the changes

@@ -23,7 +23,8 @@
               </div>
               <div class="ms-sm-4 mt-sm-3">
                 <!-- Info -->
-                <h1 class="mb-0 h5">{{profileUserData!.name}} <i class="bi bi-patch-check-fill text-success small"></i>
+                <h1 class="mb-0 h5">{{profileUserData!.name}} <i *ngIf="profileUserData!.id==1"
+                                                                 class="bi bi-patch-check-fill text-success small"></i>
                 </h1>
                 <p>{{profileUserData!.friends.length}} connections</p>
               </div>

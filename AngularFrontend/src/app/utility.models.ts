@@ -56,6 +56,10 @@ export interface Discussion extends DatabaseRecord {
   likedBy: Array<User>;
 }
 
+export function DiscussionDummy(content: Discussion): Discussion {
+  return {id: content.id} as Discussion;
+}
+
 export interface Post extends Discussion {
   comments: Array<PostComment>;
 }

@@ -29,6 +29,7 @@ public class PostsService : AbstractService<Post>
             .Include(m => m.Author)
             .Include(m => m.LikedBy)
             .Include(m => m.Comments.OrderByDescending(o => o.CreatedAt))
+            .ThenInclude(m => m.Author)
             .OrderByDescending(o => o.CreatedAt)
             .Take(Math.Min(num, MAX_POSTS))
             .ToListAsync();
@@ -41,6 +42,7 @@ public class PostsService : AbstractService<Post>
             .Include(m => m.Author)
             .Include(m => m.LikedBy)
             .Include(m => m.Comments.OrderByDescending(o => o.CreatedAt))
+            .ThenInclude(m => m.Author)
             .OrderByDescending(o => o.CreatedAt)
             .Take(Math.Min(num, MAX_POSTS))
             .ToListAsync();
