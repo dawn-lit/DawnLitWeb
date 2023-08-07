@@ -75,7 +75,7 @@ export class HttpService {
 
   // log off current user
   logoffUser(): Observable<Object> {
-    localStorage.removeItem("jwt_token");
+    localStorage.clear();
     return new Observable<Object>();
   }
 
@@ -174,6 +174,11 @@ export class HttpService {
 
   // new message
   newMessage(message: Message) {
-    return this._http.post(`/api/messages/new`, message);
+    return this._http.post("/api/messages/new", message);
+  }
+
+  // get file
+  getSingleFile(userId: number, type: string): Observable<any> {
+    return this._http.get<any>(`/api/files/get/single/${userId}/${type}`);
   }
 }

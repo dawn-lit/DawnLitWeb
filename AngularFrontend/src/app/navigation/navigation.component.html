@@ -3,7 +3,6 @@
 <link href="/assets/vendor/tiny-slider/dist/tiny-slider.css" rel="stylesheet" type="text/css">
 <link href="/assets/vendor/choices.js/public/assets/styles/choices.min.css" rel="stylesheet" type="text/css">
 <link href="/assets/vendor/glightbox-master/dist/css/glightbox.min.css" rel="stylesheet" type="text/css">
-<link href="/assets/vendor/dropzone/dist/dropzone.css" rel="stylesheet" type="text/css">
 <link href="/assets/vendor/flatpickr/dist/flatpickr.css" rel="stylesheet" type="text/css">
 <link href="/assets/vendor/plyr/plyr.css" rel="stylesheet" type="text/css">
 
@@ -152,15 +151,18 @@
             <div
               class="modeswitch-item theme-icon-active d-flex justify-content-center gap-3 align-items-center p-2 pb-0">
               <span>Mode:</span>
-              <button class="btn btn-modeswitch nav-link text-primary-hover mb-0 bi bi-brightness-high-fill"
-                      data-bs-placement="top" data-bs-theme-value="light" data-bs-title="Light"
+              <button (click)="setTheme('light')"
+                      class="btn btn-modeswitch nav-link text-primary-hover mb-0 bi bi-brightness-high-fill"
+                      data-bs-placement="top" data-bs-theme-value="light"
+                      data-bs-title="Light" data-bs-toggle="tooltip" type="button"></button>
+              <button (click)="setTheme('dark')"
+                      class="btn btn-modeswitch nav-link text-primary-hover mb-0 bi bi-moon-stars-fill"
+                      data-bs-placement="top" data-bs-theme-value="dark" data-bs-title="Dark"
                       data-bs-toggle="tooltip" type="button"></button>
-              <button class="btn btn-modeswitch nav-link text-primary-hover mb-0 bi bi-moon-stars-fill"
-                      data-bs-placement="top" data-bs-theme-value="dark" data-bs-title="Dark" data-bs-toggle="tooltip"
-                      type="button"></button>
-              <button class="btn btn-modeswitch nav-link text-primary-hover mb-0 bi bi-circle-half"
-                      data-bs-placement="top" data-bs-theme-value="auto" data-bs-title="Auto" data-bs-toggle="tooltip"
-                      type="button"></button>
+              <button (click)="setTheme('auto')"
+                      class="btn btn-modeswitch nav-link text-primary-hover mb-0 bi bi-circle-half"
+                      data-bs-placement="top" data-bs-theme-value="auto" data-bs-title="Auto"
+                      data-bs-toggle="tooltip" type="button"></button>
             </div>
           </li>
           <!-- Dark mode options END-->

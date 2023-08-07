@@ -7,6 +7,9 @@ public class FileItem : AbstractModel
     [Display(Name = "creator")]
     public User Creator { get; set; } = null!;
 
+    [Display(Name = "type")]
+    public string Type { get; set; } = string.Empty;
+
     [Display(Name = "name")]
     public string Name { get; set; } = string.Empty;
 

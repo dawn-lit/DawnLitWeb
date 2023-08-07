@@ -23,6 +23,10 @@ export class SettingsComponent {
     "name": "", "signature": "", "about": "", "password": "", "newPassword": "", "passwordConfirm": ""
   };
   deleteAccountConfirmed: boolean = false;
+  config = {
+    url: '/api/files/new/single/avatar',
+    maxFiles: 1
+  };
 
   constructor(
     private _httpService: HttpService

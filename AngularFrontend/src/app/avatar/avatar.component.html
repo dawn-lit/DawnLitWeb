@@ -1,3 +1,5 @@
 <!-- Avatar -->
-<img *ngIf="userData!=null" alt="" class="avatar-img {{classTags}}" src="{{getImageSrc()}}" style="{{getStyle()}}">
+<img *ngIf="userData!=null && imageSrc.length>0" alt="" class="avatar-img {{classTags}}"
+     src="data:image;base64, {{imageSrc}}">
+<img *ngIf="userData!=null && imageSrc.length==0" alt="" class="avatar-img {{classTags}}" style="{{getStyle()}}">
 <p *ngIf="userData!=null" id="capital_letter">{{userData.name[0].toUpperCase()}}</p>

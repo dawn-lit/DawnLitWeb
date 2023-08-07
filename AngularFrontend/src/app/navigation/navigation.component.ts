@@ -21,8 +21,10 @@ export class NavigationComponent {
   }
 
   ngOnInit(): void {
+    // set the theme
+    this.setTheme('theme' in localStorage ? localStorage['theme'] : this.getPreferredTheme());
+    // get current user data
     this.getUserData();
-    this.initTheme();
   }
 
   getUserData(): void {
@@ -32,31 +34,6 @@ export class NavigationComponent {
   logOff(): void {
     this._router.navigate(['/logoff']).then(() => {
       this.userData = null;
-    });
-  }
-
-  initTheme(): void {
-    // init and set the theme
-    this.setTheme('theme' in localStorage ? localStorage['theme'] : this.getPreferredTheme());
-    // add the listener to detect theme changes
-    window.addEventListener('DOMContentLoaded', () => {
-      if (document.querySelector('.theme-icon-active') != undefined) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-          if (localStorage.getItem('theme') == undefined || "auto") {
-            this.setTheme(this.getPreferredTheme());
-          }
-        });
-        document.querySelectorAll('[data-bs-theme-value]')
-          .forEach(toggle => {
-            toggle.addEventListener('click', () => {
-              const theme = toggle.getAttribute('data-bs-theme-value');
-              if (theme != undefined) {
-                localStorage.setItem('theme', theme);
-                this.setTheme(theme);
-              }
-            });
-          });
-      }
     });
   }
 
@@ -77,6 +54,7 @@ export class NavigationComponent {
   }
 
   setTheme(theme: string) {
+    localStorage.setItem('theme', theme);
     if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       document.documentElement.setAttribute('data-bs-theme', 'dark');
     } else {

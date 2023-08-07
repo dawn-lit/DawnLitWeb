@@ -122,9 +122,29 @@
 
           <!-- Account setting tab START -->
           <div class="tab-pane show active fade" id="nav-setting-tab-1">
+
+            <!-- Avatar settings START -->
+            <div class="card mb-4">
+              <!-- Title START -->
+              <div class="card-header border-0 pb-0">
+                <h1 class="h5 card-title">Avatar</h1>
+              </div>
+              <!-- Card header START -->
+              <!-- Card body START -->
+              <div *ngIf="userData != null" class="card-body">
+                <div class="avatar text-center d-none d-sm-inline-block">
+                  <app-avatar [classTags]="'rounded-circle'" [userData]="userData"></app-avatar>
+                </div>
+                <dropzone [config]="config" [message]="'Click or drag image here to upload'"
+                          style="width: 50%"></dropzone>
+              </div>
+
+              <!-- Card body END -->
+            </div>
+            <!-- Avatar settings END -->
+
             <!-- Account settings START -->
             <div class="card mb-4">
-
               <!-- Title START -->
               <div class="card-header border-0 pb-0">
                 <h1 class="h5 card-title">Account Settings</h1>

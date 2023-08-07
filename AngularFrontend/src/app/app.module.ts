@@ -31,7 +31,6 @@ import { BlogComponent } from './blog/blog.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
-  url: '/api/files/new',
   acceptedFiles: 'image/*',
   headers: {"Authorization": 'Bearer ' + tokenGetter()},
 };
