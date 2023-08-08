@@ -221,7 +221,7 @@
                              type="{{passwordsTypes['cp']}}">
                       <span class="input-group-text p-0">
                         <i (click)="togglePasswordVisibility('cp')"
-                           class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
+                           class="fakepasswordicon bi bi-{{passwordsTypes['cp'] != 'password' ? 'eye-slash': 'eye'}}-fill cursor-pointer p-2 w-40px"></i>
                       </span>
                     </div>
                     <p *ngIf="errorMessage['password']" class="warning_messages">{{errorMessage['password']}}</p>
@@ -235,7 +235,7 @@
                              type="{{passwordsTypes['np']}}">
                       <span class="input-group-text p-0">
                         <i (click)="togglePasswordVisibility('np')"
-                           class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
+                           class="fakepasswordicon bi bi-{{passwordsTypes['np'] != 'password' ? 'eye-slash': 'eye'}}-fill cursor-pointer p-2 w-40px"></i>
                       </span>
                     </div>
                     <!-- Pswmeter -->
@@ -251,7 +251,7 @@
                              type="{{passwordsTypes['np2']}}">
                       <span class="input-group-text p-0">
                         <i (click)="togglePasswordVisibility('np2')"
-                           class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
+                           class="fakepasswordicon bi bi-{{passwordsTypes['np2'] != 'password' ? 'eye-slash': 'eye'}}-fill cursor-pointer p-2 w-40px"></i>
                       </span>
                     </div>
                     <p *ngIf="errorMessage['passwordConfirm']"

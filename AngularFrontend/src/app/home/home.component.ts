@@ -28,6 +28,7 @@ export class HomeComponent {
     this.getAllPosts();
     this.getAnnouncements();
     this.getUserRecentlyCreated();
+    this.logInfo();
   }
 
   getUserData(): void {
@@ -57,5 +58,14 @@ export class HomeComponent {
         targetUser.requests = data.requests;
       });
     });
+  }
+
+  private logInfo(): void {
+    console.log(
+      "Even the darkest night\n" +
+      "is followed by the brand-new morning light.\n" +
+      "And only the brave ones can lead the way.\n" +
+      "With our hearts like wildfire, we'll make it through!"
+    );
   }
 }

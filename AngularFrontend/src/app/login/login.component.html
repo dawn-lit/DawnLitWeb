@@ -32,15 +32,15 @@
           </div>
           <!-- Remember me -->
           <div class="mb-3 d-sm-flex justify-content-between">
-            <div>
-              <input class="form-check-input" id="rememberCheck" type="checkbox">
-              <label class="form-check-label" for="rememberCheck">Remember me?</label>
-            </div>
-            <a href="forgot-password.html">Forgot password?</a>
+            <div></div>
+            <a hidden="hidden" href="forgot-password.html">Forgot password?</a>
           </div>
           <!-- Button -->
           <div class="d-grid">
-            <button class="btn btn-lg btn-primary" type="submit">Login</button>
+            <button *ngIf="isBlocked" class="btn btn-lg btn-primary">
+              <div class="spinner-border" role="status"></div>
+            </button>
+            <button *ngIf="!isBlocked" class="btn btn-lg btn-primary" type="submit">Login</button>
           </div>
           <!-- Copyright -->
           <p class="mb-0 mt-3">©2023 Dawn Lit All rights reserved</p>

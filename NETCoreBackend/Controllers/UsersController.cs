@@ -77,10 +77,14 @@ public class UsersController : AbstractUserController
     public async Task<IActionResult> Post(User newUser)
     {
         // ensure the email is not empty and valid
-        if (newUser.Email.Length <= 0 || !new EmailAddressAttribute().IsValid(newUser.Email) ||
-            await this._usersService.GetAsync(newUser.Email, false) != null)
-        {
+        if (newUser.Email.Length <= 0 || !new EmailAddressAttribute().IsValid(newUser.Email)){
             return this.Conflict("Email");
+        }
+        
+        // ensure the email is not used yet
+        if (await this._usersService.GetAsync(newUser.Email, false) != null)
+        {
+            return this.Ok(new { accepted = false, email = "already_exist" });
         }
 
         // ensure the user name length is within range
@@ -98,7 +102,7 @@ public class UsersController : AbstractUserController
         // create the user
         await this._usersService.CreateAsync(newUser);
 
-        return this.Accepted(new { token = Authentications.CreateJwtToken(newUser) });
+        return this.Accepted(new { accepted = true, token = Authentications.CreateJwtToken(newUser) });
     }
 
     [HttpPost("login")]

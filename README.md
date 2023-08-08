@@ -70,7 +70,25 @@ https://themes.getbootstrap.com/product/social-network-community-and-event-theme
 
 `dotnet watch run`
 
+### Ubuntu specific commands:
 
+##### Grant everyone the privilege to modify the repo directory:
+
+`sudo chmod -R 777 DawnLitWeb/`
+
+##### Connect to database (main):
+
+`sudo -i -u postgres psql main`
+
+##### Drop database (main):
+
+`sudo -i -u postgres psql`
+
+`DROP DATABASE main;`
+
+##### Setup dotnet-ef
+
+`export PATH="$PATH:/home/$USER/.dotnet/tools"`
 
 # 💪 Want to contribute?
 

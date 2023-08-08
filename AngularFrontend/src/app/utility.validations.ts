@@ -1,6 +1,6 @@
-// validate general user information
 import { Blog, Discussion, User } from "./utility.models";
 
+// validate general user information
 class UserValidation {
   // user name length requirements
   private static readonly MIN_NAME_LENGTH = 2;
@@ -21,12 +21,6 @@ class UserValidation {
     special_char_detected: `Username may not contain special characters other than "_"!`,
     too_long: `Username cannot be longer than ${this.MAX_NAME_LENGTH} characters!`
   };
-  // email error messages
-  private static readonly EMAIL_ERROR_MESSAGES = {
-    already_exist: `This Email address has already been used. If you believe your Email address has been used illegally, please use the "Forgot Password" page to retrieve your account.`,
-    invalid: "This is not a valid Email address!",
-    empty: "Please enter your Email address!"
-  };
   // password error messages
   private static readonly PASSWORD_ERROR_MESSAGES = {
     empty: "Please enter your password!",
@@ -46,8 +40,6 @@ class UserValidation {
   };
   // user name pattern
   private static readonly USERNAME_RE: RegExp = /[^A-Za-z0-9_]/;
-  // email pattern
-  private static readonly EMAIL_RE: RegExp = /\S+@\S+\.\S+/;
 
   public static isNameValid(name: string): string | null {
     // if name is empty
@@ -68,16 +60,6 @@ class UserValidation {
       return this.NAME_ERROR_MESSAGES.special_char_detected;
     }
 
-    return null;
-  }
-
-  public static isEmailValid(email: string): string | null {
-    if (email == null || email.length <= 0) {
-      return this.EMAIL_ERROR_MESSAGES.empty;
-    }
-    if (!this.EMAIL_RE.test(email)) {
-      return this.EMAIL_ERROR_MESSAGES.invalid;
-    }
     return null;
   }
 
@@ -124,10 +106,29 @@ class UserValidation {
 
 // validate user registration input data
 export class RegistrationValidation {
+  // email pattern
+  private static readonly EMAIL_RE: RegExp = /\S+@\S+\.\S+/;
+  // email error messages
+  private static readonly EMAIL_ERROR_MESSAGES: Record<string, string> = {
+    already_exist: `This Email address has already been used. If you believe your Email address has been used illegally, please use the "Forgot Password" page to retrieve your account.`,
+    invalid: "This is not a valid Email address!",
+    empty: "Please enter your Email address!"
+  };
+
+  public static isEmailValid(email: string): string | null {
+    if (email == null || email.length <= 0) {
+      return this.EMAIL_ERROR_MESSAGES["empty"];
+    }
+    if (!this.EMAIL_RE.test(email)) {
+      return this.EMAIL_ERROR_MESSAGES["invalid"];
+    }
+    return null;
+  }
+
   public static check(RegistrationData: Record<string, string>): Map<string, string> {
     const errorMessages: Map<string, string> = new Map<string, string>();
 
-    let error = UserValidation.isEmailValid(RegistrationData["email"]);
+    let error = this.isEmailValid(RegistrationData["email"]);
     if (error != null) {
       errorMessages.set("email", error);
     }
@@ -148,6 +149,10 @@ export class RegistrationValidation {
     }
 
     return errorMessages;
+  }
+
+  public static getMessage(key: string): string {
+    return this.EMAIL_ERROR_MESSAGES[key];
   }
 }
 

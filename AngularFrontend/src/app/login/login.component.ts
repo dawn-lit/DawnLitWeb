@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../http.service';
-import { HttpClient } from '@angular/common/http';
 import { LoginValidation } from "../utility.validations";
 import { TokenService } from "../token.service";
 
@@ -16,7 +15,6 @@ export class LoginComponent {
 
   constructor(
     private _httpService: HttpService,
-    private _http: HttpClient,
     private _token: TokenService
   ) {
   }
@@ -37,26 +35,24 @@ export class LoginComponent {
       // update error message
       this.resetErrorMessage();
       const errors: Map<string, string> = LoginValidation.check(this.loginData);
-
+      // if there is errors
       if (errors.size > 0) {
         errors.forEach((value: string, key: string) => {
           this.errorMessage[key] = value;
         });
+        this.isBlocked = false;
       } else {
-        this._httpService.loginUser(this.loginData).subscribe({
-          next: (data: any) => {
-            if (data.accepted == true) {
-              this._token.set(data.token);
-              this._httpService.gotoHomePage();
-              this.resetLoginData();
-            } else {
-              Object.entries(data).forEach(
-                ([key, value]) => this.errorMessage[key] = LoginValidation.getMessage(value as string)
-              );
-            }
-          },
-          error: (e) => console.log(e),
-          complete: () => console.info('complete')
+        this._httpService.loginUser(this.loginData).subscribe((data: any) => {
+          if (data.accepted == true) {
+            this._token.set(data.token);
+            this._httpService.gotoHomePage();
+            this.resetLoginData();
+          } else {
+            Object.entries(data).forEach(
+              ([key, value]) => this.errorMessage[key] = LoginValidation.getMessage(value as string)
+            );
+          }
+          this.isBlocked = false;
         });
       }
     });

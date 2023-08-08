@@ -60,7 +60,10 @@
           </div>
           <!-- Button -->
           <div class="d-grid">
-            <button class="btn btn-lg btn-primary" type="submit">Sign me up</button>
+            <button *ngIf="isBlocked" class="btn btn-lg btn-primary">
+              <div class="spinner-border" role="status"></div>
+            </button>
+            <button *ngIf="!isBlocked" class="btn btn-lg btn-primary" type="submit">Sign me up</button>
           </div>
           <!-- Copyright -->
           <p class="mb-0 mt-3 text-center">©2023 Dawn Lit All rights reserved</p>

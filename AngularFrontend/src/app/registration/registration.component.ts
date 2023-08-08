@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../http.service';
-import { HttpClient } from '@angular/common/http';
 import { RegistrationValidation } from "../utility.validations";
 import { TokenService } from "../token.service";
 
@@ -20,7 +19,6 @@ export class RegistrationComponent {
 
   constructor(
     private _httpService: HttpService,
-    private _http: HttpClient,
     private _token: TokenService
   ) {
   }
@@ -43,19 +41,29 @@ export class RegistrationComponent {
     this._httpService.getIpInfo().subscribe(res => {
       this.registrationData['loginIp'] = res.ip;
       if (this.registrationData['loginIp'] != null && this.registrationData['loginIp'] != "") {
+        // update error message
         const errors: Map<string, string> = RegistrationValidation.check(this.registrationData);
+        // if there is errors
         if (errors.size > 0) {
           errors.forEach((value: string, key: string) => {
             this.errorMessage[key] = value;
           });
+          this.isBlocked = false;
         } else {
           this._httpService.registerUser(this.registrationData).subscribe((data: any) => {
-            this._token.set(data.token);
-            this._httpService.gotoHomePage();
-            // reset registration ngmodel
-            for (const key in this.registrationData) {
-              this.registrationData[key] = "";
+            if (data.accepted == true) {
+              this._token.set(data.token);
+              this._httpService.gotoHomePage();
+              // reset registration ngmodel
+              for (const key in this.registrationData) {
+                this.registrationData[key] = "";
+              }
+            } else {
+              Object.entries(data).forEach(
+                ([key, value]) => this.errorMessage[key] = RegistrationValidation.getMessage(value as string)
+              );
             }
+            this.isBlocked = false;
           });
         }
       }
