@@ -3,7 +3,7 @@ import { Blog, Discussion, Post, PostComment, User, UserDummy } from "../utility
 import { HttpService } from "../http.service";
 import { ContentValidation } from "../utility.validations";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
-import { getExistenceTime } from "../utility.functions";
+import { getExistenceTime, Theme } from "../utility.functions";
 
 declare var $: any;
 
@@ -27,6 +27,7 @@ export class PostsComponent {
   postErrorMessage: Record<string, string> = {"title": "", "content": ""};
   blogErrorMessage: Record<string, string> = {"content": ""};
   protected readonly getExistenceTime = getExistenceTime;
+  protected readonly Theme = Theme;
 
   constructor(
     private _httpService: HttpService

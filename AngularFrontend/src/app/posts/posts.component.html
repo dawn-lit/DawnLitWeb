@@ -312,7 +312,7 @@
           <p></p>
           <p><strong>Content:</strong></p>
           <angular-editor [(ngModel)]="newBlog.content" [config]="editorConfig"
-                          [placeholder]="'Enter text here...'"></angular-editor>
+                          class="editor_{{Theme.get()}}"></angular-editor>
           <p *ngIf="blogErrorMessage['content']" class="warning_messages">{{blogErrorMessage['content']}}</p>
         </div>
 
@@ -351,7 +351,7 @@
             <app-avatar [classTags]="'rounded-circle'" [userData]="userData"></app-avatar>
           </div>
           <angular-editor [(ngModel)]="newPost.content" [config]="editorConfig"
-                          [placeholder]="'Enter text here...'"></angular-editor>
+                          class="editor_{{Theme.get()}}"></angular-editor>
         </div>
         <p *ngIf="postErrorMessage['content']" class="warning_messages">{{postErrorMessage['content']}}</p>
       </div>

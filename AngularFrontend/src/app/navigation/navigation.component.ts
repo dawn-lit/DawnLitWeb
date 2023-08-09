@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { User } from "../utility.models";
 import { HttpService } from '../http.service';
 import { Router } from "@angular/router";
-import { getExistenceTime } from "../utility.functions";
+import { getExistenceTime, Theme } from "../utility.functions";
 import { map } from "rxjs";
 
 @Component({
@@ -21,8 +21,8 @@ export class NavigationComponent {
   }
 
   ngOnInit(): void {
-    // set the theme
-    this.setTheme('theme' in localStorage ? localStorage['theme'] : this.getPreferredTheme());
+    // apply the theme
+    Theme.apply();
     // get current user data
     this.getUserData();
   }
@@ -49,16 +49,7 @@ export class NavigationComponent {
     });
   }
 
-  getPreferredTheme(): string {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-
   setTheme(theme: string) {
-    localStorage.setItem('theme', theme);
-    if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.documentElement.setAttribute('data-bs-theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-bs-theme', theme);
-    }
+    Theme.set(theme);
   }
 }

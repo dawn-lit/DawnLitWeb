@@ -18,3 +18,24 @@ export function getExistenceTime(content: DatabaseRecord): string {
 export function getDateString(date: Date): string {
   return new Date(date).toDateString();
 }
+
+export class Theme {
+  static get(): string {
+    return 'theme' in localStorage
+      ? localStorage['theme']
+      : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  }
+
+  static set(theme: string) {
+    localStorage.setItem('theme', theme);
+    if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-bs-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-bs-theme', theme);
+    }
+  }
+
+  static apply() {
+    this.set(this.get());
+  }
+}

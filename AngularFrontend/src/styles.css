@@ -2,3 +2,21 @@
 .warning_messages {
   color: red;
 }
+
+.editor_dark .angular-editor-button {
+  background-color: transparent !important;
+  color: white !important;
+}
+
+.editor_dark .angular-editor-toolbar {
+  background-color: transparent !important;
+}
+
+.editor_dark .ae-picker-label {
+  background-color: transparent !important;
+  color: white !important;
+}
+
+.editor_dark .ae-picker-options {
+  background-color: #191a1f !important;
+}
