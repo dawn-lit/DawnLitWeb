@@ -120,7 +120,7 @@ export class PostsComponent {
     if (this.userData == null) {
       return;
     }
-    this._httpService.likeContent(thePost, "post").subscribe(() => {
+    this._httpService.likePost(thePost).subscribe(() => {
       this._httpService.getPost(thePost.id).subscribe(data => {
         thePost.likedBy = data.likedBy;
       });
@@ -131,7 +131,7 @@ export class PostsComponent {
     if (this.userData == null) {
       return;
     }
-    this._httpService.likeContent(theComment, "comment").subscribe(() => {
+    this._httpService.likePostComment(theComment).subscribe(() => {
       this._httpService.getPostComment(theComment.id).subscribe(data => {
         theComment.likedBy = data.likedBy;
       });

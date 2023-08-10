@@ -7,7 +7,7 @@ namespace NETCoreBackend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CommentsController : ControllerBase
+public class CommentsController : AbstractUserController
 {
     private readonly BlogCommentsService _blogCommentsService;
     private readonly PostCommentsService _postCommentsService;
@@ -32,7 +32,7 @@ public class CommentsController : ControllerBase
     }
 
     [HttpPost("post/new")]
-    public async Task<IActionResult> PostCommentPost(PostComment newPostComment)
+    public async Task<IActionResult> CreatePostComment(PostComment newPostComment)
     {
         // create the post
         if (await this._postCommentsService.CreateAsync(newPostComment))
@@ -43,8 +43,30 @@ public class CommentsController : ControllerBase
         return this.Conflict();
     }
 
+    [HttpPost("post/like")]
+    public async Task<IActionResult> LikePostComment(PostComment likedPostComment)
+    {
+        // get current user
+        int userId = this.GetCurrentUserId();
+
+        if (userId <= 0)
+        {
+            return this.Conflict();
+        }
+
+        // set up the relationship
+        bool result = await this._postCommentsService.LikeAsync(userId, likedPostComment);
+
+        if (!result)
+        {
+            return this.NotFound();
+        }
+
+        return this.Accepted();
+    }
+
     [HttpDelete("post/delete/{id:int}")]
-    public async Task<IActionResult> PostCommentDelete(int id)
+    public async Task<IActionResult> RemovePostComment(int id)
     {
         bool result = await this._postCommentsService.RemoveAsync(id);
 
@@ -57,7 +79,7 @@ public class CommentsController : ControllerBase
     }
 
     [HttpPost("blog/new")]
-    public async Task<IActionResult> BlogCommentPost(BlogComment newPostComment)
+    public async Task<IActionResult> CreateBlogComment(BlogComment newPostComment)
     {
         // create the post
         if (await this._blogCommentsService.CreateAsync(newPostComment))
@@ -69,7 +91,7 @@ public class CommentsController : ControllerBase
     }
 
     [HttpDelete("blog/delete/{id:int}")]
-    public async Task<IActionResult> BlogCommentDelete(int id)
+    public async Task<IActionResult> RemoveBlogComment(int id)
     {
         bool result = await this._blogCommentsService.RemoveAsync(id);
 

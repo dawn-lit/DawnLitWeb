@@ -24,7 +24,7 @@
         <!-- Advanced filter responsive toggler END -->
 
         <!-- Navbar START-->
-        <nav *ngIf="userData!=null" class="navbar navbar-expand-lg mx-0">
+        <nav class="navbar navbar-expand-lg mx-0">
           <div class="offcanvas offcanvas-start" id="offcanvasSideNavbar" tabindex="-1">
             <!-- Offcanvas header -->
             <div class="offcanvas-header">
@@ -40,7 +40,7 @@
                 <div class="h-50px"
                      style="background-image:url(assets/images/bg/01.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
                 <!-- Card body START -->
-                <div class="card-body pt-0">
+                <div *ngIf="userData!=null" class="card-body pt-0">
                   <div class="text-center">
                     <!-- Avatar -->
                     <div class="avatar avatar-lg mt-n5 mb-3">
@@ -116,36 +116,17 @@
                 </div>
                 <!-- Card body END -->
                 <!-- Card footer -->
-                <div class="card-footer text-center py-2">
+                <div *ngIf="userData!=null" class="card-footer text-center py-2">
                   <a class="btn btn-link btn-sm" href="./profile?id={{userData.id}}">View Profile </a>
+                </div>
+                <div *ngIf="userData==null" class="text-center py-2">
+                  <span>You have not login yet!</span><br>
+                  <span>Click <a href="/login">here</a> to login in</span>
                 </div>
               </div>
               <!-- Card END -->
-
-              <!-- Helper link START -->
-              <ul class="nav small mt-4 justify-content-center lh-1">
-                <li class="nav-item">
-                  <a class="nav-link" href="my-profile-about.html">About</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="./settings">Settings</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="https://support.webestica.com/login" target="_blank">Support </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="docs/index.html" target="_blank">Docs </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="help.html">Help</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="privacy-and-terms.html">Privacy & terms</a>
-                </li>
-              </ul>
-              <!-- Helper link END -->
               <!-- Copyright -->
-              <p class="small text-center mt-1">©2023 <a class="text-body" href="https://www.dawnlit.com/"
+              <p class="small text-center mt-1">©2023 <a class="text-body" href="http://www.dawnlit.com/"
                                                          target="_blank"> Dawn Lit </a></p>
             </div>
           </div>
@@ -188,17 +169,15 @@
                   <!-- Button -->
                   <a (click)="sendFriendRequest(recentNewUser)"
                      *ngIf="getFriendShipStatus(recentNewUser) == FriendshipStatus.NoRequestSent"
-                     class="btn btn-primary-soft rounded-circle icon-md ms-auto" href="#"><i
+                     class="btn btn-primary-soft rounded-circle icon-md ms-auto" type="button"><i
                     class="fa-solid fa-plus"> </i></a>
                   <!-- Button -->
                   <a *ngIf="getFriendShipStatus(recentNewUser) == FriendshipStatus.AreFriends"
-                     class="btn btn-primary rounded-circle icon-md ms-auto"
-                     href="#"><i
+                     class="btn btn-primary rounded-circle icon-md ms-auto"><i
                     class="bi bi-person-check-fill"> </i></a>
                   <!-- Button -->
                   <a *ngIf="getFriendShipStatus(recentNewUser) == FriendshipStatus.RequestSent"
-                     class="btn btn-primary rounded-circle icon-md ms-auto"
-                     href="#"><i
+                     class="btn btn-primary rounded-circle icon-md ms-auto"><i
                     class="bi bi-person-fill-up"> </i></a>
                 </div>
                 <!-- Connection item END -->

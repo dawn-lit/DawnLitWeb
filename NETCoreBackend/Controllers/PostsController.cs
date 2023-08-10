@@ -7,7 +7,7 @@ namespace NETCoreBackend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PostsController : ControllerBase
+public class PostsController : AbstractUserController
 {
     private readonly PostsService _postsService;
 
@@ -42,7 +42,7 @@ public class PostsController : ControllerBase
     }
 
     [HttpPost("new")]
-    public async Task<IActionResult> Post(Post newPost)
+    public async Task<IActionResult> Create(Post newPost)
     {
         // create the post
         if (await this._postsService.CreateAsync(newPost))
@@ -53,8 +53,30 @@ public class PostsController : ControllerBase
         return this.Conflict();
     }
 
+    [HttpPost("like")]
+    public async Task<IActionResult> Like(Post likedPost)
+    {
+        // get current user
+        int userId = this.GetCurrentUserId();
+
+        if (userId <= 0)
+        {
+            return this.Conflict();
+        }
+
+        // set up the relationship
+        bool result = await this._postsService.LikeAsync(userId, likedPost);
+
+        if (!result)
+        {
+            return this.NotFound();
+        }
+
+        return this.Accepted();
+    }
+
     [HttpDelete("delete/{id:int}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Remove(int id)
     {
         bool result = await this._postsService.RemoveAsync(id);
 

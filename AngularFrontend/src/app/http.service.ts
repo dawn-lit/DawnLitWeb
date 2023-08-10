@@ -6,7 +6,6 @@ import {
   Blog,
   BlogComment,
   Chat,
-  Discussion,
   DiscussionDummy,
   Message,
   Post,
@@ -143,9 +142,14 @@ export class HttpService {
     return this._http.get<PostComment>(`/api/comments/post/get/${id}`);
   }
 
-  // like a content
-  likeContent(theContent: Discussion, contentType: string) {
-    return this._http.post(`/api/users/like/${contentType}`, DiscussionDummy(theContent));
+  // like a post
+  likePost(theContent: Post) {
+    return this._http.post(`/api/posts/like`, DiscussionDummy(theContent));
+  }
+
+  // like a post comment
+  likePostComment(theComment: PostComment) {
+    return this._http.post(`/api/comments/post/like`, DiscussionDummy(theComment));
   }
 
   // create a new Blog
@@ -166,6 +170,11 @@ export class HttpService {
   // create a new comment for blog
   createBlogComment(data: BlogComment) {
     return this._http.post(`/api/comments/blog/new`, data);
+  }
+
+  // like a blog comment
+  likeBlogComment(theComment: BlogComment) {
+    return this._http.post(`/api/comments/blog/like`, DiscussionDummy(theComment));
   }
 
   // start a new chat

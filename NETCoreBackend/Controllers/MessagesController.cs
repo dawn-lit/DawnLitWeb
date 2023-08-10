@@ -18,7 +18,7 @@ public class MessagesController : ControllerBase
 
 
     [HttpPost("new")]
-    public async Task<IActionResult> Post(Message newMessages)
+    public async Task<IActionResult> Create(Message newMessages)
     {
         // create the post
         if (await this._messagesService.CreateAsync(newMessages))

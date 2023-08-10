@@ -77,10 +77,11 @@ public class UsersController : AbstractUserController
     public async Task<IActionResult> Post(User newUser)
     {
         // ensure the email is not empty and valid
-        if (newUser.Email.Length <= 0 || !new EmailAddressAttribute().IsValid(newUser.Email)){
+        if (newUser.Email.Length <= 0 || !new EmailAddressAttribute().IsValid(newUser.Email))
+        {
             return this.Conflict("Email");
         }
-        
+
         // ensure the email is not used yet
         if (await this._usersService.GetAsync(newUser.Email, false) != null)
         {
@@ -201,50 +202,6 @@ public class UsersController : AbstractUserController
         return this.Accepted();
     }
 
-    [HttpPost("like/post")]
-    public async Task<IActionResult> LikePost(Post likedPost)
-    {
-        // get current user
-        User? user = await this.GetCurrentUser();
-
-        if (user is null)
-        {
-            return this.NotFound();
-        }
-
-        // set up the relationship
-        bool result = await this._usersService.LikePostAsync(user, likedPost);
-
-        if (!result)
-        {
-            return this.NotFound();
-        }
-
-        return this.Accepted();
-    }
-
-    [HttpPost("like/comment")]
-    public async Task<IActionResult> LikeComment(PostComment likedPostComment)
-    {
-        // get current user
-        User? user = await this.GetCurrentUser();
-
-        if (user is null)
-        {
-            return this.NotFound();
-        }
-
-        // set up the relationship
-        bool result = await this._usersService.LikePostCommentAsync(user, likedPostComment);
-
-        if (!result)
-        {
-            return this.NotFound();
-        }
-
-        return this.Accepted();
-    }
-
     [HttpPost("connect/request")]
     public async Task<IActionResult> SendFriendRequest(User targetUser)
     {
@@ -346,7 +303,7 @@ public class UsersController : AbstractUserController
     }
 
     [HttpDelete("delete")]
-    public async Task<IActionResult> Delete()
+    public async Task<IActionResult> Remove()
     {
         // get current user id
         int theId = this.GetCurrentUserId();

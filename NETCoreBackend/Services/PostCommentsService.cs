@@ -45,4 +45,41 @@ public class PostCommentsService : AbstractService<PostComment>
             .Include(m => m.LikedBy)
             .FirstOrDefaultAsync(x => x.Id == id);
     }
+
+    public async Task<bool> LikeAsync(int likeByUserId, PostComment likedPostComment)
+    {
+        // find the user who like the post
+        User? likeByUser = await this.GetDatabaseContext().Users.FirstOrDefaultAsync(x => x.Id == likeByUserId);
+
+        if (likeByUser is null)
+        {
+            return false;
+        }
+
+        // find the true post comment
+        PostComment? trueLikedComment = await this.GetDatabaseContext().PostComments
+            .Include(p => p.LikedBy)
+            .FirstOrDefaultAsync(p => p.Id == likedPostComment.Id);
+
+        if (trueLikedComment is null)
+        {
+            return false;
+        }
+
+        if (trueLikedComment.LikedBy.Contains(likeByUser))
+        {
+            // remove relationship if exists
+            trueLikedComment.LikedBy.Remove(likeByUser);
+        }
+        else
+        {
+            // setup relationships
+            trueLikedComment.LikedBy.Add(likeByUser);
+        }
+
+        // save the changes
+        await this.SaveChangesAsync();
+
+        return true;
+    }
 }

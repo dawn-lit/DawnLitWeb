@@ -43,7 +43,7 @@ public class BlogsController : AbstractUserController
     }
 
     [HttpPost("new")]
-    public async Task<IActionResult> NewBlog(Blog newBlog)
+    public async Task<IActionResult> Create(Blog newBlog)
     {
         // ensure blog's owner is current user & you are not starting new blog with yourself
         if (newBlog.Author!.Id != this.GetCurrentUserId())
@@ -62,7 +62,7 @@ public class BlogsController : AbstractUserController
     }
 
     [HttpDelete("delete/{id:int}")]
-    public async Task<IActionResult> RemoveBlog(int id)
+    public async Task<IActionResult> Remove(int id)
     {
         // get the blog to remove
         Blog? theBlog = await this._blogsService.GetAsync(id);

@@ -92,7 +92,8 @@
            data-bs-toggle="tooltip"
            type="button"
         >
-          <i class="bi bi-hand-thumbs-up-fill pe-1"></i>Liked ({{_post.likedBy.length}})</a>
+          <i class="bi bi-hand-thumbs-up-fill pe-1"></i>{{hasCurrentUserLiked(_post) ? "Liked" : "Like"}}
+          ({{_post.likedBy.length}})</a>
       </li>
       <li class="nav-item">
         <a class="nav-link {{hasCurrentUserCommented(_post)?'active':''}}" type="button"> <i
@@ -165,7 +166,7 @@
               <li class="nav-item">
                 <a (click)="likeComment(_comment)"
                    class="nav-link {{hasCurrentUserLiked(_comment)? 'active':''}}"
-                   type="button"> Like ({{_comment.likedBy.length}})</a>
+                   type="button"> {{hasCurrentUserLiked(_comment) ? "Liked" : "Like"}} ({{_comment.likedBy.length}})</a>
               </li>
               <li class="nav-item" hidden="hidden">
                 <a class="nav-link" type="button"> Reply</a>

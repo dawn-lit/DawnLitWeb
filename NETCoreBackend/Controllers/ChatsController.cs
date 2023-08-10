@@ -37,7 +37,7 @@ public class ChatsController : AbstractUserController
     }
 
     [HttpPost("new")]
-    public async Task<IActionResult> NewChat(Chat newChat)
+    public async Task<IActionResult> Create(Chat newChat)
     {
         // ensure chat's owner is current user & you are not starting new chat with yourself
         if (newChat.Owner.Id != this.GetCurrentUserId() || newChat.Owner.Id == newChat.Target.Id)
@@ -56,7 +56,7 @@ public class ChatsController : AbstractUserController
     }
 
     [HttpDelete("delete/{id:int}")]
-    public async Task<IActionResult> RemoveChat(int id)
+    public async Task<IActionResult> Remove(int id)
     {
         // get the chat to remove
         Chat? theChat = await this._chatsService.GetAsync(id);
