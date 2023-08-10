@@ -22,6 +22,7 @@ export class MessagingComponent {
   userData: User | null = null;
   selectedChat: Chat | null = null;
   messagesEntered: Record<number, Message> = {};
+  isEmojiMartVisible = false;
 
   constructor(
     private _httpService: HttpService,
@@ -71,14 +72,26 @@ export class MessagingComponent {
     this._httpService.removeChat(this.selectedChat.id).subscribe(() => this.getChats());
   }
 
+  isInputNotEmpty() {
+    return this.selectedChat != null && this.messagesEntered[this.selectedChat.id].content.length > 0;
+  }
+
   sendMessage() {
+    this.isEmojiMartVisible = false;
     if (this.selectedChat == null || this.userData == null) {
       return;
     }
     let newMessage: Message = this.messagesEntered[this.selectedChat.id];
+    if (newMessage.content.length == 0) {
+      return;
+    }
     newMessage.chat = ChatDummy(this.selectedChat);
     newMessage.sender = UserDummy(this.userData);
     this._httpService.newMessage(newMessage).subscribe();
     this.messagesEntered[this.selectedChat.id] = {content: ""} as Message;
+  }
+
+  addEmoji(event: any) {
+    this.messagesEntered[this.selectedChat!.id].content += event.emoji.native;
   }
 }

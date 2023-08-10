@@ -28,6 +28,7 @@ import { OverlayscrollbarsModule } from "overlayscrollbars-ngx";
 import { ProfileConnectionsComponent } from './profile-connections/profile-connections.component';
 import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dropzone-wrapper';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -74,7 +75,8 @@ export function tokenGetter() {
     AngularEditorModule,
     OverlayscrollbarsModule,
     PasswordStrengthMeterModule.forRoot(),
-    DropzoneModule
+    DropzoneModule,
+    PickerComponent
   ],
   providers: [
     {
