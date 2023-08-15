@@ -75,16 +75,51 @@ public class PostsController : AbstractUserController
         return this.Accepted();
     }
 
+    [HttpPut("update")]
+    public async Task<IActionResult> Update(Post modifiedPost)
+    {
+        Post? thePost = await this._postsService.GetAsync(modifiedPost.Id);
+
+        // if post is not found
+        if (thePost is null)
+        {
+            return this.Conflict("PostNotFound");
+        }
+
+        // if user is trying to edit someone else's post
+        if (thePost.Author!.Id != this.GetCurrentUserId())
+        {
+            return this.Conflict("ConflictPostAuthorId");
+        }
+
+        // update content
+        thePost.Content = modifiedPost.Content;
+
+        await this._postsService.SaveChangesAsync();
+
+        return this.Accepted();
+    }
+
     [HttpDelete("delete/{id:int}")]
     public async Task<IActionResult> Remove(int id)
     {
-        bool result = await this._postsService.RemoveAsync(id);
+        Post? thePost = await this._postsService.GetAsync(id);
 
-        if (result)
+        // if post is not found
+        if (thePost is null)
         {
-            return this.NoContent();
+            return this.Conflict("PostNotFound");
         }
 
-        return this.NotFound();
+        // if user is trying to delete someone else's post
+        if (thePost.Author!.Id != this.GetCurrentUserId())
+        {
+            return this.Conflict("ConflictPostAuthorId");
+        }
+
+        // remove post
+        await this._postsService.RemoveAsync(thePost);
+
+        return this.Accepted();
     }
 }

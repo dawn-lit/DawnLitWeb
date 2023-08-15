@@ -12,7 +12,6 @@
         <div *ngIf="blog!=null" class="vstack gap-4">
           <!-- Blog single START -->
           <div class="card card-body">
-            <img alt="" class="rounded" src="assets/images/post/16by9/big/03.jpg">
             <div class="mt-4">
               <!-- Title info -->
               <h1 class="mb-2 h2">{{blog.title}}</h1>
@@ -37,8 +36,10 @@
             <div class="card-body">
               <!-- Comments START -->
               <div *ngFor="let reply of blog.comments" class="my-4 d-flex">
-                <app-avatar [classTags]="'rounded border border-white border-3'"
-                            [userData]="reply.author"></app-avatar>
+                <div class="avatar me-3">
+                  <app-avatar [classTags]="'avatar-md rounded-circle float-start me-3'"
+                              [userData]="reply.author"></app-avatar>
+                </div>
                 <div>
                   <div class="mb-2 d-sm-flex">
                     <h6 class="m-0 me-2">{{reply.author.name}}</h6>

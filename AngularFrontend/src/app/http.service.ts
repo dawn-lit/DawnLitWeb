@@ -147,6 +147,16 @@ export class HttpService {
     return this._http.post(`/api/posts/like`, DiscussionDummy(theContent));
   }
 
+  // update a post
+  updatePost(theContent: Post) {
+    return this._http.put(`/api/posts/update`, theContent);
+  }
+
+  // remove a post
+  deletePost(theContent: Post) {
+    return this._http.delete(`/api/posts/delete/${theContent.id}`);
+  }
+
   // like a post comment
   likePostComment(theComment: PostComment) {
     return this._http.post(`/api/comments/post/like`, DiscussionDummy(theComment));

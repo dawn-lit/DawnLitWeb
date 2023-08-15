@@ -22,7 +22,7 @@
   <div class="d-flex mb-3">
     <!-- Avatar -->
     <div class="avatar avatar-xs me-2">
-      <app-avatar [classTags]="'rounded-circle'" [userData]="userData"></app-avatar>
+      <app-avatar *ngIf="userData" [classTags]="'rounded-circle'" [userData]="userData"></app-avatar>
     </div>
     <a class="nav-link py-1 px-2" data-bs-target="#feedActionPost" data-bs-toggle="modal" id="start_post"
        type="button">Start a post</a>
@@ -54,24 +54,39 @@
         </div>
       </div>
       <!-- Card feed action dropdown START -->
-      <div class="dropdown">
+      <div *ngIf="userData!= null" class="dropdown">
         <a aria-expanded="false" class="text-secondary btn btn-secondary-soft-hover py-1 px-2"
            data-bs-toggle="dropdown"
-           href="#" id="cardFeedAction">
+           id="cardFeedAction" type="button">
           <i class="bi bi-three-dots"></i>
         </a>
         <!-- Card feed action dropdown menu -->
-        <ul aria-labelledby="cardFeedAction" class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark fa-fw pe-2"></i>Save post</a></li>
-          <li hidden="hidden"><a class="dropdown-item" href="#"> <i class="bi bi-person-x fa-fw pe-2"></i>Unfollow
-            lori ferguson
-          </a></li>
-          <li><a class="dropdown-item" href="#"> <i class="bi bi-x-circle fa-fw pe-2"></i>Hide post</a></li>
-          <li><a class="dropdown-item" href="#"> <i class="bi bi-slash-circle fa-fw pe-2"></i>Block</a></li>
+        <ul *ngIf="_post.author.id == userData.id" aria-labelledby="cardFeedAction"
+            class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a (click)="postToEdit=_post" class="dropdown-item" data-bs-target="#feedActionEditPost"
+               data-bs-toggle="modal"
+               type="button">
+              <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit post</a>
+          </li>
           <li>
             <hr class="dropdown-divider">
           </li>
-          <li><a class="dropdown-item" href="#"> <i class="bi bi-flag fa-fw pe-2"></i>Report post</a></li>
+          <li><a (click)="deletePost(_post)" class="dropdown-item" type="button"><i class="bi bi-trash fa-fw pe-2"></i>Delete
+            post</a></li>
+        </ul>
+        <ul *ngIf="_post.author.id != userData!.id" aria-labelledby="cardFeedAction"
+            class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" type="button"> <i class="bi bi-bookmark fa-fw pe-2"></i>Save post</a></li>
+          <li hidden="hidden"><a class="dropdown-item" type="button"> <i class="bi bi-person-x fa-fw pe-2"></i>Unfollow
+            lori ferguson
+          </a></li>
+          <li><a class="dropdown-item" type="button"> <i class="bi bi-x-circle fa-fw pe-2"></i>Hide post</a></li>
+          <li><a class="dropdown-item" type="button"> <i class="bi bi-slash-circle fa-fw pe-2"></i>Block</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" type="button"> <i class="bi bi-flag fa-fw pe-2"></i>Report post</a></li>
         </ul>
       </div>
       <!-- Card feed action dropdown END -->
@@ -128,7 +143,7 @@
       <!-- Avatar -->
       <div class="avatar avatar-xs me-2">
         <a href="./profile?id={{userData.id}}">
-          <app-avatar [classTags]="'rounded-circle'" [userData]="userData"></app-avatar>
+          <app-avatar *ngIf="userData" [classTags]="'rounded-circle'" [userData]="userData"></app-avatar>
         </a>
       </div>
       <!-- Comment box  -->
@@ -349,7 +364,7 @@
         <div class="d-flex mb-3">
           <!-- Avatar -->
           <div class="avatar avatar-xs me-2">
-            <app-avatar [classTags]="'rounded-circle'" [userData]="userData"></app-avatar>
+            <app-avatar *ngIf="userData" [classTags]="'rounded-circle'" [userData]="userData"></app-avatar>
           </div>
           <angular-editor [(ngModel)]="newPost.content" [config]="editorConfig"
                           class="editor_{{Theme.get()}}"></angular-editor>
@@ -369,3 +384,42 @@
   </div>
 </div>
 <!-- Modal create post END -->
+
+<!-- Modal edit post START -->
+<div aria-hidden="true" aria-labelledby="feedActionEditPostLabel" class="modal fade" id="feedActionEditPost"
+     tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal feed header START -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="feedActionEditPostLabel">Edit the Post</h5>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <!-- Modal feed header END -->
+
+      <!-- Modal feed body START -->
+      <div class="modal-body">
+        <!-- Add Feed -->
+        <div class="d-flex mb-3">
+          <!-- Avatar -->
+          <div class="avatar avatar-xs me-2">
+            <app-avatar *ngIf="userData" [classTags]="'rounded-circle'" [userData]="userData"></app-avatar>
+          </div>
+          <angular-editor [(ngModel)]="postToEdit.content" [config]="editorConfig"
+                          class="editor_{{Theme.get()}}"></angular-editor>
+        </div>
+        <p *ngIf="postErrorMessage['content']" class="warning_messages">{{postErrorMessage['content']}}</p>
+      </div>
+      <!-- Modal feed body END -->
+
+      <!-- Modal feed footer -->
+      <div class="modal-footer ">
+        <!-- Button -->
+        <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
+        <button (click)="updatePost()" class="btn btn-success-soft" type="button">Update</button>
+      </div>
+      <!-- Modal feed footer -->
+    </div>
+  </div>
+</div>
+<!-- Modal edit post END -->

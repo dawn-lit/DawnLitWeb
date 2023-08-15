@@ -22,6 +22,7 @@ export class PostsComponent {
   readonly editorConfig: AngularEditorConfig = {minHeight: '10rem', editable: true};
 
   newPost: Post = {content: ""} as Post;
+  postToEdit: Post = {content: ""} as Post;
   newBlog: Blog = {title: "", content: ""} as Blog;
   newComments: Record<string, PostComment> = {};
   postErrorMessage: Record<string, string> = {"title": "", "content": ""};
@@ -136,5 +137,18 @@ export class PostsComponent {
         theComment.likedBy = data.likedBy;
       });
     });
+  }
+
+  deletePost(thePost: Post) {
+    if (confirm('Are you sure you want to delete this post?')) {
+      this._httpService.deletePost(thePost).subscribe(() => {
+        this.posts = this.posts.filter(item => item.id != thePost.id);
+      });
+    }
+  }
+
+  updatePost() {
+    this._httpService.updatePost(this.postToEdit)
+      .subscribe(() => ($("#feedActionEditPost") as any).modal("hide"));
   }
 }

@@ -35,6 +35,7 @@ export class AvatarComponent {
     if (this.userData == null) {
       return;
     }
-    this._httpService.getSingleFile(this.userData!.id, "avatar").pipe(map(data => this.imageSrc = data.src)).subscribe();
+    this._httpService.getSingleFile(this.userData!.id, "avatar")
+      .pipe(map(data => this.imageSrc = data.src)).subscribe();
   }
 }
