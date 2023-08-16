@@ -136,7 +136,8 @@
       <!-- Sidenav END -->
 
       <!-- Main content START -->
-      <app-posts (childEvent)="getAllPosts()" [enablePost]="userData != null" [posts]="allPosts"
+      <app-posts (updateBlogsEvent)="getAnnouncements()" (updatePostsEvent)="getAllPosts()"
+                 [enablePost]="userData != null" [posts]="allPosts"
                  [userData]="userData"
                  class="col-md-8 col-lg-6 vstack gap-4"></app-posts>
       <!-- Main content END -->

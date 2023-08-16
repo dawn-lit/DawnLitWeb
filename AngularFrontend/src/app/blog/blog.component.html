@@ -26,6 +26,30 @@
               <!-- description -->
               <p [innerHTML]="blog.content"></p>
             </div>
+            <!-- Card feed action dropdown START -->
+            <div *ngIf="userData!= null && blog.author.id == userData.id" class="dropdown">
+              <a aria-expanded="false" class="text-secondary btn btn-secondary-soft-hover py-1 px-2"
+                 data-bs-toggle="dropdown"
+                 id="cardFeedAction" type="button">
+                <i class="bi bi-three-dots"></i>
+              </a>
+              <ul aria-labelledby="cardFeedAction"
+                  class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a (click)="blogToEdit=blog" class="dropdown-item" data-bs-target="#feedActionEditBlog"
+                     data-bs-toggle="modal"
+                     type="button">
+                    <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit blog</a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a (click)="deleteBlog(blog)" class="dropdown-item" type="button"><i
+                  class="bi bi-trash fa-fw pe-2"></i>Delete
+                  blog</a></li>
+              </ul>
+            </div>
+            <!-- Card feed action dropdown END -->
           </div>
           <!-- Card END -->
           <!-- Comments START -->
@@ -76,5 +100,46 @@
     </div> <!-- Row END -->
   </div>
   <!-- Container END -->
-
 </main>
+
+<!-- Modal create blog START -->
+<div aria-hidden="true" aria-labelledby="feedActionEditBlogLabel" class="modal fade" id="feedActionEditBlog"
+     tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal feed header START -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="feedActionEditBlogLabel">What do you want to talk about?</h5>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <!-- Modal feed header END -->
+
+      <!-- Modal feed body START -->
+      <div class="modal-body">
+        <!-- Add Feed -->
+        <div class="mb-3">
+          <!-- Avatar -->
+          <p><strong>Title:</strong></p>
+          <input [(ngModel)]="blogToEdit.title">
+          <p *ngIf="blogErrorMessage['title']" class="warning_messages">{{blogErrorMessage['title']}}</p>
+          <p></p>
+          <p><strong>Content:</strong></p>
+          <angular-editor [(ngModel)]="blogToEdit.content" [config]="editorConfig"
+                          class="editor_{{Theme.get()}}"></angular-editor>
+          <p *ngIf="blogErrorMessage['content']" class="warning_messages">{{blogErrorMessage['content']}}</p>
+        </div>
+
+      </div>
+      <!-- Modal feed body END -->
+
+      <!-- Modal feed footer -->
+      <div class="modal-footer ">
+        <!-- Button -->
+        <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
+        <button (click)="updateBlog()" class="btn btn-success-soft" type="button">Update</button>
+      </div>
+      <!-- Modal feed footer -->
+    </div>
+  </div>
+</div>
+<!-- Modal create blog END -->

@@ -4,6 +4,7 @@ import { HttpService } from "../http.service";
 import { ContentValidation } from "../utility.validations";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
 import { getExistenceTime, Theme } from "../utility.functions";
+import { Router } from "@angular/router";
 
 declare var $: any;
 
@@ -17,7 +18,8 @@ export class PostsComponent {
   @Input() posts: Array<Post> = [];
   @Input() enablePost: boolean = false;
   @Input() userData: User | null = null;
-  @Output() childEvent: EventEmitter<any> = new EventEmitter();
+  @Output() updatePostsEvent: EventEmitter<any> = new EventEmitter();
+  @Output() updateBlogsEvent: EventEmitter<any> = new EventEmitter();
 
   readonly editorConfig: AngularEditorConfig = {minHeight: '10rem', editable: true};
 
@@ -25,13 +27,14 @@ export class PostsComponent {
   postToEdit: Post = {content: ""} as Post;
   newBlog: Blog = {title: "", content: ""} as Blog;
   newComments: Record<string, PostComment> = {};
-  postErrorMessage: Record<string, string> = {"title": "", "content": ""};
-  blogErrorMessage: Record<string, string> = {"content": ""};
+  postErrorMessage: Record<string, string> = {};
+  blogErrorMessage: Record<string, string> = {};
   protected readonly getExistenceTime = getExistenceTime;
   protected readonly Theme = Theme;
 
   constructor(
-    private _httpService: HttpService
+    private _httpService: HttpService,
+    private _router: Router
   ) {
   }
 
@@ -42,45 +45,61 @@ export class PostsComponent {
     return this.newComments[associatePost.id];
   }
 
-  createPost() {
-    const errors: Map<string, string> = ContentValidation.check(this.newPost);
+  // check the post before sending it to server
+  checkPost(thePost: Post): boolean {
+    // reset current error message(s)
+    this.postErrorMessage = {};
+    // get errors
+    const errors: Map<string, string> = ContentValidation.check(thePost);
+    // check if form has error
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {
         this.postErrorMessage[key] = value;
       });
-    } else {
+      return false;
+    }
+    return true;
+  }
+
+  createPost() {
+    if (this.checkPost(this.newPost)) {
       this.newPost.author = UserDummy(this.userData);
       this._httpService.createPost(this.newPost).subscribe(() => {
-          // reset error message
-          for (const key in this.postErrorMessage) {
-            this.postErrorMessage[key] = "";
-          }
           this.newPost["content"] = "";
           // make parent update all the posts
-          this.childEvent.emit();
+          this.updatePostsEvent.emit();
           ($("#feedActionPost") as any).modal("hide");
         }
       );
     }
   }
 
+  updatePost() {
+    if (this.checkPost(this.postToEdit)) {
+      this._httpService.updatePost(this.postToEdit)
+        .subscribe(() => ($("#feedActionEditPost") as any).modal("hide"));
+    }
+  }
+
   createBlog() {
+    // reset current error message(s)
+    this.blogErrorMessage = {};
+    // get errors
     const errors: Map<string, string> = ContentValidation.check(this.newBlog);
+    // check if form has error
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {
         this.blogErrorMessage[key] = value;
       });
     } else {
       this.newBlog.author = UserDummy(this.userData);
-      this._httpService.createBlog(this.newBlog).subscribe(() => {
-          // reset error message
-          for (const key in this.blogErrorMessage) {
-            this.blogErrorMessage[key] = "";
-          }
+      this._httpService.createBlog(this.newBlog).subscribe((resp: any) => {
           this.newBlog["content"] = "";
           // make parent update all the blogs
-          this.childEvent.emit();
+          this.updateBlogsEvent.emit();
           ($("#feedActionBlog") as any).modal("hide");
+          this._router.navigateByUrl(`/blog?id=${resp.id}`).then(() => {
+          });
         }
       );
     }
@@ -145,10 +164,5 @@ export class PostsComponent {
         this.posts = this.posts.filter(item => item.id != thePost.id);
       });
     }
-  }
-
-  updatePost() {
-    this._httpService.updatePost(this.postToEdit)
-      .subscribe(() => ($("#feedActionEditPost") as any).modal("hide"));
   }
 }

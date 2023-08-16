@@ -44,6 +44,12 @@ public class PostsController : AbstractUserController
     [HttpPost("new")]
     public async Task<IActionResult> Create(Post newPost)
     {
+        // check if no content
+        if (newPost.Content.Length == 0)
+        {
+            return this.NoContent();
+        }
+
         // create the post
         if (await this._postsService.CreateAsync(newPost))
         {
@@ -90,6 +96,12 @@ public class PostsController : AbstractUserController
         if (thePost.Author!.Id != this.GetCurrentUserId())
         {
             return this.Conflict("ConflictPostAuthorId");
+        }
+
+        // check if no content
+        if (modifiedPost.Content.Length == 0)
+        {
+            return this.NoContent();
         }
 
         // update content

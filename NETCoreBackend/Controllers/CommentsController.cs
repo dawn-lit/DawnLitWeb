@@ -34,6 +34,12 @@ public class CommentsController : AbstractUserController
     [HttpPost("post/new")]
     public async Task<IActionResult> CreatePostComment(PostComment newPostComment)
     {
+        // check if no content
+        if (newPostComment.Content.Length == 0)
+        {
+            return this.NoContent();
+        }
+
         // create the post
         if (await this._postCommentsService.CreateAsync(newPostComment))
         {
@@ -81,6 +87,12 @@ public class CommentsController : AbstractUserController
     [HttpPost("blog/new")]
     public async Task<IActionResult> CreateBlogComment(BlogComment newPostComment)
     {
+        // check if no content
+        if (newPostComment.Content.Length == 0)
+        {
+            return this.NoContent();
+        }
+
         // create the post
         if (await this._blogCommentsService.CreateAsync(newPostComment))
         {

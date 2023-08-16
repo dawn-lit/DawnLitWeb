@@ -151,7 +151,8 @@
                 <textarea [(ngModel)]="obtainCommentTemplate(_post).content" class="form-control pe-5 bg-light"
                           data-autoresize name="content"
                           placeholder="Add a comment..." rows="1"></textarea>
-        <button class="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0">
+        <button [disabled]="obtainCommentTemplate(_post).content.length<=0"
+                class="nav-link bg-transparent px-3 position-absolute top-50 end-0 translate-middle-y border-0">
           <i class="bi bi-send-fill"> </i>
         </button>
       </form>
@@ -339,7 +340,10 @@
       <div class="modal-footer ">
         <!-- Button -->
         <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
-        <button (click)="createBlog()" class="btn btn-success-soft" type="button">Post</button>
+        <button (click)="createBlog()" [disabled]="newBlog.content.length<=0 || newBlog.title.length<=0"
+                class="btn btn-success-soft"
+                type="button">Post
+        </button>
       </div>
       <!-- Modal feed footer -->
     </div>
@@ -377,7 +381,9 @@
       <div class="modal-footer ">
         <!-- Button -->
         <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
-        <button (click)="createPost()" class="btn btn-success-soft" type="button">Post</button>
+        <button (click)="createPost()" [disabled]="newPost.content.length<=0" class="btn btn-success-soft"
+                type="button">Post
+        </button>
       </div>
       <!-- Modal feed footer -->
     </div>
@@ -416,7 +422,9 @@
       <div class="modal-footer ">
         <!-- Button -->
         <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
-        <button (click)="updatePost()" class="btn btn-success-soft" type="button">Update</button>
+        <button (click)="updatePost()" [disabled]="postToEdit.content.length<=0" class="btn btn-success-soft"
+                type="button">Update
+        </button>
       </div>
       <!-- Modal feed footer -->
     </div>

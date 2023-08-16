@@ -167,9 +167,19 @@ export class HttpService {
     return this._http.post("/api/blogs/new", data);
   }
 
-  // get a Blog
+  // get a blog
   getBlog(id: number): Observable<Blog> {
     return this._http.get<Blog>(`/api/blogs/get/${id}`);
+  }
+
+  // update a blog
+  updateBlog(theBlog: Blog) {
+    return this._http.put(`/api/blogs/update`, theBlog);
+  }
+
+  // remove a blog
+  deleteBlog(theBlog: Blog) {
+    return this._http.delete(`/api/blogs/delete/${theBlog.id}`);
   }
 
   // create announcements from admin

@@ -3,8 +3,11 @@ import { HttpService } from "../http.service";
 import { Blog, BlogComment, BlogDummy, User, UserDummy } from "../utility.models";
 import { map } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
-import { getDateString } from "../utility.functions";
+import { getDateString, Theme } from "../utility.functions";
 import { ContentValidation } from "../utility.validations";
+import { AngularEditorConfig } from "@kolkov/angular-editor";
+
+declare var $: any;
 
 @Component({
   selector: 'app-blog',
@@ -16,7 +19,11 @@ export class BlogComponent {
   blog: Blog | null = null;
   newComment: BlogComment = {content: ""} as BlogComment;
   newCommentErrorMessage: Record<string, string> = {"content": ""};
+  blogToEdit: Blog = {content: ""} as Blog;
+  readonly editorConfig: AngularEditorConfig = {minHeight: '10rem', editable: true};
+  blogErrorMessage: Record<string, string> = {"title": "", "content": ""};
   protected readonly getDateString = getDateString;
+  protected readonly Theme = Theme;
 
   constructor(
     private _httpService: HttpService,
@@ -63,5 +70,16 @@ export class BlogComponent {
         this.getBlog(this.blog!.id);
       });
     }
+  }
+
+  deleteBlog(theBlog: Blog) {
+    if (confirm('Are you sure you want to delete this blog?')) {
+      this._httpService.deleteBlog(theBlog).subscribe(() => this._httpService.gotoHomePage());
+    }
+  }
+
+  updateBlog() {
+    this._httpService.updateBlog(this.blogToEdit)
+      .subscribe(() => ($("#feedActionEditBlog") as any).modal("hide"));
   }
 }
