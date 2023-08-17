@@ -15,22 +15,25 @@ declare var $: any;
 })
 export class PostsComponent {
 
+  // inputs from parent
   @Input() posts: Array<Post> = [];
   @Input() enablePost: boolean = false;
   @Input() userData: User | null = null;
   @Output() updatePostsEvent: EventEmitter<any> = new EventEmitter();
   @Output() updateBlogsEvent: EventEmitter<any> = new EventEmitter();
-
-  readonly editorConfig: AngularEditorConfig = {minHeight: '10rem', editable: true};
-
-  newPost: Post = {content: ""} as Post;
-  postToEdit: Post = {content: ""} as Post;
-  newBlog: Blog = {title: "", content: ""} as Blog;
-  newComments: Record<string, PostComment> = {};
-  postErrorMessage: Record<string, string> = {};
-  blogErrorMessage: Record<string, string> = {};
+  // protected local variables
+  protected newPost: Post = {content: ""} as Post;
+  protected postToEditTempDummy: Post = {content: ""} as Post;
+  protected newBlog: Blog = {title: "", content: ""} as Blog;
+  protected postErrorMessage: Record<string, string> = {};
+  protected blogErrorMessage: Record<string, string> = {};
+  // readonly properties
+  protected readonly editorConfig: AngularEditorConfig = {minHeight: '10rem', editable: true};
   protected readonly getExistenceTime = getExistenceTime;
   protected readonly Theme = Theme;
+  // private ts local variables
+  private postToEdit: Post = {} as Post;
+  private newComments: Record<string, PostComment> = {};
 
   constructor(
     private _httpService: HttpService,
@@ -74,8 +77,14 @@ export class PostsComponent {
     }
   }
 
+  updatePostToEdit(_post: Post) {
+    this.postToEdit = _post;
+    this.postToEditTempDummy.content = _post.content;
+  }
+
   updatePost() {
-    if (this.checkPost(this.postToEdit)) {
+    if (this.checkPost(this.postToEditTempDummy)) {
+      this.postToEdit.content = this.postToEditTempDummy.content;
       this._httpService.updatePost(this.postToEdit)
         .subscribe(() => ($("#feedActionEditPost") as any).modal("hide"));
     }

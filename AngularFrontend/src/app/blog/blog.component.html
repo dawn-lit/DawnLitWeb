@@ -27,7 +27,7 @@
               <p [innerHTML]="blog.content"></p>
             </div>
             <!-- Card feed action dropdown START -->
-            <div *ngIf="userData!= null && blog.author.id == userData.id" class="dropdown">
+            <div *ngIf="currentUser!= null && blog.author.id == currentUser.id" class="dropdown">
               <a aria-expanded="false" class="text-secondary btn btn-secondary-soft-hover py-1 px-2"
                  data-bs-toggle="dropdown"
                  id="cardFeedAction" type="button">
@@ -36,7 +36,7 @@
               <ul aria-labelledby="cardFeedAction"
                   class="dropdown-menu dropdown-menu-end">
                 <li>
-                  <a (click)="blogToEdit=blog" class="dropdown-item" data-bs-target="#feedActionEditBlog"
+                  <a (click)="updateBlogToEdit(blog)" class="dropdown-item" data-bs-target="#feedActionEditBlog"
                      data-bs-toggle="modal"
                      type="button">
                     <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit blog</a>
@@ -70,7 +70,7 @@
                     <span class="me-3 small">{{getDateString(reply.createdAt)}}</span>
                   </div>
                   <p>{{reply.content}}</p>
-                  <a class="btn btn-light btn-sm" href="#">Reply</a>
+                  <a class="btn btn-light btn-sm" hidden="hidden">Reply</a>
                 </div>
               </div>
               <!-- Comments END -->
@@ -82,11 +82,17 @@
                   <!-- Your Comment -->
                   <div class="col-12">
                     <textarea [(ngModel)]="newComment.content" class="form-control" name="content" rows="3"></textarea>
-                    <p *ngIf="newCommentErrorMessage['content']">{{newCommentErrorMessage['content']}}</p>
+                    <p *ngIf="newCommentErrorMessage['content']"
+                       class="warning_messages">{{newCommentErrorMessage['content']}}</p>
                   </div>
                   <!-- Button -->
                   <div class="col-12">
-                    <button class="btn btn-primary" type="submit">Post comment</button>
+                    <button [disabled]="newComment.content.length<=0" class="btn btn-primary" type="submit">
+                      <span *ngIf="isBlocked" aria-hidden="true" class="spinner-border spinner-border-sm"
+                            role="status"></span>
+                      <span *ngIf="isBlocked">&nbsp;</span>
+                      Post comment
+                    </button>
                   </div>
                 </form>
               </div>
@@ -120,11 +126,11 @@
         <div class="mb-3">
           <!-- Avatar -->
           <p><strong>Title:</strong></p>
-          <input [(ngModel)]="blogToEdit.title">
+          <input [(ngModel)]="blogToEditTempDummy.title">
           <p *ngIf="blogErrorMessage['title']" class="warning_messages">{{blogErrorMessage['title']}}</p>
           <p></p>
           <p><strong>Content:</strong></p>
-          <angular-editor [(ngModel)]="blogToEdit.content" [config]="editorConfig"
+          <angular-editor [(ngModel)]="blogToEditTempDummy.content" [config]="editorConfig"
                           class="editor_{{Theme.get()}}"></angular-editor>
           <p *ngIf="blogErrorMessage['content']" class="warning_messages">{{blogErrorMessage['content']}}</p>
         </div>
@@ -136,7 +142,14 @@
       <div class="modal-footer ">
         <!-- Button -->
         <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
-        <button (click)="updateBlog()" class="btn btn-success-soft" type="button">Update</button>
+        <button (click)="updateBlog()"
+                [disabled]="blogToEditTempDummy.content.length<=0 || blogToEditTempDummy.title.length<=0"
+                class="btn btn-success-soft"
+                type="button">
+          <span *ngIf="isBlocked" aria-hidden="true" class="spinner-border spinner-border-sm" role="status"></span>
+          <span *ngIf="isBlocked">&nbsp;</span>
+          Update
+        </button>
       </div>
       <!-- Modal feed footer -->
     </div>

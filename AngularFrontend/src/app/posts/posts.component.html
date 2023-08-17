@@ -64,7 +64,7 @@
         <ul *ngIf="_post.author.id == userData.id" aria-labelledby="cardFeedAction"
             class="dropdown-menu dropdown-menu-end">
           <li>
-            <a (click)="postToEdit=_post" class="dropdown-item" data-bs-target="#feedActionEditPost"
+            <a (click)="updatePostToEdit(_post)" class="dropdown-item" data-bs-target="#feedActionEditPost"
                data-bs-toggle="modal"
                type="button">
               <i class="bi bi-pencil-square fa-fw pe-2"></i>Edit post</a>
@@ -411,7 +411,7 @@
           <div class="avatar avatar-xs me-2">
             <app-avatar *ngIf="userData" [classTags]="'rounded-circle'" [userData]="userData"></app-avatar>
           </div>
-          <angular-editor [(ngModel)]="postToEdit.content" [config]="editorConfig"
+          <angular-editor [(ngModel)]="postToEditTempDummy.content" [config]="editorConfig"
                           class="editor_{{Theme.get()}}"></angular-editor>
         </div>
         <p *ngIf="postErrorMessage['content']" class="warning_messages">{{postErrorMessage['content']}}</p>
@@ -422,7 +422,7 @@
       <div class="modal-footer ">
         <!-- Button -->
         <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
-        <button (click)="updatePost()" [disabled]="postToEdit.content.length<=0" class="btn btn-success-soft"
+        <button (click)="updatePost()" [disabled]="postToEditTempDummy.content.length<=0" class="btn btn-success-soft"
                 type="button">Update
         </button>
       </div>

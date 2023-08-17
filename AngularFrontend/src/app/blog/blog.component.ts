@@ -15,13 +15,16 @@ declare var $: any;
   styleUrls: ['./blog.component.css']
 })
 export class BlogComponent {
-  userData: User | null = null;
-  blog: Blog | null = null;
-  newComment: BlogComment = {content: ""} as BlogComment;
-  newCommentErrorMessage: Record<string, string> = {"content": ""};
-  blogToEdit: Blog = {content: ""} as Blog;
-  readonly editorConfig: AngularEditorConfig = {minHeight: '10rem', editable: true};
-  blogErrorMessage: Record<string, string> = {"title": "", "content": ""};
+  // protected local variables
+  protected currentUser: User | null = null;
+  protected blog: Blog | null = null;
+  protected newComment: BlogComment = {content: ""} as BlogComment;
+  protected newCommentErrorMessage: Record<string, string> = {"content": ""};
+  protected blogToEditTempDummy: Blog = {title: "", content: ""} as Blog;
+  protected blogErrorMessage: Record<string, string> = {"title": "", "content": ""};
+  protected isBlocked = false;
+  // readonly properties
+  protected readonly editorConfig: AngularEditorConfig = {minHeight: '10rem', editable: true};
   protected readonly getDateString = getDateString;
   protected readonly Theme = Theme;
 
@@ -38,11 +41,12 @@ export class BlogComponent {
         this.getBlog(Number(_id));
       }
     });
-    this.getUserData();
+    this.getCurrentUser();
   }
 
-  getUserData(): void {
-    this._httpService.getCurrentUser().pipe(map(data => this.userData = data)).subscribe();
+  getCurrentUser(): void {
+    this._httpService.getCurrentUser()
+      .pipe(map(data => this.currentUser = data)).subscribe();
   }
 
   getBlog(blogId: number): void {
@@ -50,9 +54,7 @@ export class BlogComponent {
   }
 
   createComment() {
-    if (this.blog == null) {
-      return;
-    }
+    if (this.blog == null || this.isBlocked) return;
     const errors: Map<string, string> = ContentValidation.check(this.newComment);
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {
@@ -60,7 +62,8 @@ export class BlogComponent {
       });
     } else {
       this.newComment.blog = BlogDummy(this.blog);
-      this.newComment.author = UserDummy(this.userData);
+      this.newComment.author = UserDummy(this.currentUser);
+      this.isBlocked = true;
       this._httpService.createBlogComment(this.newComment).subscribe(() => {
         // reset error message
         for (const key in this.newCommentErrorMessage) {
@@ -68,6 +71,7 @@ export class BlogComponent {
         }
         this.newComment.content = "";
         this.getBlog(this.blog!.id);
+        this.isBlocked = false;
       });
     }
   }
@@ -78,8 +82,20 @@ export class BlogComponent {
     }
   }
 
+  updateBlogToEdit(theBlog: Blog) {
+    this.blogToEditTempDummy.title = theBlog.title;
+    this.blogToEditTempDummy.content = theBlog.content;
+  }
+
   updateBlog() {
-    this._httpService.updateBlog(this.blogToEdit)
-      .subscribe(() => ($("#feedActionEditBlog") as any).modal("hide"));
+    if (this.blog == null || this.isBlocked) return;
+    this.blog.title = this.blogToEditTempDummy.title;
+    this.blog.content = this.blogToEditTempDummy.content;
+    this.isBlocked = true;
+    this._httpService.updateBlog(this.blog)
+      .subscribe(() => {
+        ($("#feedActionEditBlog") as any).modal("hide");
+        this.isBlocked = false;
+      });
   }
 }
