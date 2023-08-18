@@ -1,7 +1,7 @@
 <!-- Avatar -->
-<img *ngIf="userData!=null && imageSrc!=null && imageSrc.length==0" alt="" class="avatar-img {{classTags}}"
+<img *ngIf="hasImageFetched() && getAvatarImage().length==0" alt="" class="avatar-img {{classTags}}"
      style="{{getStyle()}}">
-<p *ngIf="userData!=null && imageSrc!=null && imageSrc.length==0"
-   id="capital_letter">{{userData.name[0].toUpperCase()}}</p>
-<img *ngIf="userData!=null && imageSrc!=null && imageSrc.length>0" alt="" class="avatar-img {{classTags}}"
-     src="data:image;base64, {{imageSrc}}">
+<p *ngIf="hasImageFetched() && getAvatarImage().length==0"
+   id="capital_letter">{{userData!.name[0].toUpperCase()}}</p>
+<img *ngIf="hasImageFetched() && getAvatarImage().length>0" alt="" class="avatar-img {{classTags}}"
+     src="data:image;base64, {{getAvatarImage()}}">

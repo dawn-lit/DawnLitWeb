@@ -34,6 +34,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
   acceptedFiles: 'image/*',
   headers: {"Authorization": 'Bearer ' + tokenGetter()},
+  maxFilesize: 1048576
 };
 
 export function tokenGetter() {

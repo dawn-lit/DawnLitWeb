@@ -19,7 +19,7 @@ export class MessagingComponent {
       y: "scroll"
     }
   };
-  userData: User | null = null;
+  currentUser: User = {id: 0, chats: [] as Array<Chat>} as User;
   selectedChat: Chat | null = null;
   messagesEntered: Record<number, Message> = {};
   isEmojiMartVisible = false;
@@ -30,7 +30,7 @@ export class MessagingComponent {
   }
 
   ngOnInit(): void {
-    this.getUserData();
+    this.getCurrentUser();
   }
 
   getMessageEntered(theChat: Chat): Message {
@@ -40,26 +40,24 @@ export class MessagingComponent {
     return this.messagesEntered[theChat.id];
   }
 
-  getUserData(): void {
+  getCurrentUser(): void {
     interval(1000)
       .pipe(mergeMap(() => this._httpService.getCurrentUser()))
       .subscribe(data => {
         // since chats is not included, use old chat data first before the new data arrived
-        if (this.userData != null) {
-          data.chats = this.userData.chats;
-        }
-        this.userData = data;
+        data.chats = this.currentUser.chats;
+        this.currentUser = data;
         this.getChats();
       });
   }
 
   getChats(): void {
     this._httpService.getCurrentUserChats().subscribe(chats => {
-        this.userData!.chats = chats;
-        if (this.userData!.chats.length > 0) {
+        this.currentUser.chats = chats;
+        if (this.currentUser.chats.length > 0) {
           this.selectedChat = this.selectedChat != null
-            ? this.userData!.chats.find(c => c.id == this.selectedChat!.id)!
-            : this.userData!.chats[0];
+            ? this.currentUser.chats.find(c => c.id == this.selectedChat!.id)!
+            : this.currentUser.chats[0];
         }
       }
     );
@@ -69,7 +67,10 @@ export class MessagingComponent {
     if (this.selectedChat == null) {
       return;
     }
-    this._httpService.removeChat(this.selectedChat.id).subscribe(() => this.getChats());
+    this._httpService.removeChat(this.selectedChat.id).subscribe(() => {
+      this.getChats();
+      this.selectedChat = null;
+    });
   }
 
   isInputNotEmpty() {
@@ -78,15 +79,15 @@ export class MessagingComponent {
 
   sendMessage() {
     this.isEmojiMartVisible = false;
-    if (this.selectedChat == null || this.userData == null) {
-      return;
-    }
+    if (this.selectedChat == null || this.currentUser.id <= 0) return;
+    // get the message that will be sent
     let newMessage: Message = this.messagesEntered[this.selectedChat.id];
-    if (newMessage.content.length == 0) {
-      return;
-    }
+    // make sure message is not empty
+    if (newMessage.content.length == 0) return;
+    // attach dummies
     newMessage.chat = ChatDummy(this.selectedChat);
-    newMessage.sender = UserDummy(this.userData);
+    newMessage.sender = UserDummy(this.currentUser);
+    // send the message
     this._httpService.newMessage(newMessage).subscribe();
     this.messagesEntered[this.selectedChat.id] = {content: ""} as Message;
   }

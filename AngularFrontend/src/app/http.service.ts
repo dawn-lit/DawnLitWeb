@@ -27,6 +27,11 @@ export class HttpService {
   ) {
   }
 
+  // get file
+  getFile(userId: number, type: string): Observable<any> {
+    return this._http.get<any>(`/api/files/get/single/${userId}/${type}`);
+  }
+
   // get the ip of the client
   getIpInfo(): Observable<any> {
     return this._http.get<any>('https://jsonip.com');
@@ -215,10 +220,5 @@ export class HttpService {
   // new message
   newMessage(message: Message) {
     return this._http.post("/api/messages/new", message);
-  }
-
-  // get file
-  getSingleFile(userId: number, type: string): Observable<any> {
-    return this._http.get<any>(`/api/files/get/single/${userId}/${type}`);
   }
 }
