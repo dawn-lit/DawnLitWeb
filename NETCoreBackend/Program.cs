@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using NETCoreBackend.Hubs;
 using NETCoreBackend.Modules;
 using Newtonsoft.Json;
 
@@ -50,6 +51,9 @@ builder.Services.AddAuthentication(opt =>
         };
     });
 
+// Add hubs to the container.
+builder.Services.AddSignalR();
+
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -67,5 +71,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// map hub
+app.MapHub<ChatHub>("/chat");
 
 app.Run();

@@ -2,9 +2,11 @@ const PROXY_CONFIG = [
   {
     context: [
       "/api",
+      "/chat"
     ],
     target: "https://localhost:7061",
-    secure: false
+    secure: false,
+    ws: true
   }
 ]
 

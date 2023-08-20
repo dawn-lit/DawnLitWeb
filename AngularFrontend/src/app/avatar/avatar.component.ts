@@ -32,7 +32,7 @@ export class AvatarComponent {
   }
 
   hasImageFetched(): boolean {
-    return this.userData != null && this.userData!.id in AvatarComponent.AVATAR_IMAGES;
+    return this.userData != null && this.userData.id in AvatarComponent.AVATAR_IMAGES;
   }
 
   getAvatarImage(): string {
