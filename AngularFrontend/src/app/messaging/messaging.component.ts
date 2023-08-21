@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Chat, ChatDummy, Message, User, UserDummy } from "../utility.models";
 import { HttpService } from "../http.service";
 import { interval, mergeMap } from "rxjs";
-import { HubConnection, HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
+import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { tokenGetter } from "../app.module";
 
 @Component({
@@ -25,20 +25,12 @@ export class MessagingComponent {
   selectedChat: Chat | null = null;
   messagesEntered: Record<number, Message> = {};
   isEmojiMartVisible = false;
-
   public messages: string[] = [];
+  private _connection: HubConnection | null = null;
 
   constructor(
     private _httpService: HttpService,
-    private _connection: HubConnection
   ) {
-    this._connection = new HubConnectionBuilder()
-      .withUrl("/chat", {
-        accessTokenFactory: () => tokenGetter()!,
-      })
-      .configureLogging(LogLevel.Information)
-      .withAutomaticReconnect()
-      .build();
   }
 
   ngOnInit(): void {
@@ -47,6 +39,13 @@ export class MessagingComponent {
   }
 
   async connectSignalrHub() {
+    this._connection = new HubConnectionBuilder()
+      .withUrl("/chat", {
+        accessTokenFactory: () => tokenGetter()!,
+      })
+      //.configureLogging(LogLevel.Information)
+      .withAutomaticReconnect()
+      .build();
     this._connection.on('ReceiveMessage', (user, message) => {
       this.messages.push(`${user}: ${message}`);
     });

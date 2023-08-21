@@ -29,22 +29,17 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/bootstrap-icons/font/bootstrap-icons.css",
-              "./node_modules/katex/dist/katex.min.css",
-              "./node_modules/overlayscrollbars/styles/overlayscrollbars.css",
-              "./node_modules/@ctrl/ngx-emoji-mart/picker.css",
-              "./src/assets/css/style.css",
-              "./src/styles.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "node_modules/overlayscrollbars/styles/overlayscrollbars.css",
+              "node_modules/@ctrl/ngx-emoji-mart/picker.css",
+              "src/assets/css/style.css",
+              "src/styles.css"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "./node_modules/marked/marked.min.js",
-              "./node_modules/emoji-toolkit/lib/js/joypixels.min.js",
-              "./node_modules/katex/dist/katex.min.js",
-              "./node_modules/katex/dist/contrib/auto-render.min.js",
-              "./src/assets/js/functions.js"
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "src/assets/js/functions.js"
             ]
           },
           "configurations": {

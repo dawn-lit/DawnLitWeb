@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HttpClientModule } from "@angular/common/http";
 import { NgOptimizedImage } from "@angular/common";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { WikiComponent } from './wiki/wiki.component';
 import { SettingsComponent } from './settings/settings.component';
 import { LogoffComponent } from './logoff/logoff.component';
 import { AvatarComponent } from './avatar/avatar.component';
@@ -21,7 +20,6 @@ import { BlogComponent } from './blog/blog.component';
 import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
 
 // third party libraries
-import { MarkdownModule } from 'ngx-markdown';
 import { FormsModule } from "@angular/forms";
 import { JwtModule } from "@auth0/angular-jwt";
 import { AngularEditorModule } from '@kolkov/angular-editor';
@@ -46,7 +44,6 @@ export function tokenGetter() {
     AppComponent,
     HomeComponent,
     NavigationComponent,
-    WikiComponent,
     LoginComponent,
     RegistrationComponent,
     SettingsComponent,
@@ -64,7 +61,6 @@ export function tokenGetter() {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    MarkdownModule.forRoot({loader: HttpClient}),
     FormsModule,
     JwtModule.forRoot({
       config: {
