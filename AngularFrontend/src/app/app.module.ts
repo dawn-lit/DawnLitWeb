@@ -18,6 +18,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { BlogComponent } from './blog/blog.component';
+import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
 
 // third party libraries
 import { MarkdownModule } from 'ngx-markdown';
@@ -26,7 +27,6 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { OverlayscrollbarsModule } from "overlayscrollbars-ngx";
 import { ProfileConnectionsComponent } from './profile-connections/profile-connections.component';
-import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dropzone-wrapper';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
@@ -57,7 +57,8 @@ export function tokenGetter() {
     ProfileAboutComponent,
     MessagingComponent,
     ProfileConnectionsComponent,
-    BlogComponent
+    BlogComponent,
+    PasswordStrengthBarComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +76,6 @@ export function tokenGetter() {
     NgOptimizedImage,
     AngularEditorModule,
     OverlayscrollbarsModule,
-    PasswordStrengthMeterModule.forRoot(),
     DropzoneModule,
     PickerComponent
   ],

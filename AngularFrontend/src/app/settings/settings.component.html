@@ -239,7 +239,7 @@
                       </span>
                     </div>
                     <!-- Pswmeter -->
-                    <password-strength-meter [password]="passwordData['newPassword']"></password-strength-meter>
+                    <app-password-strength-bar [password]="passwordData['newPassword']"></app-password-strength-bar>
                     <p *ngIf="errorMessage['newPassword']" class="warning_messages">{{errorMessage['newPassword']}}</p>
                   </div>
                   <!-- Confirm password -->
