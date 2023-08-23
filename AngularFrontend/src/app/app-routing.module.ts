@@ -9,6 +9,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { ProfileComponent } from "./profile/profile.component";
 import { MessagingComponent } from "./messaging/messaging.component";
 import { BlogComponent } from "./blog/blog.component";
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -19,7 +20,7 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent},
   {path: 'messaging', component: MessagingComponent},
   {path: 'blog', component: BlogComponent},
-  {path: '**', pathMatch: 'full', redirectTo: ''},
+  {path: '**', pathMatch: 'full', component: PageNotFoundComponent},
 ];
 
 @NgModule({

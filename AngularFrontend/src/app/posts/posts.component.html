@@ -1,22 +1,3 @@
-<!-- Story START -->
-<div *ngIf="enablePost" class="d-flex gap-2 mb-n3">
-  <div class="position-relative">
-    <div
-      class="card border border-2 border-dashed h-150px px-4 px-sm-5 shadow-none d-flex align-items-center justify-content-center text-center">
-      <div>
-        <a class="stretched-link btn btn-light rounded-circle icon-md" data-bs-target="#feedActionBlog"
-           data-bs-toggle="modal" type="button"><i
-          class="bi bi-plus-lg"></i></a>
-        <h6 class="mt-2 mb-0 small">Post a Blog</h6>
-      </div>
-    </div>
-  </div>
-
-  <!-- Stories -->
-  <div class="storiesWrapper stories-square stories user-icon carousel scroll-enable" id="stories"></div>
-</div>
-<!-- Story END -->
-
 <!-- Share feed START -->
 <div *ngIf="enablePost" class="card card-body">
   <div class="d-flex mb-3">
@@ -27,6 +8,25 @@
     <a class="nav-link py-1 px-2" data-bs-target="#feedActionPost" data-bs-toggle="modal" id="start_post"
        type="button">Start a post</a>
   </div>
+  <!-- Share feed toolbar START -->
+  <ul class="nav nav-pills nav-stack small fw-normal">
+    <li class="nav-item">
+      <a class="nav-link bg-light py-1 px-2 mb-0" data-bs-target="#feedActionPhoto" data-bs-toggle="modal"><i
+        class="bi bi-image-fill text-success pe-2"></i>Photo</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link bg-light py-1 px-2 mb-0" data-bs-target="#feedActionVideo" data-bs-toggle="modal"><i
+        class="bi bi-camera-reels-fill text-info pe-2"></i>Video</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link bg-light py-1 px-2 mb-0" data-bs-target="#modalCreateEvents" data-bs-toggle="modal"><i
+        class="bi bi-calendar2-event-fill text-warning pe-2"></i>Event</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link bg-light py-1 px-2 mb-0" data-bs-target="#feedActionBlog" data-bs-toggle="modal"><i
+        class="bi bi-file-text-fill text-danger pe-2"></i>Create a blog</a>
+    </li>
+  </ul>
   <!-- Share feed toolbar END -->
 </div>
 <!-- Share feed END -->
@@ -335,15 +335,26 @@
 
       </div>
       <!-- Modal feed body END -->
-
       <!-- Modal feed footer -->
-      <div class="modal-footer ">
-        <!-- Button -->
-        <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
-        <button (click)="createBlog()" [disabled]="newBlog.content.length<=0 || newBlog.title.length<=0"
-                class="btn btn-success-soft"
-                type="button">Post
-        </button>
+      <div class="modal-footer row justify-content-between">
+        <!-- Select -->
+        <div class="col-lg-3">
+          <select class="form-select js-choice choice-select-text-none" data-position="top" data-search-enabled="false">
+            <option value="PB">Public</option>
+            <option value="PV">Friends</option>
+            <option value="PV">Only me</option>
+            <option value="PV">Custom</option>
+          </select>
+          <!-- Button -->
+        </div>
+        <div class="col-lg-8 text-sm-end">
+          <!-- Button -->
+          <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
+          <button (click)="createBlog()" [disabled]="newBlog.content.length<=0 || newBlog.title.length<=0"
+                  class="btn btn-success-soft"
+                  type="button">Post
+          </button>
+        </div>
       </div>
       <!-- Modal feed footer -->
     </div>
@@ -376,14 +387,25 @@
         <p *ngIf="postErrorMessage['content']" class="warning_messages">{{postErrorMessage['content']}}</p>
       </div>
       <!-- Modal feed body END -->
-
       <!-- Modal feed footer -->
-      <div class="modal-footer ">
-        <!-- Button -->
-        <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
-        <button (click)="createPost()" [disabled]="newPost.content.length<=0" class="btn btn-success-soft"
-                type="button">Post
-        </button>
+      <div class="modal-footer row justify-content-between">
+        <!-- Select -->
+        <div class="col-lg-3">
+          <select class="form-select js-choice choice-select-text-none" data-position="top" data-search-enabled="false">
+            <option value="PB">Public</option>
+            <option value="PV">Friends</option>
+            <option value="PV">Only me</option>
+            <option value="PV">Custom</option>
+          </select>
+          <!-- Button -->
+        </div>
+        <div class="col-lg-8 text-sm-end">
+          <!-- Button -->
+          <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
+          <button (click)="createPost()" [disabled]="newPost.content.length<=0" class="btn btn-success-soft"
+                  type="button">Post
+          </button>
+        </div>
       </div>
       <!-- Modal feed footer -->
     </div>
@@ -417,14 +439,25 @@
         <p *ngIf="postErrorMessage['content']" class="warning_messages">{{postErrorMessage['content']}}</p>
       </div>
       <!-- Modal feed body END -->
-
       <!-- Modal feed footer -->
-      <div class="modal-footer ">
-        <!-- Button -->
-        <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
-        <button (click)="updatePost()" [disabled]="postToEditTempDummy.content.length<=0" class="btn btn-success-soft"
-                type="button">Update
-        </button>
+      <div class="modal-footer row justify-content-between">
+        <!-- Select -->
+        <div class="col-lg-3">
+          <select class="form-select js-choice choice-select-text-none" data-position="top" data-search-enabled="false">
+            <option value="PB">Public</option>
+            <option value="PV">Friends</option>
+            <option value="PV">Only me</option>
+            <option value="PV">Custom</option>
+          </select>
+          <!-- Button -->
+        </div>
+        <div class="col-lg-8 text-sm-end">
+          <!-- Button -->
+          <button class="btn btn-danger-soft me-2" data-bs-dismiss="modal" type="button">Cancel</button>
+          <button (click)="updatePost()" [disabled]="postToEditTempDummy.content.length<=0" class="btn btn-success-soft"
+                  type="button">Post
+          </button>
+        </div>
       </div>
       <!-- Modal feed footer -->
     </div>

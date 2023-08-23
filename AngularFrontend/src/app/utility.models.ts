@@ -17,6 +17,7 @@ export interface User extends DatabaseRecord {
   likedPosts: Array<Post>;
   postComments: Array<PostComment>;
   likedPostComments: Array<PostComment>;
+  blogs: Array<Blog>;
   blogComments: Array<BlogComment>;
   likedBlogComments: Array<BlogComment>;
   coins: number;

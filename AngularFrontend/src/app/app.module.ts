@@ -3,6 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from "@angular/common/http";
 import { NgOptimizedImage } from "@angular/common";
 
+// third party libraries
+import { FormsModule } from "@angular/forms";
+import { JwtModule } from "@auth0/angular-jwt";
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { OverlayscrollbarsModule } from "overlayscrollbars-ngx";
+import { ProfileConnectionsComponent } from './profile-connections/profile-connections.component';
+import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dropzone-wrapper';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+
+// apps
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -18,15 +28,7 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { BlogComponent } from './blog/blog.component';
 import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
-
-// third party libraries
-import { FormsModule } from "@angular/forms";
-import { JwtModule } from "@auth0/angular-jwt";
-import { AngularEditorModule } from '@kolkov/angular-editor';
-import { OverlayscrollbarsModule } from "overlayscrollbars-ngx";
-import { ProfileConnectionsComponent } from './profile-connections/profile-connections.component';
-import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dropzone-wrapper';
-import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -55,7 +57,8 @@ export function tokenGetter() {
     MessagingComponent,
     ProfileConnectionsComponent,
     BlogComponent,
-    PasswordStrengthBarComponent
+    PasswordStrengthBarComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
