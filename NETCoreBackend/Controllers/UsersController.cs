@@ -82,12 +82,6 @@ public class UsersController : AbstractUserController
             return this.Conflict("Email");
         }
 
-        // ensure the email is not used yet
-        if (await this._usersService.GetAsync(newUser.Email, false) != null)
-        {
-            return this.Ok(new { accepted = false, email = "already_exist" });
-        }
-
         // ensure the user name length is within range
         if (newUser.Name.Length is < MIN_NAME_LENGTH or > MAX_NAME_LENGTH)
         {
@@ -100,6 +94,20 @@ public class UsersController : AbstractUserController
             return this.Conflict("Password");
         }
 
+        // ensure the email is not used yet
+        User? theUser = await this._usersService.GetAsync(newUser.Email, false);
+        if (theUser != null)
+        {
+            // if the user already exists or is still waiting for deletion
+            if (theUser.DeletedAt == null || DateTime.UtcNow < theUser.DeletedAt)
+            {
+                return this.Ok(new { accepted = false, email = "already_exist" });
+            }
+
+            // if the user is supposed to be deleted
+            await this._usersService.RemoveAsync(theUser);
+        }
+
         // create the user
         await this._usersService.CreateAsync(newUser);
 
@@ -109,26 +117,40 @@ public class UsersController : AbstractUserController
     [HttpPost("login")]
     public async Task<IActionResult> Login(User userThatLogin)
     {
-        User? theUserData = await this._usersService.GetAsync(userThatLogin.Email, true);
+        User? theUser = await this._usersService.GetAsync(userThatLogin.Email, true);
 
-        // ensure that the user exists
-        if (theUserData == null)
+        // ensure the user exists
+        if (theUser == null)
         {
             return this.Ok(new { accepted = false, email = "email_cannot_find" });
         }
 
+        // whether the user is in deletion
+        if (theUser.DeletedAt != null)
+        {
+            // if the user is still waiting to be deleted
+            if (DateTime.UtcNow < theUser.DeletedAt)
+            {
+                return this.Ok(new { accepted = false, email = "account_being_deleted" });
+            }
+
+            // if the user is supposed to be deleted
+            await this._usersService.RemoveAsync(theUser);
+            return this.Ok(new { accepted = false, email = "email_cannot_find" });
+        }
+
         // whether the password is correct
-        if (!Authentications.VerifyPasswordHash(userThatLogin.Password, theUserData.Confidential!))
+        if (!Authentications.VerifyPasswordHash(userThatLogin.Password, theUser.Confidential!))
         {
             return this.Ok(new { accepted = false, password = "password_incorrect" });
         }
 
-        theUserData.UpdatedAt = DateTime.UtcNow;
-        theUserData.Confidential!.LoginIp = userThatLogin.LoginIp;
+        theUser.UpdatedAt = DateTime.UtcNow;
+        theUser.Confidential!.LoginIp = userThatLogin.LoginIp;
 
         await this._usersService.SaveChangesAsync();
 
-        return this.Accepted(new { accepted = true, token = Authentications.CreateJwtToken(theUserData) });
+        return this.Accepted(new { accepted = true, token = Authentications.CreateJwtToken(theUser) });
     }
 
     [HttpPut("update/info")]
@@ -305,21 +327,20 @@ public class UsersController : AbstractUserController
     [HttpDelete("delete")]
     public async Task<IActionResult> Remove()
     {
-        // get current user id
-        int theId = this.GetCurrentUserId();
+        // get current user
+        User? currentUser = await this.GetCurrentUser();
 
-        if (theId == 0)
+        if (currentUser is null)
         {
-            return this.NotFound();
+            return this.NotFound("current user");
         }
 
-        bool result = await this._usersService.RemoveAsync(theId);
+        // only marked user as deleted (in 7 days)
+        currentUser.DeletedAt ??= DateTime.UtcNow.AddDays(7);
 
-        if (result)
-        {
-            return this.Accepted();
-        }
+        // save the changes
+        await this._usersService.SaveChangesAsync();
 
-        return this.NotFound();
+        return this.Accepted();
     }
 }

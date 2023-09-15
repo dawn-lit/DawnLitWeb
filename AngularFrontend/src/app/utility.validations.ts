@@ -163,6 +163,7 @@ export class LoginValidation {
     "email_cannot_find": "This Email address does not exist!",
     "password_incorrect": "Wrong password!",
     "password_empty": "Password cannot be empty!",
+    "account_being_deleted": "This account has been deleted and is still in cool down. If you want to revert this, please let the admin know!"
   };
 
   public static check(LoginData: Record<string, string>): Map<string, string> {

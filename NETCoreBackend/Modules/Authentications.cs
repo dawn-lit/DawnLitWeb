@@ -10,8 +10,7 @@ namespace NETCoreBackend.Modules;
 
 public static class Authentications
 {
-    private const string TOKEN =
-        "EEQMcmb1D/3C0medg2v+uuEJ6a7bz+q0L0/da1AUSzcqVY8OgqxzMLn8kLwK4unFFjAmfzMxBLe2eDWe4GGcYg==";
+    public static readonly string TOKEN = ConfigurationManager.AppSetting["JwtIssuerSigningKey"];
 
     public static string CreateJwtToken(User theUser)
     {

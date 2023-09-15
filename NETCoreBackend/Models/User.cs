@@ -68,6 +68,9 @@ public class User : AbstractModel
     [Display(Name = "banned")]
     public bool Banned { get; set; } = false;
 
+    [Display(Name = "deletedAt")]
+    public DateTime? DeletedAt { get; set; }
+
     [NotMapped]
     [Display(Name = "loginIp")]
     public string LoginIp { get; set; } = string.Empty;

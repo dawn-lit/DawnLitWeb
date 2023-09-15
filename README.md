@@ -62,13 +62,13 @@ https://themes.getbootstrap.com/product/social-network-community-and-event-theme
 
 `dotnet ef database update`
 
-#### Run the angular frontend:
-
-`ng serve --watch`
-
 #### Run the dotnet backend:
 
 `dotnet watch run`
+
+#### Run the angular frontend:
+
+`ng serve --watch`
 
 ### Ubuntu specific commands:
 

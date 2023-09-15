@@ -75,8 +75,10 @@ export class SettingsComponent {
   }
 
   deleteUser() {
-    this._httpService.deleteUser().subscribe((data: any) => {
-      this._httpService.logoffUser().subscribe(() => this._httpService.gotoHomePage());
-    });
+    this._httpService.deleteUser().subscribe(() => {
+        this._httpService.logoffUser();
+        this._httpService.gotoHomePage();
+      }
+    );
   }
 }
