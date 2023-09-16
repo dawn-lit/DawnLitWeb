@@ -40,8 +40,8 @@
                   <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
                 </span>
             </div>
-            <!-- Pswmeter -->
-            <app-password-strength-bar [password]="registrationData['password']"></app-password-strength-bar>
+            <!-- Pswmeter
+            <app-password-strength-bar [password]="registrationData['password']"></app-password-strength-bar>-->
             <p *ngIf="errorMessage['password']" class="warning_messages">{{errorMessage['password']}}</p>
           </div>
           <!-- Confirm password -->

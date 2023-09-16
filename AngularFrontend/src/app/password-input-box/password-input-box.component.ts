@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { zxcvbn } from "@zxcvbn-ts/core";
 
 enum STRENGTH {
@@ -10,12 +10,22 @@ enum STRENGTH {
 }
 
 @Component({
-  selector: 'app-password-strength-bar',
-  templateUrl: './password-strength-bar.component.html',
-  styleUrls: ['./password-strength-bar.component.css']
+  selector: 'app-password-input-box',
+  templateUrl: './password-input-box.component.html',
+  styleUrls: ['./password-input-box.component.css']
 })
-export class PasswordStrengthBarComponent {
-  @Input() password: string = "";
+export class PasswordInputBoxComponent {
+  @Input() enableStrengthBar: boolean = true;
+  @Input() label: string = "";
+  @Input() errorMessage: string = "";
+  @Input() placeholder: string = "";
+  @Output() updatePasswordEvent: EventEmitter<string> = new EventEmitter<string>();
+  protected password: string = "";
+  protected passwordType: string = "password";
+
+  togglePasswordVisibility(): void {
+    this.passwordType = this.passwordType == "password" ? "text" : "password";
+  }
 
   getStrength(): number {
     switch (zxcvbn(this.password).score) {

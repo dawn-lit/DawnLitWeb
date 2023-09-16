@@ -214,48 +214,29 @@
                 <form (ngSubmit)="updatePassword()" class="row g-3">
                   <!-- Current password -->
                   <div class="col-12">
-                    <label class="form-label">Current password</label>
-                    <div class="input-group">
-                      <input [(ngModel)]="passwordData['password']" class="form-control fakepassword"
-                             name="password" placeholder="Enter your current password"
-                             type="{{passwordsTypes['cp']}}">
-                      <span class="input-group-text p-0">
-                        <i (click)="togglePasswordVisibility('cp')"
-                           class="fakepasswordicon bi bi-{{passwordsTypes['cp'] != 'password' ? 'eye-slash': 'eye'}}-fill cursor-pointer p-2 w-40px"></i>
-                      </span>
-                    </div>
-                    <p *ngIf="errorMessage['password']" class="warning_messages">{{errorMessage['password']}}</p>
+                    <app-password-input-box
+                      (updatePasswordEvent)="processUpdatePasswordEvent('password', $event)"
+                      [enableStrengthBar]=false
+                      [errorMessage]="errorMessage['password']"
+                      [label]="'Current password'"
+                      [placeholder]="'Enter your current password'"></app-password-input-box>
                   </div>
                   <!-- New password -->
                   <div class="col-12">
-                    <label class="form-label">New password</label>
-                    <div class="input-group">
-                      <input [(ngModel)]="passwordData['newPassword']" class="form-control fakepassword"
-                             name="newPassword" placeholder="Enter new password"
-                             type="{{passwordsTypes['np']}}">
-                      <span class="input-group-text p-0">
-                        <i (click)="togglePasswordVisibility('np')"
-                           class="fakepasswordicon bi bi-{{passwordsTypes['np'] != 'password' ? 'eye-slash': 'eye'}}-fill cursor-pointer p-2 w-40px"></i>
-                      </span>
-                    </div>
-                    <!-- Pswmeter -->
-                    <app-password-strength-bar [password]="passwordData['newPassword']"></app-password-strength-bar>
-                    <p *ngIf="errorMessage['newPassword']" class="warning_messages">{{errorMessage['newPassword']}}</p>
+                    <app-password-input-box
+                      (updatePasswordEvent)="processUpdatePasswordEvent('newPassword', $event)"
+                      [errorMessage]="errorMessage['newPassword']"
+                      [label]="'New password'"
+                      [placeholder]="'Enter new password'"></app-password-input-box>
                   </div>
                   <!-- Confirm password -->
                   <div class="col-12">
-                    <label class="form-label">Confirm password</label>
-                    <div class="input-group">
-                      <input [(ngModel)]="passwordData['passwordConfirm']" class="form-control"
-                             name="passwordConfirm" placeholder="Re-enter your new password"
-                             type="{{passwordsTypes['np2']}}">
-                      <span class="input-group-text p-0">
-                        <i (click)="togglePasswordVisibility('np2')"
-                           class="fakepasswordicon bi bi-{{passwordsTypes['np2'] != 'password' ? 'eye-slash': 'eye'}}-fill cursor-pointer p-2 w-40px"></i>
-                      </span>
-                    </div>
-                    <p *ngIf="errorMessage['passwordConfirm']"
-                       class="warning_messages">{{errorMessage['passwordConfirm']}}</p>
+                    <app-password-input-box
+                      (updatePasswordEvent)="processUpdatePasswordEvent('passwordConfirm', $event)"
+                      [enableStrengthBar]=false
+                      [errorMessage]="errorMessage['passwordConfirm']"
+                      [label]="'Confirm password'"
+                      [placeholder]="'Re-enter your new password'"></app-password-input-box>
                   </div>
                   <!-- Button  -->
                   <div class="col-12 text-end">

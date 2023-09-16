@@ -27,8 +27,8 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { BlogComponent } from './blog/blog.component';
-import { PasswordStrengthBarComponent } from './password-strength-bar/password-strength-bar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PasswordInputBoxComponent } from './password-input-box/password-input-box.component';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -57,8 +57,8 @@ export function tokenGetter() {
     MessagingComponent,
     ProfileConnectionsComponent,
     BlogComponent,
-    PasswordStrengthBarComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PasswordInputBoxComponent
   ],
   imports: [
     BrowserModule,

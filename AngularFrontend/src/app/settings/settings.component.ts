@@ -59,7 +59,16 @@ export class SettingsComponent {
     }
   }
 
+  processUpdatePasswordEvent(k: string, v: string) {
+    this.passwordData[k] = v;
+  }
+
   updatePassword(): void {
+    // clear error messages
+    for (const key in this.errorMessage) {
+      this.errorMessage[key] = "";
+    }
+    // handle error
     const errors: Map<string, string> = UserUpdateValidation.checkPassword(this.passwordData);
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {
