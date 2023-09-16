@@ -22,18 +22,13 @@ public class UsersService : AbstractService<User>
         Authentications.CreatePasswordHash(newUser.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
         // create an associate confidential record
-        Confidential userConfidential = new()
+        newUser.Confidential = new Confidential
         {
             PasswordHash = passwordHash,
-            PasswordSalt = passwordSalt
+            PasswordSalt = passwordSalt,
+            LoginIp = newUser.LoginIp,
+            RegisterIp = newUser.LoginIp
         };
-
-        await this._confidentialService.CreateAsync(userConfidential);
-
-        // update user confidential
-        newUser.Confidential = userConfidential;
-        newUser.Confidential.LoginIp = newUser.LoginIp;
-        newUser.Confidential.RegisterIp = newUser.LoginIp;
 
         return await base.CreateAsync(newUser);
     }
@@ -85,6 +80,11 @@ public class UsersService : AbstractService<User>
         return await this.GetDatabaseCollection()
             .Include(m => m.Confidential)
             .FirstOrDefaultAsync(x => x.Email == email);
+    }
+
+    public async Task AttachConfidentialAsync(User theUser)
+    {
+        theUser.Confidential = await this._confidentialService.GetAsync(theUser);
     }
 
     public async Task<bool> SendFriendRequest(User currentUser, User targetUser)

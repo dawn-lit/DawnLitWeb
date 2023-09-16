@@ -75,6 +75,12 @@ public class DatabaseContext : DbContext
             .HasMany(e => e.Files)
             .WithOne(e => e.Creator);
 
+        modelBuilder.Entity<User>()
+            .HasOne(e => e.Confidential)
+            .WithOne(e => e.User)
+            .HasForeignKey<Confidential>(e => e.UserId)
+            .IsRequired();
+
         modelBuilder.Entity<Post>()
             .HasMany(e => e.Comments)
             .WithOne(e => e.Post);

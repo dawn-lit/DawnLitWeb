@@ -213,6 +213,8 @@ public class UsersController : AbstractUserController
         }
 
         // make sure that the password is correct
+        await this._usersService.AttachConfidentialAsync(user);
+
         if (!Authentications.VerifyPasswordHash(modifiedUser.Password, user.Confidential!))
         {
             return this.Conflict(new { accepted = false, password = "password_incorrect" });

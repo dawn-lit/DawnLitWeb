@@ -56,10 +56,8 @@ public class PostsService : AbstractService<Post>
 
     public new async Task<bool> CreateAsync(Post newPost)
     {
-        DatabaseContext dbContext = this.GetDatabaseContext();
-
         // setup relationships
-        EntityEntry<User> authorRef = dbContext.Users.Attach(newPost.Author!);
+        EntityEntry<User> authorRef = this.GetDatabaseContext().Users.Attach(newPost.Author!);
         authorRef.Entity.Posts.Add(newPost);
 
         return await base.CreateAsync(newPost);

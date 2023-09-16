@@ -10,7 +10,7 @@ namespace NETCoreBackend.Modules;
 
 public static class Authentications
 {
-    public static readonly string TOKEN = ConfigurationManager.AppSetting["JwtIssuerSigningKey"];
+    private static readonly string TOKEN = ConfigurationManager.AppSetting["JwtIssuerSigningKey"];
 
     public static string CreateJwtToken(User theUser)
     {
@@ -32,7 +32,7 @@ public static class Authentications
 
     public static JwtSecurityToken? ReadJwtToken(HttpRequest theRequest)
     {
-        string theTokenString = theRequest.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
+        string theTokenString = theRequest.Headers[HeaderNames.Authorization].ToString()!.Replace("Bearer ", "");
         return theTokenString.Equals(string.Empty) ? null : new JwtSecurityTokenHandler().ReadJwtToken(theTokenString);
     }
 
