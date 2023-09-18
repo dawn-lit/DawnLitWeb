@@ -28,6 +28,10 @@ export class RegistrationComponent {
     this.isBlocked = false;
   }
 
+  processUpdatePasswordEvent(k: string, v: string) {
+    this.registrationData[k] = v;
+  }
+
   onSubmit(): void {
     if (this.isBlocked) {
       return;

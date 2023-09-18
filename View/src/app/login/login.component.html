@@ -23,9 +23,6 @@
               <input [(ngModel)]="loginData['password']" class="form-control fakepassword" id="psw-input"
                      name="password" placeholder="Enter new password"
                      type="password">
-              <span class="input-group-text p-0">
-                  <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
-                </span>
             </div>
             <p *ngIf="errorMessage['password']" class="warning_messages"
                style="text-align: left !important;">{{errorMessage['password']}}</p>

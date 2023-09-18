@@ -4,4 +4,4 @@
 *.jpg filter=lfs diff=lfs merge=lfs -text
 *.gif filter=lfs diff=lfs merge=lfs -text
 *.svg filter=lfs diff=lfs merge=lfs -text
-AngularFrontend/src/assets/css/style.css -linguist-detectable
+View/src/assets/css/style.css -linguist-detectable

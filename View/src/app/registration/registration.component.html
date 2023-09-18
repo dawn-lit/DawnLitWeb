@@ -13,7 +13,7 @@
         <form (ngSubmit)="onSubmit()" class="mt-4">
           <!-- Email -->
           <div class="mb-3 input-group-lg">
-            <p>Username:</p>
+            <label class="form-label">Username:</label>
             <input [(ngModel)]="registrationData['name']" class="form-control" name="name"
                    placeholder="Enter username"
                    type="text">
@@ -21,37 +21,27 @@
           </div>
           <!-- Email -->
           <div class="mb-3 input-group-lg">
-            <p>Email:</p>
+            <label class="form-label">Email:</label>
             <input [(ngModel)]="registrationData['email']" class="form-control" name="email" placeholder="Enter email"
                    type="email">
             <p *ngIf="errorMessage['email']" class="warning_messages">{{errorMessage['email']}}</p>
           </div>
           <!-- New password -->
-          <div class="mb-3 position-relative">
-            <!-- Input group -->
-            <p>Password:</p>
-            <div class="input-group input-group-lg">
-              <br>
-              <input [(ngModel)]="registrationData['password']" class="form-control fakepassword" id="psw-input"
-                     name="password"
-                     placeholder="Enter new password"
-                     type="password">
-              <span class="input-group-text p-0">
-                  <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
-                </span>
-            </div>
-            <!-- Pswmeter
-            <app-password-strength-bar [password]="registrationData['password']"></app-password-strength-bar>-->
-            <p *ngIf="errorMessage['password']" class="warning_messages">{{errorMessage['password']}}</p>
+          <div class="mb-3">
+            <app-password-input-box (updatePasswordEvent)="processUpdatePasswordEvent('password', $event)"
+                                    [additionalInputBoxClass]="'input-group-lg'"
+                                    [errorMessage]="errorMessage['password']"
+                                    [label]="'Password:'"
+                                    [placeholder]='"Enter new password"'></app-password-input-box>
           </div>
           <!-- Confirm password -->
-          <div class="mb-3 input-group-lg">
-            <p>Please confirm password</p>
-            <input [(ngModel)]="registrationData['password_confirm']" class="form-control" name="password_confirm"
-                   placeholder="Confirm password"
-                   type="password">
-            <p *ngIf="errorMessage['password_confirm']"
-               class="warning_messages">{{errorMessage['password_confirm']}}</p>
+          <div class="mb-3">
+            <app-password-input-box (updatePasswordEvent)="processUpdatePasswordEvent('password_confirm', $event)"
+                                    [additionalInputBoxClass]="'input-group-lg'"
+                                    [enableStrengthBar]="false"
+                                    [errorMessage]="errorMessage['password_confirm']"
+                                    [label]="'Please confirm password:'"
+                                    [placeholder]='"Confirm password"'></app-password-input-box>
           </div>
           <!-- Keep me signed in -->
           <div class="mb-3 text-start">

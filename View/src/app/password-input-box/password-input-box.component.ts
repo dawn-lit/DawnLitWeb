@@ -19,6 +19,7 @@ export class PasswordInputBoxComponent {
   @Input() label: string = "";
   @Input() errorMessage: string = "";
   @Input() placeholder: string = "";
+  @Input() additionalInputBoxClass: string = "";
   @Output() updatePasswordEvent: EventEmitter<string> = new EventEmitter<string>();
   protected password: string = "";
   protected passwordType: string = "password";
