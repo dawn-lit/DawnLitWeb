@@ -7,7 +7,7 @@
         <div class="text-center">
           <!-- Title -->
           <h1 class="mb-2">Sign up</h1>
-          <span class="d-block">Already have an account? <a href="/login">Sign in here</a></span>
+          <span class="d-block">Already have an account? <a routerLink="/login">Sign in here</a></span>
         </div>
         <!-- Form START -->
         <form (ngSubmit)="onSubmit()" class="mt-4">
@@ -43,12 +43,7 @@
                                     [label]="'Please confirm password:'"
                                     [placeholder]='"Confirm password"'></app-password-input-box>
           </div>
-          <!-- Keep me signed in -->
-          <div class="mb-3 text-start">
-            <input class="form-check-input" id="keepsingnedCheck" type="checkbox">
-            <label class="form-check-label" for="keepsingnedCheck"> Keep me signed in</label>
-          </div>
-          <!-- Button -->
+          <!-- Submit Button -->
           <div class="d-grid">
             <button *ngIf="isBlocked" class="btn btn-lg btn-primary">
               <div class="spinner-border" role="status"></div>

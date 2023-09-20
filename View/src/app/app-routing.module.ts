@@ -10,11 +10,13 @@ import { ProfileComponent } from "./profile/profile.component";
 import { MessagingComponent } from "./messaging/messaging.component";
 import { BlogComponent } from "./blog/blog.component";
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logoff', component: LogoffComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'registration', component: RegistrationComponent},
   {path: 'settings', component: SettingsComponent},
   {path: 'profile', component: ProfileComponent},

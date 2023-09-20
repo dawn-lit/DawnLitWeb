@@ -6,7 +6,7 @@
       <div class="card card-body text-center p-4 p-sm-5">
         <!-- Title -->
         <h1 class="mb-2">Sign in</h1>
-        <p class="mb-0">Don't have an account?<a href="./registration"> Click here to sign up</a></p>
+        <p class="mb-0">Don't have an account?<a routerLink="/registration"> Click here to sign up</a></p>
         <!-- Form START -->
         <form (ngSubmit)="onSubmit()" class="mt-sm-4">
           <!-- Email -->
@@ -30,7 +30,7 @@
           <!-- Remember me -->
           <div class="mb-3 d-sm-flex justify-content-between">
             <div></div>
-            <a hidden="hidden" href="forgot-password.html">Forgot password?</a>
+            <a routerLink="/forgot-password">Forgot password?</a>
           </div>
           <!-- Button -->
           <div class="d-grid">
@@ -46,5 +46,5 @@
       </div>
       <!-- Sign in START -->
     </div>
-  </div> <!-- Row END -->
+  </div>
 </div>

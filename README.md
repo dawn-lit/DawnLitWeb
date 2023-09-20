@@ -2,7 +2,7 @@
 
 This repo contains the source code for **Dawn Lit**, a social platform for people who have an interest in technology to connect and share thoughts.
 
-<img src="/AngularFrontend/src/favicon.ico" alt="Dawn Lit" style="width:20%; height:20%; display: block; margin-left: auto; margin-right: auto;" />
+<img src="/View/src/favicon.ico" alt="Dawn Lit" style="width:20%; height:20%; display: block; margin-left: auto; margin-right: auto;" />
 
 Dawn Lit aims to provide a platform that enables users to discuss and share their thoughts anonymously, in contrast to other uncommon career websites. We sincerely value the privacy of our users. The only sensitive data that this website will gather is the login IP, which will exclusively be used for security purposes. We will never acquire or distribute your personal information, contrary to the practices of numerous technology companies and social platforms in the present era.
 
