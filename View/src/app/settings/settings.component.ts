@@ -3,11 +3,12 @@ import { User } from "../utility.models";
 import { HttpService } from "../http.service";
 import { UserUpdateValidation } from "../utility.validations";
 import { map } from "rxjs";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.css']
+  styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent {
   userData: User | null = null;
@@ -19,9 +20,7 @@ export class SettingsComponent {
   passwordData: Record<string, string> = {
     "password": "", "newPassword": "", "passwordConfirm": ""
   };
-  errorMessage: Record<string, string> = {
-    "name": "", "signature": "", "about": "", "password": "", "newPassword": "", "passwordConfirm": ""
-  };
+  errorMessage: Record<string, string> = {};
   deleteAccountConfirmed: boolean = false;
   config = {
     url: '/api/files/new/single/avatar',
@@ -29,7 +28,8 @@ export class SettingsComponent {
   };
 
   constructor(
-    private _httpService: HttpService
+    private _httpService: HttpService,
+    private _snackBar: MatSnackBar
   ) {
   }
 
@@ -49,13 +49,18 @@ export class SettingsComponent {
     if (this.userData == null) {
       return;
     }
+    // clear error messages
+    this.errorMessage = {}
+    // handle error
     const errors: Map<string, string> = UserUpdateValidation.checkInfo(this.userData);
     if (errors.size > 0) {
       errors.forEach((value: string, key: string) => {
         this.errorMessage[key] = value;
       });
     } else {
-      this._httpService.updateCurrentUserInfo(this.userData).subscribe();
+      this._httpService.updateCurrentUserInfo(this.userData).subscribe(
+        () => this._snackBar.open('Changes saved!', "Close", {duration: 5000})
+      );
     }
   }
 
@@ -65,9 +70,7 @@ export class SettingsComponent {
 
   updatePassword(): void {
     // clear error messages
-    for (const key in this.errorMessage) {
-      this.errorMessage[key] = "";
-    }
+    this.errorMessage = {}
     // handle error
     const errors: Map<string, string> = UserUpdateValidation.checkPassword(this.passwordData);
     if (errors.size > 0) {
@@ -79,6 +82,9 @@ export class SettingsComponent {
         for (const key in this.passwordData) {
           this.passwordData[key] = "";
         }
+        this._httpService.updateCurrentUserInfo(this.userData).subscribe(
+          () => this._snackBar.open('New password saved!', "Close", {duration: 5000})
+        );
       });
     }
   }

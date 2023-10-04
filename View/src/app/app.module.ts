@@ -11,6 +11,8 @@ import { OverlayscrollbarsModule } from "overlayscrollbars-ngx";
 import { ProfileConnectionsComponent } from './profile-connections/profile-connections.component';
 import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dropzone-wrapper';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // apps
 import { AppRoutingModule } from './app-routing.module';
@@ -78,7 +80,9 @@ export function tokenGetter() {
     AngularEditorModule,
     OverlayscrollbarsModule,
     DropzoneModule,
-    PickerComponent
+    PickerComponent,
+    MatSnackBarModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {

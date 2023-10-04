@@ -5,4 +5,4 @@ bin/
 obj/
 Migrations/
 Files/
-AngularFrontend/package-lock.json
+View/package-lock.json

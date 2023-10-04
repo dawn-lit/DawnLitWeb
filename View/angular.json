@@ -33,6 +33,7 @@
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "node_modules/overlayscrollbars/styles/overlayscrollbars.css",
               "node_modules/@ctrl/ngx-emoji-mart/picker.css",
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/assets/css/style.css",
               "src/styles.css"
             ],
