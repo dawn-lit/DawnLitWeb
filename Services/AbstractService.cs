@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
+using DawnLitWeb.Models;
+using DawnLitWeb.Modules;
 using Microsoft.EntityFrameworkCore;
-using NETCoreBackend.Models;
-using NETCoreBackend.Modules;
 
-namespace NETCoreBackend.Services;
+namespace DawnLitWeb.Services;
 
 public abstract class AbstractService<T> where T : AbstractModel
 {

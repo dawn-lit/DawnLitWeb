@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NETCoreBackend.Models;
+﻿using DawnLitWeb.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace NETCoreBackend.Modules;
+namespace DawnLitWeb.Modules;
 
 public class DatabaseContext : DbContext
 {

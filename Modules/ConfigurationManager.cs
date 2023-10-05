@@ -1,4 +1,4 @@
-﻿namespace NETCoreBackend.Modules;
+﻿namespace DawnLitWeb.Modules;
 
 internal static class ConfigurationManager
 {

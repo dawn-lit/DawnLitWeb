@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace NETCoreBackend.Hubs;
+namespace DawnLitWeb.Hubs;
 
 public class ChatHub : Hub
 {

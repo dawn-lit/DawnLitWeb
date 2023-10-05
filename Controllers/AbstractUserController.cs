@@ -1,9 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using DawnLitWeb.Modules;
 using Microsoft.AspNetCore.Mvc;
-using NETCoreBackend.Modules;
 
-namespace NETCoreBackend.Controllers;
+namespace DawnLitWeb.Controllers;
 
 public abstract class AbstractUserController : ControllerBase
 {

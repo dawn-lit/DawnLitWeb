@@ -1,9 +1,9 @@
 using System.Text;
+using DawnLitWeb.Hubs;
+using DawnLitWeb.Modules;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using NETCoreBackend.Hubs;
-using NETCoreBackend.Modules;
 using Newtonsoft.Json;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

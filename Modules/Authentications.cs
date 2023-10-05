@@ -2,11 +2,11 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using DawnLitWeb.Models;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
-using NETCoreBackend.Models;
 
-namespace NETCoreBackend.Modules;
+namespace DawnLitWeb.Modules;
 
 public static class Authentications
 {

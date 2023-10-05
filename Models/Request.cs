@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NETCoreBackend.Models;
+namespace DawnLitWeb.Models;
 
 public class Request : AbstractModel
 {

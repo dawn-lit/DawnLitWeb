@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace NETCoreBackend.Models;
+namespace DawnLitWeb.Models;
 
 public class User : AbstractModel
 {

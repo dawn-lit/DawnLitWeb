@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DawnLitWeb.Models;
+using DawnLitWeb.Modules;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using NETCoreBackend.Models;
-using NETCoreBackend.Modules;
 
-namespace NETCoreBackend.Services;
+namespace DawnLitWeb.Services;
 
 public class BlogsService : AbstractService<Blog>
 {

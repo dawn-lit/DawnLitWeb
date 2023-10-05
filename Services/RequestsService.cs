@@ -1,7 +1,7 @@
-﻿using NETCoreBackend.Models;
-using NETCoreBackend.Modules;
+﻿using DawnLitWeb.Models;
+using DawnLitWeb.Modules;
 
-namespace NETCoreBackend.Services;
+namespace DawnLitWeb.Services;
 
 public class RequestsService : AbstractService<Request>
 {
