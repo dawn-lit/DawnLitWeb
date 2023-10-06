@@ -59,7 +59,7 @@ export class HttpService {
   }
 
   // register a new user
-  registerUser(data: any) {
+  registerUser(data: Record<string, string>) {
     return this._http.post("/api/users/new", data);
   }
 
@@ -74,12 +74,12 @@ export class HttpService {
   }
 
   // update the current user's information
-  updateCurrentUserInfo(data: any) {
+  updateCurrentUserInfo(data: User) {
     return this._http.put(`/api/users/update/info`, data);
   }
 
-  // update the current user's information
-  updateCurrentUserPassword(data: any) {
+  // update the current user's password
+  updateCurrentUserPassword(data: Record<string, string>) {
     return this._http.put(`/api/users/update/password`, data);
   }
 

@@ -1,0 +1,10 @@
+#avatar-edit {
+  width: 6rem;
+  position: absolute;
+  margin-top: -5rem;
+  margin-left: -0.5rem;
+}
+
+dropzone {
+  color: black !important;
+}

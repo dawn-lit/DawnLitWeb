@@ -12,11 +12,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class SettingsComponent {
   userData: User | null = null;
-  passwordsTypes: Record<string, string> = {
-    "cp": "password",
-    "np": "password",
-    "np2": "password",
-  };
   passwordData: Record<string, string> = {
     "password": "", "newPassword": "", "passwordConfirm": ""
   };
@@ -24,7 +19,8 @@ export class SettingsComponent {
   deleteAccountConfirmed: boolean = false;
   config = {
     url: '/api/files/new/single/avatar',
-    maxFiles: 1
+    maxFiles: 1,
+    message: "edit"
   };
 
   constructor(
@@ -39,10 +35,6 @@ export class SettingsComponent {
 
   getUserData(): void {
     this._httpService.getCurrentUser().pipe(map(data => this.userData = data)).subscribe();
-  }
-
-  togglePasswordVisibility(k: string) {
-    this.passwordsTypes[k] = this.passwordsTypes[k] == "password" ? "text" : "password";
   }
 
   saveChanges(): void {
@@ -69,6 +61,9 @@ export class SettingsComponent {
   }
 
   updatePassword(): void {
+    if (this.userData == null) {
+      return;
+    }
     // clear error messages
     this.errorMessage = {}
     // handle error
@@ -82,7 +77,7 @@ export class SettingsComponent {
         for (const key in this.passwordData) {
           this.passwordData[key] = "";
         }
-        this._httpService.updateCurrentUserInfo(this.userData).subscribe(
+        this._httpService.updateCurrentUserInfo(this.userData!).subscribe(
           () => this._snackBar.open('New password saved!', "Close", {duration: 5000})
         );
       });

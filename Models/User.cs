@@ -15,7 +15,7 @@ public class User : AbstractModel
     public string Github { get; set; } = string.Empty;
 
     [Display(Name = "group")]
-    public int Group { get; set; } = 0;
+    public int Group { get; set; }
 
     [Display(Name = "posts")]
     public ICollection<Post> Posts { get; } = new List<Post>();
@@ -51,10 +51,10 @@ public class User : AbstractModel
     public ICollection<Chat> Chats { get; set; } = new List<Chat>();
 
     [Display(Name = "coins")]
-    public int Coins { get; set; } = 0;
+    public int Coins { get; set; }
 
     [Display(Name = "experience")]
-    public int Experience { get; set; } = 0;
+    public int Experience { get; set; }
 
     [Display(Name = "signature")]
     public string Signature { get; set; } = string.Empty;
@@ -66,7 +66,7 @@ public class User : AbstractModel
     public ICollection<FileItem> Files { get; set; } = new List<FileItem>();
 
     [Display(Name = "banned")]
-    public bool Banned { get; set; } = false;
+    public bool Banned { get; set; }
 
     [Display(Name = "deletedAt")]
     public DateTime? DeletedAt { get; set; }
