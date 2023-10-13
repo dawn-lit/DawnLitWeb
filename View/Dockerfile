@@ -1,22 +1,28 @@
-FROM node:18
+FROM node:18 as node
 
 # set a directory for the app
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# copy all the files to the container
-COPY package.json ./
+# copy all the necessary files to the container
+COPY ./src ./src
+COPY ./angular.json ./angular.json
+COPY ./nginx.conf ./nginx.conf
+COPY ./package.json ./package.json
+COPY ./tsconfig.json ./tsconfig.json
+COPY ./tsconfig.app.json ./tsconfig.app.json
+COPY ./tsconfig.spec.json ./tsconfig.spec.json
 
 # install dependencies
 RUN npm install
 
-# copy everything
-COPY . .
-
 # create a production build
-RUN npm run build
+RUN npm run build --prod
 
 # copy nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
 
+# using nginx env
+FROM nginx:alpine
+
 # copy production build
-COPY /dist/angular-frontend /usr/share/nginx/html
+COPY --from=node /app/dist/angular-frontend /usr/share/nginx/html
