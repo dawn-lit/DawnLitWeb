@@ -1,4 +1,4 @@
-# build environment
+# build env
 FROM node:18 as node
 
 # set a directory for the app
@@ -8,6 +8,7 @@ WORKDIR /app
 COPY ./src ./src
 COPY ./angular.json ./
 COPY ./nginx.conf ./
+# COPY ./nginx-dev.conf ./nginx.conf
 COPY ./package.json ./
 COPY ./tsconfig.json ./
 COPY ./tsconfig.app.json ./
