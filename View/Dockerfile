@@ -7,8 +7,6 @@ WORKDIR /app
 # copy all the necessary files to the container
 COPY ./src ./src
 COPY ./angular.json ./
-COPY ./nginx.conf ./
-# COPY ./nginx-dev.conf ./nginx.conf
 COPY ./package.json ./
 COPY ./tsconfig.json ./
 COPY ./tsconfig.app.json ./
@@ -20,11 +18,12 @@ RUN npm install
 # create a production build
 RUN npm run build --prod
 
-# copy nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
-
 # using nginx env
 FROM nginx:alpine
+
+# copy nginx configuration
+# COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx-dev.conf /etc/nginx/conf.d/default.conf
 
 # copy production build
 COPY --from=node /app/dist/angular-frontend /usr/share/nginx/html
