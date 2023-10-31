@@ -4,7 +4,7 @@ const PROXY_CONFIG = [
       "/api",
       "/chat"
     ],
-    target: "https://localhost:7061",
+    target: "http://dawnlit.com:17061",
     secure: false,
     ws: true,
     headers: {
