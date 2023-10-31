@@ -1,5 +1,5 @@
 # build env
-FROM node:18 as node
+FROM node:20 as node
 
 # set a directory for the app
 WORKDIR /app
@@ -22,8 +22,8 @@ RUN npm run build --prod
 FROM nginx:alpine
 
 # copy nginx configuration
-# COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-COPY ./nginx-dev.conf /etc/nginx/conf.d/default.conf
+# COPY ./nginx.dev.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx.pord.conf /etc/nginx/conf.d/default.conf
 
 # copy production build
 COPY --from=node /app/dist/angular-frontend /usr/share/nginx/html

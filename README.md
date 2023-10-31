@@ -91,6 +91,30 @@ https://themes.getbootstrap.com/product/social-network-community-and-event-theme
 
 `export PATH="$PATH:/home/$USER/.dotnet/tools"`
 
+# ✈️ How to setup a development environment using docker
+
+### Build and run front-end application:
+
+```
+cd ./View/
+
+# build front-end application
+docker build . -t angular-app
+
+# run front-end application image at port 80
+docker run --name angular-app -d -p 80:80 angular-app
+```
+
+### Build and run back-end application:
+
+```
+# build back-end application
+docker build . -t dotnet-app
+
+# run back-end application image with port forwarding from 80 to 7061
+docker run --name dotnet-app -d -p 7061:80 dotnet-app
+```
+
 # 💪 Want to contribute?
 
 I understand this is a challenging time for everyone, so I welcome anyone with an interest in web development to
