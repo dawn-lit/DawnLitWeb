@@ -19,7 +19,7 @@ RUN npm install
 RUN npm run build --prod
 
 # using nginx env
-FROM nginx:alpine
+FROM nginx:latest
 
 # copy nginx configuration
 # COPY ./nginx.dev.conf /etc/nginx/conf.d/default.conf
