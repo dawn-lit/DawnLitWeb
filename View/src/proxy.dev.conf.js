@@ -2,7 +2,7 @@ const PROXY_CONFIG = [
   {
     context: [
       "/api",
-      "/chat"
+      "/signalr"
     ],
     target: "https://localhost:7061",
     secure: false,

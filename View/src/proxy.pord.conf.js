@@ -2,7 +2,7 @@ const PROXY_CONFIG = [
   {
     context: [
       "/api",
-      "/chat"
+      "/signalr"
     ],
     target: "https://be.dawnlit.com",
     secure: false,

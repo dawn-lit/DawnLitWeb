@@ -40,7 +40,7 @@ export class MessagingComponent {
 
   async connectSignalrHub() {
     this._connection = new HubConnectionBuilder()
-      .withUrl("/chat", {
+      .withUrl("/signalr", {
         accessTokenFactory: () => tokenGetter()!,
       })
       //.configureLogging(LogLevel.Information)
