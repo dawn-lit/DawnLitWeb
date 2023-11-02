@@ -1,4 +1,3 @@
-using System.Text;
 using DawnLitWeb.Hubs;
 using DawnLitWeb.Modules;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -45,9 +44,7 @@ builder.Services.AddAuthentication(opt =>
             ValidateIssuerSigningKey = true,
             ValidIssuer = "https://localhost:7061",
             ValidAudience = "https://localhost:7061",
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtIssuerSigningKey").Value)
-            )
+            IssuerSigningKey = Authentications.TOKEN_KEY
         };
     });
 
@@ -73,6 +70,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 // map hub
-app.MapHub<ChatHub>("/chat");
+app.MapHub<ChatHub>("/signalr");
 
 app.Run();

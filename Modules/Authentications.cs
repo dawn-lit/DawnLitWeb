@@ -10,7 +10,7 @@ namespace DawnLitWeb.Modules;
 
 public static class Authentications
 {
-    private static readonly string TOKEN = ConfigurationManager.AppSetting["JwtIssuerSigningKey"];
+    public static readonly SymmetricSecurityKey TOKEN_KEY = new(new HMACSHA512().Key);
 
     public static string CreateJwtToken(User theUser)
     {
@@ -21,9 +21,7 @@ public static class Authentications
             new Claim(ClaimTypes.Email, theUser.Email)
         };
 
-        SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(TOKEN));
-
-        SigningCredentials cred = new(key, SecurityAlgorithms.HmacSha512Signature);
+        SigningCredentials cred = new(TOKEN_KEY, SecurityAlgorithms.HmacSha512Signature);
 
         JwtSecurityToken token = new(claims: claims, expires: DateTime.Now.AddDays(1), signingCredentials: cred);
 
@@ -32,7 +30,7 @@ public static class Authentications
 
     public static JwtSecurityToken? ReadJwtToken(HttpRequest theRequest)
     {
-        string theTokenString = theRequest.Headers[HeaderNames.Authorization].ToString()!.Replace("Bearer ", "");
+        string theTokenString = theRequest.Headers[HeaderNames.Authorization].ToString().Replace("Bearer ", "");
         return theTokenString.Equals(string.Empty) ? null : new JwtSecurityTokenHandler().ReadJwtToken(theTokenString);
     }
 
