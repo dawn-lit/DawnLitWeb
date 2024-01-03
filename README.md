@@ -17,7 +17,7 @@ navigating to the end.
 
 ## 🔗Live Demo:
 
-http://dawnlit.com
+https://dawnlit.com
 
 **Warning**: The website is still in the early development phase, and we will perform data deletion occasionally due to
 technical limitations. We do not recommend that individuals divulge any confidential information at this stage due to
@@ -51,9 +51,13 @@ https://themes.getbootstrap.com/product/social-network-community-and-event-theme
 
 <img src="https://avatars.githubusercontent.com/u/9141961?s=200&v=4" alt=".NET Core" style="width:10%; height:10%" /><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/120px-Postgresql_elephant.svg.png" alt="PostgreSQL" style="width:10%; height:10%" />
 
-`.NET Core 6`, `PostgreSQL 15`
+`.NET Core 8`, `PostgreSQL 16`
 
 # ⌨️ Useful commands:
+
+#### Update Dotnet ef tool
+
+`dotnet tool update --global dotnet-ef`
 
 #### Migrate the models:
 
@@ -81,6 +85,18 @@ https://themes.getbootstrap.com/product/social-network-community-and-event-theme
 
 `sudo -i -u postgres psql main`
 
+##### Create Super User:
+
+`sudo -i -u postgres psql`
+
+`CREATE USER root WITH SUPERUSER PASSWORD 'test_password';`
+
+##### Create database (main):
+
+`sudo -i -u postgres psql`
+
+`CREATE DATABASE main;`
+
 ##### Drop database (main):
 
 `sudo -i -u postgres psql`
@@ -101,8 +117,8 @@ cd ./View/
 # build front-end application
 docker build . -t angular-app
 
-# run front-end application image at port 80
-docker run --name angular-app -d -p 80:80 angular-app
+# run front-end application image with port forwarding from 4200 to 80
+docker run --name angular-app -d -p 4200:80 angular-app
 ```
 
 ### Build and run back-end application:
@@ -111,8 +127,8 @@ docker run --name angular-app -d -p 80:80 angular-app
 # build back-end application
 docker build . -t dotnet-app
 
-# run back-end application image with port forwarding from 80 to 7061
-docker run --name dotnet-app -d -p 7061:80 dotnet-app
+# run back-end application image with port forwarding from 8080 to 7061
+docker run --name dotnet-app -d -p 7061:8080 dotnet-app
 ```
 
 # 💪 Want to contribute?
