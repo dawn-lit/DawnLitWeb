@@ -15,6 +15,18 @@ COPY ./appsettings.json ./
 COPY ./DawnLitWeb.csproj ./
 COPY ./Program.cs ./
 
+# Update Dotnet ef tool
+RUN dotnet tool update --global dotnet-ef
+
+# setup env
+ENV PATH="$PATH:/root/.dotnet/tools"
+
+# migrate the models
+RUN dotnet ef migrations add TheMigration
+
+# Sync the models with the database:
+RUN dotnet ef database update
+
 # Restore as distinct layers
 RUN dotnet restore
 

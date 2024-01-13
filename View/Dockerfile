@@ -22,8 +22,7 @@ RUN npm run build --prod
 FROM nginx:latest
 
 # copy nginx configuration
-# COPY ./nginx.dev.conf /etc/nginx/conf.d/default.conf
-COPY ./nginx.pord.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 # copy production build
 COPY --from=node /app/dist/angular-frontend /usr/share/nginx/html
