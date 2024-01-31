@@ -2,6 +2,6 @@
 <img *ngIf="hasImageFetched() && getAvatarImage().length==0" alt="" class="avatar-img {{classTags}}"
      style="{{getStyle()}}">
 <p *ngIf="hasImageFetched() && getAvatarImage().length==0"
-   id="capital_letter">{{userData!.name[0].toUpperCase()}}</p>
+   id="capital_letter">{{ userData!.name[0].toUpperCase() }}</p>
 <img *ngIf="hasImageFetched() && getAvatarImage().length>0" alt="" class="avatar-img {{classTags}}"
      src="data:image;base64, {{getAvatarImage()}}">

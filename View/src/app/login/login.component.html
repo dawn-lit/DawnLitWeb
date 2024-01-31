@@ -14,7 +14,7 @@
             <input [(ngModel)]="loginData['email']" class="form-control"
                    name="email" placeholder="Enter email" type="email">
             <p *ngIf="errorMessage['email']" class="warning_messages"
-               style="text-align: left !important;">{{errorMessage['email']}}</p>
+               style="text-align: left !important;">{{ errorMessage['email'] }}</p>
           </div>
           <!-- New password -->
           <div class="mb-3 position-relative">
@@ -25,7 +25,7 @@
                      type="password">
             </div>
             <p *ngIf="errorMessage['password']" class="warning_messages"
-               style="text-align: left !important;">{{errorMessage['password']}}</p>
+               style="text-align: left !important;">{{ errorMessage['password'] }}</p>
           </div>
           <!-- Remember me -->
           <div class="mb-3 d-sm-flex justify-content-between">

@@ -46,11 +46,12 @@
         <!-- Info -->
         <div>
           <div class="nav nav-divider">
-            <h6 class="nav-item card-title mb-0"><a href="./profile?id={{_post.author.id}}"> {{_post.author.name}} </a>
+            <h6 class="nav-item card-title mb-0"><a
+              href="./profile?id={{_post.author.id}}"> {{ _post.author.name }} </a>
             </h6>
-            <span class="nav-item small"> {{getExistenceTime(_post)}}</span>
+            <span class="nav-item small"> {{ getExistenceTime(_post) }}</span>
           </div>
-          <p class="mb-0 small">{{_post.author.signature}}</p>
+          <p class="mb-0 small">{{ _post.author.signature }}</p>
         </div>
       </div>
       <!-- Card feed action dropdown START -->
@@ -107,12 +108,12 @@
            data-bs-toggle="tooltip"
            type="button"
         >
-          <i class="bi bi-hand-thumbs-up-fill pe-1"></i>{{hasCurrentUserLiked(_post) ? "Liked" : "Like"}}
-          ({{_post.likedBy.length}})</a>
+          <i class="bi bi-hand-thumbs-up-fill pe-1"></i>{{ hasCurrentUserLiked(_post) ? "Liked" : "Like" }}
+          ({{ _post.likedBy.length }})</a>
       </li>
       <li class="nav-item">
         <a class="nav-link {{hasCurrentUserCommented(_post)?'active':''}}" type="button"> <i
-          class="bi bi-chat-fill pe-1"></i>Comments ({{_post.comments.length}})</a>
+          class="bi bi-chat-fill pe-1"></i>Comments ({{ _post.comments.length }})</a>
       </li>
       <!-- Card share action START -->
       <li class="nav-item dropdown ms-sm-auto" hidden="hidden">
@@ -172,17 +173,18 @@
             <!-- Comment by -->
             <div class="bg-light rounded-start-top-0 p-3 rounded">
               <div class="d-flex justify-content-between">
-                <h6 class="mb-1"><a href="./profile?id={{_comment.author.id}}">{{_comment.author.name}}</a></h6>
-                <small class="ms-2">{{getExistenceTime(_comment)}}</small>
+                <h6 class="mb-1"><a href="./profile?id={{_comment.author.id}}">{{ _comment.author.name }}</a></h6>
+                <small class="ms-2">{{ getExistenceTime(_comment) }}</small>
               </div>
-              <p class="small mb-0">{{_comment.content}}</p>
+              <p class="small mb-0">{{ _comment.content }}</p>
             </div>
             <!-- Comment react -->
             <ul class="nav nav-divider py-2 small">
               <li class="nav-item">
                 <a (click)="likeComment(_comment)"
                    class="nav-link {{hasCurrentUserLiked(_comment)? 'active':''}}"
-                   type="button"> {{hasCurrentUserLiked(_comment) ? "Liked" : "Like"}} ({{_comment.likedBy.length}})</a>
+                   type="button"> {{ hasCurrentUserLiked(_comment) ? "Liked" : "Like" }} ({{ _comment.likedBy.length }}
+                  )</a>
               </li>
               <li class="nav-item" hidden="hidden">
                 <a class="nav-link" type="button"> Reply</a>
@@ -325,12 +327,12 @@
           <!-- Avatar -->
           <p><strong>Title:</strong></p>
           <input [(ngModel)]="newBlog.title">
-          <p *ngIf="blogErrorMessage['title']" class="warning_messages">{{blogErrorMessage['title']}}</p>
+          <p *ngIf="blogErrorMessage['title']" class="warning_messages">{{ blogErrorMessage['title'] }}</p>
           <p></p>
           <p><strong>Content:</strong></p>
           <angular-editor [(ngModel)]="newBlog.content" [config]="editorConfig"
                           class="editor_{{Theme.get()}}"></angular-editor>
-          <p *ngIf="blogErrorMessage['content']" class="warning_messages">{{blogErrorMessage['content']}}</p>
+          <p *ngIf="blogErrorMessage['content']" class="warning_messages">{{ blogErrorMessage['content'] }}</p>
         </div>
 
       </div>
@@ -384,7 +386,7 @@
           <angular-editor [(ngModel)]="newPost.content" [config]="editorConfig"
                           class="editor_{{Theme.get()}}"></angular-editor>
         </div>
-        <p *ngIf="postErrorMessage['content']" class="warning_messages">{{postErrorMessage['content']}}</p>
+        <p *ngIf="postErrorMessage['content']" class="warning_messages">{{ postErrorMessage['content'] }}</p>
       </div>
       <!-- Modal feed body END -->
       <!-- Modal feed footer -->
@@ -436,7 +438,7 @@
           <angular-editor [(ngModel)]="postToEditTempDummy.content" [config]="editorConfig"
                           class="editor_{{Theme.get()}}"></angular-editor>
         </div>
-        <p *ngIf="postErrorMessage['content']" class="warning_messages">{{postErrorMessage['content']}}</p>
+        <p *ngIf="postErrorMessage['content']" class="warning_messages">{{ postErrorMessage['content'] }}</p>
       </div>
       <!-- Modal feed body END -->
       <!-- Modal feed footer -->

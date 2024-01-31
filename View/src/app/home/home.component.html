@@ -50,21 +50,21 @@
                       </a>
                     </div>
                     <!-- Info -->
-                    <h5 class="mb-0"><a href="/profile?id={{userData.id}}">{{userData.name}}</a></h5>
-                    <p class="mt-3">{{userData.signature}}</p>
+                    <h5 class="mb-0"><a href="/profile?id={{userData.id}}">{{ userData.name }}</a></h5>
+                    <p class="mt-3">{{ userData.signature }}</p>
 
                     <!-- User stat START -->
                     <div class="hstack gap-2 gap-xl-3 justify-content-center">
                       <!-- User stat item -->
                       <div>
-                        <h6 class="mb-0">{{userData.posts.length}}</h6>
+                        <h6 class="mb-0">{{ userData.posts.length }}</h6>
                         <small>Post</small>
                       </div>
                       <!-- Divider -->
                       <div class="vr"></div>
                       <!-- User stat item -->
                       <div>
-                        <h6 class="mb-0">{{userData.friends.length}}</h6>
+                        <h6 class="mb-0">{{ userData.friends.length }}</h6>
                         <small>Connected</small>
                       </div>
                     </div>
@@ -164,8 +164,8 @@
                   </div>
                   <!-- Title -->
                   <div class="overflow-hidden">
-                    <a class="h6 mb-0" href="/profile?id={{recentNewUser.id}}">{{recentNewUser.name}} </a>
-                    <p class="mb-0 small text-truncate">{{recentNewUser.signature}}</p>
+                    <a class="h6 mb-0" href="/profile?id={{recentNewUser.id}}">{{ recentNewUser.name }} </a>
+                    <p class="mb-0 small text-truncate">{{ recentNewUser.signature }}</p>
                   </div>
                   <!-- Button -->
                   <a (click)="sendFriendRequest(recentNewUser)"
@@ -200,8 +200,8 @@
               <div class="card-body">
                 <!-- News item -->
                 <div *ngFor="let announcement of announcements" class="mb-3">
-                  <h6 class="mb-0"><a href="/blog?id={{announcement.id}}">{{announcement.title}}</a></h6>
-                  <small>{{getExistenceTime(announcement)}}</small>
+                  <h6 class="mb-0"><a href="/blog?id={{announcement.id}}">{{ announcement.title }}</a></h6>
+                  <small>{{ getExistenceTime(announcement) }}</small>
                 </div>
                 <!-- Load more comments -->
                 <a aria-pressed="true"

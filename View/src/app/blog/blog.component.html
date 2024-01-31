@@ -14,14 +14,14 @@
           <div class="card card-body">
             <div class="mt-4">
               <!-- Title info -->
-              <h1 class="mb-2 h2">{{blog.title}}</h1>
+              <h1 class="mb-2 h2">{{ blog.title }}</h1>
               <ul class="nav nav-stack gap-3 align-items-center">
                 <li class="nav-item">
                   <div class="nav-link">
-                    by <a class="text-reset btn-link" href="/profile?id={{blog.author.id}}">{{blog.author.name}}</a>
+                    by <a class="text-reset btn-link" href="/profile?id={{blog.author.id}}">{{ blog.author.name }}</a>
                   </div>
                 </li>
-                <li class="nav-item"><i class="bi bi-calendar-date pe-1"></i>{{getDateString(blog.createdAt)}}</li>
+                <li class="nav-item"><i class="bi bi-calendar-date pe-1"></i>{{ getDateString(blog.createdAt) }}</li>
               </ul>
               <!-- description -->
               <p [innerHTML]="blog.content"></p>
@@ -55,7 +55,7 @@
           <!-- Comments START -->
           <div class="card">
             <div *ngIf="blog.comments.length>0" class="card-header pb-0 border-0">
-              <h4>{{blog.comments.length}} comments</h4>
+              <h4>{{ blog.comments.length }} comments</h4>
             </div>
             <div class="card-body">
               <!-- Comments START -->
@@ -66,10 +66,10 @@
                 </div>
                 <div>
                   <div class="mb-2 d-sm-flex">
-                    <h6 class="m-0 me-2">{{reply.author.name}}</h6>
-                    <span class="me-3 small">{{getDateString(reply.createdAt)}}</span>
+                    <h6 class="m-0 me-2">{{ reply.author.name }}</h6>
+                    <span class="me-3 small">{{ getDateString(reply.createdAt) }}</span>
                   </div>
-                  <p>{{reply.content}}</p>
+                  <p>{{ reply.content }}</p>
                   <a class="btn btn-light btn-sm" hidden="hidden">Reply</a>
                 </div>
               </div>
@@ -83,7 +83,7 @@
                   <div class="col-12">
                     <textarea [(ngModel)]="newComment.content" class="form-control" name="content" rows="3"></textarea>
                     <p *ngIf="newCommentErrorMessage['content']"
-                       class="warning_messages">{{newCommentErrorMessage['content']}}</p>
+                       class="warning_messages">{{ newCommentErrorMessage['content'] }}</p>
                   </div>
                   <!-- Button -->
                   <div class="col-12">
@@ -127,12 +127,12 @@
           <!-- Avatar -->
           <p><strong>Title:</strong></p>
           <input [(ngModel)]="blogToEditTempDummy.title">
-          <p *ngIf="blogErrorMessage['title']" class="warning_messages">{{blogErrorMessage['title']}}</p>
+          <p *ngIf="blogErrorMessage['title']" class="warning_messages">{{ blogErrorMessage['title'] }}</p>
           <p></p>
           <p><strong>Content:</strong></p>
           <angular-editor [(ngModel)]="blogToEditTempDummy.content" [config]="editorConfig"
                           class="editor_{{Theme.get()}}"></angular-editor>
-          <p *ngIf="blogErrorMessage['content']" class="warning_messages">{{blogErrorMessage['content']}}</p>
+          <p *ngIf="blogErrorMessage['content']" class="warning_messages">{{ blogErrorMessage['content'] }}</p>
         </div>
 
       </div>

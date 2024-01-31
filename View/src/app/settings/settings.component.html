@@ -159,7 +159,7 @@
                     <label class="form-label">User name</label>
                     <input [(ngModel)]="userData.name" class="form-control" name="name" type="text"
                            value="{{userData.name}}">
-                    <p *ngIf="errorMessage['name']" class="warning_messages">{{errorMessage['name']}}</p>
+                    <p *ngIf="errorMessage['name']" class="warning_messages">{{ errorMessage['name'] }}</p>
                   </div>
                   <!-- Email -->
                   <div class="col-sm-6">
@@ -177,17 +177,17 @@
                     <label class="form-label">Signature</label>
                     <textarea [(ngModel)]="userData.signature" [maxLength]="100" class="form-control"
                               name="signature" placeholder="Description (Required)"
-                              rows="2">{{userData.signature}}</textarea>
-                    <small>Character limit: {{userData.signature.length}}/100</small>
-                    <p *ngIf="errorMessage['signature']" class="warning_messages">{{errorMessage['signature']}}</p>
+                              rows="2">{{ userData.signature }}</textarea>
+                    <small>Character limit: {{ userData.signature.length }}/100</small>
+                    <p *ngIf="errorMessage['signature']" class="warning_messages">{{ errorMessage['signature'] }}</p>
                   </div>
                   <div class="col-12">
                     <label class="form-label">About</label>
                     <textarea [(ngModel)]="userData.about" [maxLength]="500" class="form-control"
                               name="about" placeholder="Description (Required)"
-                              rows="4">{{userData.about}}</textarea>
-                    <small>Character limit: {{userData.about.length}}/500</small>
-                    <p *ngIf="errorMessage['about']" class="warning_messages">{{errorMessage['about']}}</p>
+                              rows="4">{{ userData.about }}</textarea>
+                    <small>Character limit: {{ userData.about.length }}/500</small>
+                    <p *ngIf="errorMessage['about']" class="warning_messages">{{ errorMessage['about'] }}</p>
                   </div>
                   <!-- Button  -->
                   <div class="col-12 text-end">

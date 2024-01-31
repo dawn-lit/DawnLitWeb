@@ -23,10 +23,10 @@
               </div>
               <div class="ms-sm-4 mt-sm-3">
                 <!-- Info -->
-                <h1 class="mb-0 h5">{{profileUserData!.name}} <i *ngIf="profileUserData!.id==1"
-                                                                 class="bi bi-patch-check-fill text-success small"></i>
+                <h1 class="mb-0 h5">{{ profileUserData!.name }} <i *ngIf="profileUserData!.id==1"
+                                                                   class="bi bi-patch-check-fill text-success small"></i>
                 </h1>
-                <p>{{profileUserData!.friends.length}} connections</p>
+                <p>{{ profileUserData!.friends.length }} connections</p>
               </div>
               <!-- Button -->
               <div class="d-flex mt-3 justify-content-center ms-sm-auto">
@@ -78,7 +78,7 @@
               </div>
             </div>
             <span *ngIf="profileUserData!.signature.length > 0"
-                  class="bi bi-chat-right-text"> {{profileUserData!.signature}}</span>
+                  class="bi bi-chat-right-text"> {{ profileUserData!.signature }}</span>
           </div>
           <!-- Card body END -->
           <div class="card-footer mt-3 pt-2 pb-0">
@@ -92,7 +92,7 @@
               <li class="nav-item"><a (click)="setActiveCategory('connections')"
                                       class="nav-link {{getActiveStatus('connections')}}"
                                       type="button"> Connections <span
-                class="badge bg-success bg-opacity-10 text-success small">{{profileUserData!.friends.length}}</span>
+                class="badge bg-success bg-opacity-10 text-success small">{{ profileUserData!.friends.length }}</span>
               </a>
               </li>
               <li class="nav-item"><a class="nav-link" hidden="hidden" href="my-profile-media.html"> Media</a></li>
@@ -130,18 +130,18 @@
               </div>
               <!-- Card body START -->
               <div class="card-body position-relative pt-0">
-                <p *ngIf="profileUserData!.about.length > 0">{{profileUserData!.about}}</p>
+                <p *ngIf="profileUserData!.about.length > 0">{{ profileUserData!.about }}</p>
                 <!-- Date time -->
                 <ul class="list-unstyled mt-3 mb-0">
                   <li class="mb-2"><i class="bi bi-diamond-half fa-fw pe-1"></i> UID:
-                    <strong> {{profileUserData!.id}} </strong></li>
+                    <strong> {{ profileUserData!.id }} </strong></li>
                   <li class="mb-2"><i class="bi bi-envelope fa-fw pe-1"></i> Email:
-                    <strong> {{profileUserData!.email}} </strong></li>
+                    <strong> {{ profileUserData!.email }} </strong></li>
                   <li class="mb-2"><i class="bi bi-calendar2-plus me-1"></i> Joined on:
-                    <strong> {{profileUserData!.createdAt.toLocaleDateString()}} </strong></li>
+                    <strong> {{ profileUserData!.createdAt.toLocaleDateString() }} </strong></li>
                   <li *ngIf="profileUserData!.github"><i class="bi bi-github me-1"></i> GitHub:
                     <strong> <a href="https://github.com/{{profileUserData!.github}}"
-                                style="color: #676a79">{{profileUserData!.github}}</a> </strong></li>
+                                style="color: #676a79">{{ profileUserData!.github }}</a> </strong></li>
                 </ul>
               </div>
               <!-- Card body END -->
@@ -205,7 +205,7 @@
               <!-- Card header START -->
               <div class="card-header d-sm-flex justify-content-between align-items-center border-0">
                 <h5 class="card-title">Friends <span
-                  class="badge bg-danger bg-opacity-10 text-danger">{{profileUserData!.friends.length}}</span></h5>
+                  class="badge bg-danger bg-opacity-10 text-danger">{{ profileUserData!.friends.length }}</span></h5>
                 <a *ngIf="profileUserData!.friends.length > 4" class="btn btn-primary-soft btn-sm" href="#">See all
                   friends</a>
               </div>

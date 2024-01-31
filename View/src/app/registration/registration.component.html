@@ -17,14 +17,14 @@
             <input [(ngModel)]="registrationData['name']" class="form-control" name="name"
                    placeholder="Enter username"
                    type="text">
-            <p *ngIf="errorMessage['name']" class="warning_messages">{{errorMessage['name']}}</p>
+            <p *ngIf="errorMessage['name']" class="warning_messages">{{ errorMessage['name'] }}</p>
           </div>
           <!-- Email -->
           <div class="mb-3 input-group-lg">
             <label class="form-label">Email:</label>
             <input [(ngModel)]="registrationData['email']" class="form-control" name="email" placeholder="Enter email"
                    type="email">
-            <p *ngIf="errorMessage['email']" class="warning_messages">{{errorMessage['email']}}</p>
+            <p *ngIf="errorMessage['email']" class="warning_messages">{{ errorMessage['email'] }}</p>
           </div>
           <!-- New password -->
           <div class="mb-3">
