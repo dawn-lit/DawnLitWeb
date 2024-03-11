@@ -23,16 +23,6 @@ https://dawnlit.com
 technical limitations. We do not recommend that individuals divulge any confidential information at this stage due to
 the potential security apprehension.
 
-# 🚀 How it started
-
-Part of the source code, especially the backend source code, comes from my previous web project:
-
-https://github.com/TigeiaWorkshop/TigeiaWorkshopOfficialWebsite
-
-The frontend template bought from here:
-
-https://themes.getbootstrap.com/product/social-network-community-and-event-theme/
-
 # 🖥️ Technology specifications
 
 ##### The website is currently designed to be hosted on:
