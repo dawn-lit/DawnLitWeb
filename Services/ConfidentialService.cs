@@ -4,12 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DawnLitWeb.Services;
 
-public class ConfidentialService : AbstractService<Confidential>
+public class ConfidentialService(DatabaseContext db) : AbstractService<Confidential>(db, db.Confidential)
 {
-    public ConfidentialService(DatabaseContext db) : base(db, db.Confidential)
-    {
-    }
-
     public async Task<Confidential?> GetAsync(User theUser)
     {
         return await this.GetDatabaseCollection()

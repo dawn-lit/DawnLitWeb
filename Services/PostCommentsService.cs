@@ -4,12 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DawnLitWeb.Services;
 
-public class PostCommentsService : AbstractService<PostComment>
+public class PostCommentsService(DatabaseContext db) : AbstractService<PostComment>(db, db.PostComments)
 {
-    public PostCommentsService(DatabaseContext db) : base(db, db.PostComments)
-    {
-    }
-
     public new async Task<bool> CreateAsync(PostComment newPostComment)
     {
         // find references
@@ -31,7 +27,7 @@ public class PostCommentsService : AbstractService<PostComment>
         newPostComment.Author = authorRef;
         newPostComment.Post = postRef;
 
-        // setup one to many relationships
+        // setup one-to-many relationships
         authorRef.PostComments.Add(newPostComment);
         postRef.Comments.Add(newPostComment);
 

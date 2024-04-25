@@ -5,13 +5,9 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DawnLitWeb.Services;
 
-public class BlogsService : AbstractService<Blog>
+public class BlogsService(DatabaseContext db) : AbstractService<Blog>(db, db.Blogs)
 {
     private const int MAX_BLOGS = 100;
-
-    public BlogsService(DatabaseContext db) : base(db, db.Blogs)
-    {
-    }
 
     public new async Task<Blog?> GetAsync(int id)
     {

@@ -7,14 +7,9 @@ namespace DawnLitWeb.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class MessagesController : ControllerBase
+public class MessagesController(DatabaseContext db) : ControllerBase
 {
-    private readonly MessagesService _messagesService;
-
-    public MessagesController(DatabaseContext db)
-    {
-        this._messagesService = new MessagesService(db);
-    }
+    private readonly MessagesService _messagesService = new(db);
 
 
     [HttpPost("new")]

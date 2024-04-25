@@ -4,12 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DawnLitWeb.Services;
 
-public class BlogCommentsService : AbstractService<BlogComment>
+public class BlogCommentsService(DatabaseContext db) : AbstractService<BlogComment>(db, db.BlogComments)
 {
-    public BlogCommentsService(DatabaseContext db) : base(db, db.BlogComments)
-    {
-    }
-
     public new async Task<bool> CreateAsync(BlogComment newBlogComment)
     {
         // find references
@@ -31,7 +27,7 @@ public class BlogCommentsService : AbstractService<BlogComment>
         newBlogComment.Author = authorRef;
         newBlogComment.Blog = blogRef;
 
-        // setup one to many relationships
+        // setup one-to-many relationships
         authorRef.BlogComments.Add(newBlogComment);
         blogRef.Comments.Add(newBlogComment);
 

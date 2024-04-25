@@ -4,12 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DawnLitWeb.Services;
 
-public class ChatsService : AbstractService<Chat>
+public class ChatsService(DatabaseContext db) : AbstractService<Chat>(db, db.Chats)
 {
-    public ChatsService(DatabaseContext db) : base(db, db.Chats)
-    {
-    }
-
     public new async Task<Chat?> GetAsync(int id)
     {
         return await this.GetDatabaseCollection()
@@ -34,7 +30,7 @@ public class ChatsService : AbstractService<Chat>
 
     public new async Task<bool> CreateAsync(Chat newChat)
     {
-        // try find owner reference
+        // try to find owner reference
         User? ownerUserRef = await this.GetDatabaseContext().Users
             .Include(u => u.Chats)
             .ThenInclude(c => c.Target)

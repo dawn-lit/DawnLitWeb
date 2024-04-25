@@ -8,7 +8,7 @@ namespace DawnLitWeb.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UsersController : AbstractUserController
+public class UsersController(DatabaseContext db) : AbstractUserController
 {
     private const int MIN_NAME_LENGTH = 2;
     private const int MAX_NAME_LENGTH = 16;
@@ -22,12 +22,7 @@ public class UsersController : AbstractUserController
     private const int MIN_ABOUT_LENGTH = 0;
     private const int MAX_ABOUT_LENGTH = 500;
 
-    private readonly UsersService _usersService;
-
-    public UsersController(DatabaseContext db)
-    {
-        this._usersService = new UsersService(db);
-    }
+    private readonly UsersService _usersService = new(db);
 
     private async Task<User?> GetCurrentUser()
     {
@@ -82,7 +77,7 @@ public class UsersController : AbstractUserController
             return this.Conflict("Email");
         }
 
-        // ensure the user name length is within range
+        // ensure the username length is within range
         if (newUser.Name.Length is < MIN_NAME_LENGTH or > MAX_NAME_LENGTH)
         {
             return this.Conflict("Name");
@@ -156,7 +151,7 @@ public class UsersController : AbstractUserController
     [HttpPut("update/info")]
     public async Task<IActionResult> UpdateInfo(User modifiedUser)
     {
-        // ensure the user name length is within range
+        // ensure the username length is within range
         if (modifiedUser.Name.Length is < MIN_NAME_LENGTH or > MAX_NAME_LENGTH)
         {
             return this.Conflict("Name");

@@ -4,14 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DawnLitWeb.Services;
 
-public class MessagesService : AbstractService<Message>
+public class MessagesService(DatabaseContext db) : AbstractService<Message>(db, db.Messages)
 {
-    private readonly ChatsService _chatsService;
-
-    public MessagesService(DatabaseContext db) : base(db, db.Messages)
-    {
-        this._chatsService = new ChatsService(db);
-    }
+    private readonly ChatsService _chatsService = new(db);
 
     public new async Task<bool> CreateAsync(Message newMessage)
     {

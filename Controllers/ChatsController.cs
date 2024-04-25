@@ -7,14 +7,9 @@ namespace DawnLitWeb.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ChatsController : AbstractUserController
+public class ChatsController(DatabaseContext db) : AbstractUserController
 {
-    private readonly ChatsService _chatsService;
-
-    public ChatsController(DatabaseContext db)
-    {
-        this._chatsService = new ChatsService(db);
-    }
+    private readonly ChatsService _chatsService = new(db);
 
 
     [HttpGet("get/{id:int}")]
@@ -66,7 +61,7 @@ public class ChatsController : AbstractUserController
             return this.NotFound();
         }
 
-        // ensure the Chat is own by current user
+        // ensure the Chat is owned by current user
         if (theChat.Owner.Id != this.GetCurrentUserId())
         {
             return this.Conflict();

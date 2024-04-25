@@ -14,12 +14,12 @@ public static class Authentications
 
     public static string CreateJwtToken(User theUser)
     {
-        List<Claim> claims = new()
-        {
+        List<Claim> claims =
+        [
             new Claim(ClaimTypes.Name, theUser.Name),
             new Claim(ClaimTypes.PrimarySid, theUser.Id.ToString()),
             new Claim(ClaimTypes.Email, theUser.Email)
-        };
+        ];
 
         SigningCredentials cred = new(TOKEN_KEY, SecurityAlgorithms.HmacSha512Signature);
 

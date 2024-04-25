@@ -7,14 +7,9 @@ namespace DawnLitWeb.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PostsController : AbstractUserController
+public class PostsController(DatabaseContext db) : AbstractUserController
 {
-    private readonly PostsService _postsService;
-
-    public PostsController(DatabaseContext db)
-    {
-        this._postsService = new PostsService(db);
-    }
+    private readonly PostsService _postsService = new(db);
 
     [HttpGet("get/list/{num:int}")]
     public async Task<List<Post>> GetList(int num)

@@ -7,14 +7,9 @@ namespace DawnLitWeb.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class BlogsController : AbstractUserController
+public class BlogsController(DatabaseContext db) : AbstractUserController
 {
-    private readonly BlogsService _blogsService;
-
-    public BlogsController(DatabaseContext db)
-    {
-        this._blogsService = new BlogsService(db);
-    }
+    private readonly BlogsService _blogsService = new(db);
 
 
     [HttpGet("get/{id:int}")]

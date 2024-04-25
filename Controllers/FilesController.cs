@@ -38,7 +38,7 @@ public class FilesController : AbstractUserController
             return this.Conflict("user id");
         }
 
-        // try get current user reference
+        // try to get current user reference
         User? creator = await this._usersService.GetAsync(currentUserId);
 
         if (creator is null)

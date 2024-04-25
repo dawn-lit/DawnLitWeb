@@ -5,25 +5,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DawnLitWeb.Services;
 
-public abstract class AbstractService<T> where T : AbstractModel
+public abstract class AbstractService<T>(DatabaseContext db, DbSet<T> collection)
+    where T : AbstractModel
 {
-    private readonly DbSet<T> _dbCollection;
-    private readonly DatabaseContext _dbContext;
-
-    protected AbstractService(DatabaseContext db, DbSet<T> collection)
-    {
-        this._dbContext = db;
-        this._dbCollection = collection;
-    }
-
     protected DatabaseContext GetDatabaseContext()
     {
-        return this._dbContext;
+        return db;
     }
 
     protected DbSet<T> GetDatabaseCollection()
     {
-        return this._dbCollection;
+        return collection;
     }
 
     public async Task<long> CountAsync(Expression<Func<T, bool>> predicate)

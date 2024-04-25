@@ -3,12 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DawnLitWeb.Modules;
 
-public class DatabaseContext : DbContext
+public class DatabaseContext(DbContextOptions options) : DbContext(options)
 {
-    public DatabaseContext(DbContextOptions options) : base(options)
-    {
-    }
-
     public DbSet<User> Users { get; set; } = null!;
 
     public DbSet<Blog> Blogs { get; set; } = null!;

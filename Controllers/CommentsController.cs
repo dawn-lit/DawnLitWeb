@@ -7,16 +7,10 @@ namespace DawnLitWeb.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CommentsController : AbstractUserController
+public class CommentsController(DatabaseContext db) : AbstractUserController
 {
-    private readonly BlogCommentsService _blogCommentsService;
-    private readonly PostCommentsService _postCommentsService;
-
-    public CommentsController(DatabaseContext db)
-    {
-        this._postCommentsService = new PostCommentsService(db);
-        this._blogCommentsService = new BlogCommentsService(db);
-    }
+    private readonly BlogCommentsService _blogCommentsService = new(db);
+    private readonly PostCommentsService _postCommentsService = new(db);
 
     [HttpGet("post/get/{id:int}")]
     public async Task<ActionResult<PostComment>> PostCommentGet(int id)

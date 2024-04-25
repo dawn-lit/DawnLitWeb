@@ -4,17 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DawnLitWeb.Services;
 
-public class UsersService : AbstractService<User>
+public class UsersService(DatabaseContext db) : AbstractService<User>(db, db.Users)
 {
     private const int MAX_USERS = 10;
-    private readonly ConfidentialService _confidentialService;
-    private readonly RequestsService _requestsService;
-
-    public UsersService(DatabaseContext db) : base(db, db.Users)
-    {
-        this._confidentialService = new ConfidentialService(db);
-        this._requestsService = new RequestsService(db);
-    }
+    private readonly ConfidentialService _confidentialService = new(db);
+    private readonly RequestsService _requestsService = new(db);
 
     public new async Task<bool> CreateAsync(User newUser)
     {
@@ -137,7 +131,7 @@ public class UsersService : AbstractService<User>
         Request? existsCurrentUserRequest =
             currentUser.Requests.FirstOrDefault(r => r.Sender == targetUser && r.Type == "FRIEND_REQUEST");
 
-        // if target user has not even send a friend request to current user yet, then do nothing
+        // if target user has not even sent a friend request to current user yet, then do nothing
         if (existsCurrentUserRequest == null)
         {
             return false;
@@ -166,7 +160,7 @@ public class UsersService : AbstractService<User>
         Request? existsCurrentUserRequest =
             currentUser.Requests.FirstOrDefault(r => r.Sender == targetUser && r.Type == "FRIEND_REQUEST");
 
-        // if target user has not even send a friend request to current user yet, then do nothing
+        // if target user has not even sent a friend request to current user yet, then do nothing
         if (existsCurrentUserRequest == null)
         {
             return false;

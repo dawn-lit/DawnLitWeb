@@ -4,12 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DawnLitWeb.Services;
 
-public class FilesService : AbstractService<FileItem>
+public class FilesService(DatabaseContext db) : AbstractService<FileItem>(db, db.Files)
 {
-    public FilesService(DatabaseContext db) : base(db, db.Files)
-    {
-    }
-
     public async Task<FileItem?> GetAsync(int useId, string fileType)
     {
         return await this.GetDatabaseCollection()
